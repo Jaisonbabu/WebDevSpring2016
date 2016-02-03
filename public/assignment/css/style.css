@@ -1,3 +1,30 @@
-#justify{
+p{
     text-align: justify;
+}
+
+.form-horizontal .control-label{
+    text-align:left;
+}
+
+th {
+    background-color: darkgray;
+    color: black;
+}
+
+.glyphicon{
+    font-size: 20px;
+}
+
+.glyphicon-plus{
+    color:deepskyblue;
+}
+.glyphicon-remove{
+    color:red;
+}
+.glyphicon-ok{
+    color:green;
+}
+
+.glyphicon-pencil{
+    color:darkslategrey;
 }

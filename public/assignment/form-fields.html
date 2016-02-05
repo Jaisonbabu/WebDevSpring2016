@@ -24,7 +24,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -34,8 +35,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Username</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="profile.html">Username</a></li>
+                <li><a href="home.html">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -67,10 +68,10 @@
                 <input type="text" class="form-control" id="firstName" placeholder="First Name"/>
             </div>
             <div class="col-xs-6">
-                <span class="glyphicon glyphicon-pencil push"></span>
-                <span class="glyphicon glyphicon-plus push"></span>
-                <span class="glyphicon glyphicon-remove push"></span>
-                <span class="glyphicon glyphicon-list-alt push"></span>
+                <span class="glyphicon glyphicon-pencil "></span>
+                <span class="glyphicon glyphicon-plus "></span>
+                <span class="glyphicon glyphicon-remove "></span>
+                <span class="glyphicon glyphicon-list-alt "></span>
             </div>
         </div>
 
@@ -80,12 +81,99 @@
                 <input type="text" class="form-control" id="lastName" placeholder="Last Name"/>
             </div>
             <div class="col-xs-6">
-                <span class="glyphicon glyphicon-pencil push"></span>
-                <span class="glyphicon glyphicon-plus push"></span>
-                <span class="glyphicon glyphicon-remove push"></span>
-                <span class="glyphicon glyphicon-list-alt push"></span>
+                <span class="glyphicon glyphicon-pencil "></span>
+                <span class="glyphicon glyphicon-plus "></span>
+                <span class="glyphicon glyphicon-remove "></span>
+                <span class="glyphicon glyphicon-list-alt "></span>
             </div>
         </div>
+
+        <label for="dob">Date of Birth:</label>
+        <div class=" row">
+            <div class=" form-group col-xs-6 col-lg-6">
+                <input type="date" class="form-control" id="dob"/>
+            </div>
+            <div class="col-xs-6">
+                <span class="glyphicon glyphicon-pencil "></span>
+                <span class="glyphicon glyphicon-plus "></span>
+                <span class="glyphicon glyphicon-remove "></span>
+                <span class="glyphicon glyphicon-list-alt "></span>
+            </div>
+        </div>
+
+        <label for="gender">Gender:</label>
+        <div class=" row">
+            <div class=" form-group col-xs-6 col-lg-6">
+                <select name="gender" id="gender" class="form-control" >
+                    <option value="male">Male</option>
+                     <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="col-xs-6">
+                <span class="glyphicon glyphicon-pencil "></span>
+                <span class="glyphicon glyphicon-plus "></span>
+                <span class="glyphicon glyphicon-remove "></span>
+                <span class="glyphicon glyphicon-list-alt "></span>
+            </div>
+        </div>
+
+        <label>Roles:</label>
+        <div class="row">
+            <div class=" form-group col-xs-6 col-lg-6">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="admin" checked >Admin</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="student" >Student</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="user" checked >User</label>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="glyphicon glyphicon-remove"></span>
+                <span class="glyphicon glyphicon-list-alt"></span>
+            </div>
+        </div>
+        <label>Licence Agreement:</label>
+        <div class="row">
+            <div class=" form-group col-xs-6 col-lg-6">
+                <div class="radio">
+                    <label><input type="radio" id="licenceYes" checked >Yes</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" id="LicenceNo" >No</label>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="glyphicon glyphicon-remove"></span>
+                <span class="glyphicon glyphicon-list-alt"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <label for="addNewField">Add New Field:</label>
+        <div class=" row">
+            <div class=" form-group col-xs-6 col-lg-6">
+                <select name="addNewField" id="addNewField" class="form-control" >
+                    <option value="singleLineText">Single Line Text</option>
+                    <option value="date">Date</option>
+                    <option value="dropdown">Dropdown</option>
+                    <option value="checkboxes">Checkboxes</option>
+                    <option value="radioButton">Radio Buttons</option>
+                    <option value="paraTextFields">Paragraph Text Fields</option>
+                </select>
+            </div>
+            <div class="col-xs-6">
+                <span class="glyphicon glyphicon-plus "></span>
+            </div>
+        </div>
+
     </form>
 
     </div>

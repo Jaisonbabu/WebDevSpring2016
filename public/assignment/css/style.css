@@ -28,3 +28,10 @@ th {
 .glyphicon-pencil{
     color:darkslategrey;
 }
+
+hr {
+    border: none;
+    height: 1px;
+    color: #333;
+    background-color: #333;
+}

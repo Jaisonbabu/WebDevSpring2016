@@ -1,11 +1,16 @@
 
 .form-horizontal .control-label{
     text-align:left;
+    white-space: nowrap;
 }
 
 th {
     background-color: darkgray;
     color: black;
+}
+
+.table-responsive th, .table-responsive td{
+    white-space: nowrap;
 }
 
 .glyphicon{

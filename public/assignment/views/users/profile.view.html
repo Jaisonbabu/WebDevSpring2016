@@ -8,15 +8,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>Profile</title>
 
     <!-- Bootstrap core css -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
+    <<link href="../../css/dashboard.css" type = "text/css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
 
 
 </head>
@@ -32,14 +32,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="home.html">Form Maker</a>
+            <a class="navbar-brand" href="../home/home.view.html">Form Maker</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="register.html">Register</a></li>
-                <li class = "active"><a href="#">Login</a></li>
-                <li><a href="profile.html">Username</a></li>
-                <li><a href="login.html">Logout</a></li>
+                <li class="active"><a href="profile.view.html">Username</a></li>
+                <li><a href="login.view.html">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -49,15 +47,15 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="admin.html">Admin</a></li>
-                <li><a href="forms.html">Forms</a></li>
+                <li><a href="../home/home.view.html">Home</a></li>
+                <li class="active"><a href="profile.view.html">Profile <span class="sr-only">(current)</span></a></li>
+                <li><a href="../admin/admin.view.html">Admin</a></li>
+                <li><a href="../forms/forms.view.html">Forms</a></li>
             </ul>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Login</h1>
+            <h1 class="page-header">Profile</h1>
 
             <form class="form-horizontal">
                 <div class="form-group">
@@ -72,10 +70,28 @@
                         <input type="password" class="form-control" id="password" placeholder="Password">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-2 control-label">First Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">Email:</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <a href="profile.html" class="btn btn-primary btn-lg btn-block" role="button">Login</a>
+                        <a href="#" class="btn btn-primary btn-lg btn-block" role="button">Update</a>
                     </div>
                 </div>
             </form>
@@ -88,7 +104,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/libs/jquery_11.3.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="../js/libs/jquery_11.3.min.js"><\/script>')</script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->

@@ -6,7 +6,8 @@
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label">Username:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="username" placeholder="Username" required autofocus>
+                <input ng-model = "user.username" type="text" class="form-control" id="username"
+                       placeholder="Username" required autofocus >
             </div>
         </div>
         <div class="form-group">
@@ -31,7 +32,8 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
 
-                <a href="profile.view.html" class="btn btn-primary btn-lg btn-block" role="button">Register</a>
+                <a href="profile.view.html" class="btn btn-primary btn-lg btn-block" role="button"
+                   ng-click = "register(user)">Register</a>
             </div>
         </div>
     </form>

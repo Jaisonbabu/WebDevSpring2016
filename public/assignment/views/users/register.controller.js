@@ -5,16 +5,29 @@
         .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($scope, $location, $rootScope, UserService ) {
+    function RegisterController($scope, $location, UserService ) {
 
-        $rootScope.user = null;
-        $scope.register = function (user){
 
+        $scope.error = null;
+
+        $scope.register = function(user){
+
+            console.log("Inside register controller");
             if(user == null){
-                $scope.error = ""
+                $scope.error = " Please fill the missing required fields"
             }
 
-          $rootScope.user = user;
+            var userExists = UserService.userExists(user.username);
+
+            if(userExists){
+                $scope.error = "Username Already Exists";
+                return;
+            }
+
+            UserService.createUser(user, function (user){
+                UserService.setUser(user)
+            });
+
             $location.url("/profile");
 
 

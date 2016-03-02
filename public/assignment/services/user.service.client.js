@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($http) {
+    function UserService($http, $rootScope) {
         var users = [];
 
         users = [
@@ -25,7 +25,12 @@
             findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
-            updateUser: updateUser
+            updateUser: updateUser,
+            userExists: userExists,
+            setUser: setUser,
+            getUser: getUser,
+            findUserbyId: findUserbyId
+
         };
 
         return service;
@@ -34,12 +39,19 @@
 
             for (var i in users){
                 if(users[i].username == username && users[i].password == password)
-                {
                     callback(users[i]);
-                }
             }
 
             callback(null);
+        }
+
+        function findUserbyId(userId){
+            for(var i in users){
+                if(users[i]._id == userId){
+                    return users[i];
+                }
+            }
+            return null;
         }
 
         function findAllUsers(callback) {
@@ -47,9 +59,17 @@
         }
 
         function createUser(user, callback){
-            user._id =  (new Date).getTime();
-            users.push(user);
-            callback(users);
+
+            var newUser = {
+                _id : (new Date).getTime(),
+                username :  user.username,
+                password : user.password,
+                email: user.email
+
+            };
+            users.push(newUser);
+            console.log(users);
+            callback(newUser);
         }
 
         function deleteUserById(userId, callback){
@@ -62,7 +82,46 @@
         }
 
         function updateUser(userId, user, callback){
+            var currentUser = findUserbyId(userId);
+            console.log(currentUser + "inside updateUser");
+            console.log(currentUser);
 
+            if(currentUser != null){
+                var currentUser = {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username,
+                    password: user.password,
+                    email:user.email
+                }
+                callback(currentUser);
+            }
+
+            callback(null);
         }
+
+        function userExists(userName){
+            for(var i in users){
+                if(users[i].username == userName){
+                    return true;
+                    console.log(users[i].username );
+                }
+            }
+            return false;
+        }
+
+        function setUser(user){
+            $rootScope.currentUser = user;
+            console.log("inside setUser "+ $rootScope.currentUser.username);
+        }
+
+        function getUser(user){
+            return $rootScope.currentUser = user;
+        }
+
+
+
+
+
     }
 })();

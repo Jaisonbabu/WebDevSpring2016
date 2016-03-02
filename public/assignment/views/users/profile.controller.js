@@ -1,3 +1,15 @@
-/**
- * Created by Jaison89 on 2/27/2016.
- */
+"use strict";
+
+(function(){
+    angular
+        .module("FormBuilderApp")
+        .controller("ProfileController", ProfileController);
+
+    function ProfileController ($scope, $location) {
+        console.log($location.path());
+        $scope.$location = $location;
+
+
+
+    }
+})();

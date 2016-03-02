@@ -9,6 +9,17 @@ th {
     color: black;
 }
 
+.invalid-field
+{
+    border:1px solid #f00;
+}
+
+.errorMsg{
+    text-align: center;
+    font-style: italic;
+    color: red;
+}
+
 .table-responsive th, .table-responsive td{
     white-space: nowrap;
 }

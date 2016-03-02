@@ -1,3 +1,14 @@
-/**
- * Created by Jaison89 on 2/27/2016.
- */
+"use strict";
+
+(function(){
+    angular
+        .module("FormBuilderApp")
+        .controller("HomeController", HomeController);
+
+    function HomeController ($scope, $location) {
+        console.log($location.path());
+        $scope.$location = $location;
+
+
+    }
+})();

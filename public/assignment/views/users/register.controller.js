@@ -8,19 +8,16 @@
     function RegisterController($scope, $location, UserService ) {
 
 
-        $scope.error = null;
+        $scope.message = null;
 
         $scope.register = function(user){
 
             console.log("Inside register controller");
-            if(user == null){
-                $scope.error = " Please fill the missing required fields"
-            }
 
             var userExists = UserService.userExists(user.username);
 
             if(userExists){
-                $scope.error = "Username Already Exists";
+                $scope.message = "Username Already Exists";
                 return;
             }
 
@@ -29,9 +26,6 @@
             });
 
             $location.url("/profile");
-
-
-
 
         };
 

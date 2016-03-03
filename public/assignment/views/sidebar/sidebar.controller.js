@@ -7,9 +7,7 @@
 
     function SidebarController ($scope, $location) {
         console.log($location.path());
-        $scope.$location = $location;
-
-
+        $scope.location = $location;
 
     }
 })();

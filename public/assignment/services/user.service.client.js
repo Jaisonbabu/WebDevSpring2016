@@ -20,7 +20,7 @@
                         "username":"ed",     "password":"ed",      "roles": ["student"]		}
                 ];
 
-        var service = {
+        var userService = {
             findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
             createUser: createUser,
@@ -33,7 +33,7 @@
 
         };
 
-        return service;
+        return userService;
 
         function findUserByCredentials(username, password, callback) {
 
@@ -41,7 +41,6 @@
                 if(users[i].username == username && users[i].password == password)
                     callback(users[i]);
             }
-
             callback(null);
         }
 
@@ -87,13 +86,13 @@
             console.log(currentUser);
 
             if(currentUser != null){
-                var currentUser = {
+                $.extend(true,currentUser,{
                     firstName: user.firstName,
                     lastName: user.lastName,
                     username: user.username,
                     password: user.password,
                     email:user.email
-                }
+                });
                 callback(currentUser);
             }
 
@@ -103,8 +102,9 @@
         function userExists(userName){
             for(var i in users){
                 if(users[i].username == userName){
-                    return true;
                     console.log(users[i].username );
+                    return true;
+
                 }
             }
             return false;
@@ -112,15 +112,12 @@
 
         function setUser(user){
             $rootScope.currentUser = user;
-            console.log("inside setUser "+ $rootScope.currentUser.username);
+            console.log("inside setUser "+ $rootScope.currentUser._id);
         }
 
-        function getUser(user){
-            return $rootScope.currentUser = user;
+        function getUser(){
+            return $rootScope.currentUser;
         }
-
-
-
 
 
     }

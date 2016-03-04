@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($http, $rootScope) {
+    function UserService($http, $rootScope, $location) {
         var users = [];
 
         users = [
@@ -29,7 +29,9 @@
             userExists: userExists,
             setUser: setUser,
             getUser: getUser,
-            findUserbyId: findUserbyId
+            findUserbyId: findUserbyId,
+            checkLoggedIn: checkLoggedIn,
+            checkUserAdmin: checkUserAdmin
 
         };
 
@@ -104,15 +106,26 @@
                 if(users[i].username == userName){
                     console.log(users[i].username );
                     return true;
-
                 }
             }
             return false;
         }
 
+        function checkLoggedIn(){
+            if( $rootScope.currentUser == null){
+                $location.url("/");
+            }
+        }
+
+        function checkUserAdmin(){
+            if( $rootScope.currentUser == null || currentUser.roles.indexOf('admin') >= 0){
+                $location.url("/");
+            }
+        }
+
         function setUser(user){
             $rootScope.currentUser = user;
-            console.log("inside setUser "+ $rootScope.currentUser._id);
+           // console.log("inside setUser "+ $rootScope.currentUser._id);
         }
 
         function getUser(){

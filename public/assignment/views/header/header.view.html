@@ -12,10 +12,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/register">Register</a></li>
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/profile">Username</a></li>
-                <li><a href="#/login">Logout</a></li>
+                <li ng-hide = "currentUser"><a href="#/register">Register</a></li>
+                <li ng-hide = "currentUser"><a href="#/login">Login</a></li>
+                <li ng-show = "currentUser"><a href="#/profile">{{currentUser.username}}</a></li>
+                <li ng-show = "currentUser"><a ng-click = logout()>Logout</a></li>
+                <li ng-show = "currentUser.roles.indexOf('admin') >= 0"><a href="#/admin">Admin</a></li>
+
             </ul>
         </div>
     </div>

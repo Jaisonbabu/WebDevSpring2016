@@ -25,8 +25,7 @@
 
 
         function createFormForUser(userId, form, callback){
-
-            if (form != null){
+            if (form != null && form.title != ""){
                 var newForm = {
                     _id : (new Date).getTime(),
                     title: form.title,

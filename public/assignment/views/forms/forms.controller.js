@@ -7,6 +7,8 @@
 
     function FormController($scope, $location, UserService, FormService) {
 
+        UserService.checkLoggedIn();
+
         $scope.forms = FormService.getCurrentForms();
         $scope.error = null;
         $scope.selectedForm = null;
@@ -42,10 +44,13 @@
             var callback = function (updatedForm){
                 if(updatedForm == null){
                     $scope.error = "Form name cannot be empty";
+                }else{
+                    $scope.error = null;
                 }
             };
 
-             FormService.updateFormById(formUpdated._id, formUpdated, callback)
+            FormService.updateFormById(formUpdated._id, formUpdated, callback);
+
         }
 
         function deleteForm(index){

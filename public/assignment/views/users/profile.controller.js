@@ -7,14 +7,12 @@
 
     function ProfileController ($scope, $location, $rootScope, UserService) {
 
-        console.log($rootScope.currentUser.username + " inside profile controller");
+        //console.log($rootScope.currentUser.username + " inside profile controller");
+        UserService.checkLoggedIn();
+
 
         $scope.user = UserService.getUser();
-        if (!$rootScope.currentUser) {
-            $location.url("/home");
-        }
-
-       $scope.update = function (){
+        $scope.update = function (){
 
            var updateUserDetail = function (updatedUser) {
                console.log("inside update updateUsercallback");

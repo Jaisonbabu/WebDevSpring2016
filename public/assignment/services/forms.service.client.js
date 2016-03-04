@@ -17,7 +17,8 @@
             createFormForUser: createFormForUser,
             findAllFormsForUser: findAllFormsForUser,
             deleteFormById: deleteFormById,
-            updateFormById: updateFormById
+            updateFormById: updateFormById,
+            getCurrentForms: getCurrentForms
         };
 
         return formService;
@@ -25,13 +26,17 @@
 
         function createFormForUser(userId, form, callback){
 
-            var newForm = {
-                _id : (new Date).getTime(),
-                title: form.title,
-                userId : userId
-            };
-            forms.push(newForm);
-            callback(newForm);
+            if (form != null){
+                var newForm = {
+                    _id : (new Date).getTime(),
+                    title: form.title,
+                    userId : userId
+                };
+                forms.push(newForm);
+                callback(newForm);
+                return;
+            }
+            callback(null);
         }
 
         function findAllFormsForUser(userId, callback){
@@ -53,17 +58,40 @@
         }
 
         function updateFormById(formId, newForm, callback){
-            for (var i in forms){
-                if(forms[i] === formId){
-                    forms[i]._id = newForm._id;
-                    forms[i].title = newForm.title;
-                    forms[i].userId = newForm.userId;
+            if(newForm.title != ""){
+                for (var i in forms){
+                    if(forms[i]._id === formId){
+                        forms[i] ={
+                            _id : newForm._id,
+                            title : newForm.title,
+                            userId : newForm.userId
+                        };
 
-                    callback(forms[i]);
+                        callback(forms[i]);
+                        return;
+                    }
                 }
             }
-            callback(null);
+            else{
+                callback(null);
+            }
+        }
+
+        function findFormById(formId){
+            for( var i in forms){
+                if(forms[i]._id === formId){
+                    return forms[i];
+                }
+                else{
+                    return null;
+                }
+            }
+        }
+
+        function getCurrentForms(){
+            return forms;
         }
     }
+
 
 })();

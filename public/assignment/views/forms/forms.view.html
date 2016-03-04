@@ -1,7 +1,9 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller = "FormController">
+
+    <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
     <h1 class="page-header">Forms</h1>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">Forms</a></li>
+        <li role="presentation" class="active"><a href="#/forms">Forms</a></li>
         <li role="presentation"><a href="#/fields">Fields</a></li>
     </ul>
     <div class="table-responsive">
@@ -15,58 +17,23 @@
             <tbody>
             <tr>
                 <td>
-                    <input type = "text" class="form-control" placeholder="name">
+                    <input ng-model = "form.title" type = "text" class="form-control" placeholder="name">
                 </td>
                 <td>
-                    <a href="#"><span class="glyphicon glyphicon-plus"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-ok"></span></a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="form-fields.view.html">Registration Form</a>
-                </td>
-                <td>
-                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a ng-click = "addForm(form)"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a ng-click = "updateForm(form)"><span class="glyphicon glyphicon-ok"></span></a>
                 </td>
             </tr>
-            <tr>
+            <tr ng-repeat="form in forms">
+                <td><a href="fields.view.html" >{{form.title}}</a></td>
                 <td>
-                    <a href="form-fields.view.html">Contact List</a>
-                </td>
-                <td>
-                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="form-fields.view.html">To Do List</a>
-                </td>
-                <td>
-                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a ng-click="deleteForm($index)"><span  class="glyphicon glyphicon-remove"></span></a>
+                    <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil"></span></a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-
-
-
-</div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../js/libs/jquery_11.3.min.js"><\/script>')</script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.1/holder.min.js"></script>
-</body>
-</html>
+

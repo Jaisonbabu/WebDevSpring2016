@@ -13,6 +13,10 @@
                 templateUrl: "views/forms/forms.view.html",
                 controller: "FormController"
             })
+            .when("/fields", {
+                templateUrl: "views/forms/form-fields.view.html",
+                controller: "FieldsController"
+            })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController"

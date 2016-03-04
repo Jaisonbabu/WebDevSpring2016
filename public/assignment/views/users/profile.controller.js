@@ -10,9 +10,9 @@
         console.log($rootScope.currentUser.username + " inside profile controller");
 
         $scope.user = UserService.getUser();
-        //if (!$scope.currentUser) {
-        //    $location.url("/home");
-        //}
+        if (!$rootScope.currentUser) {
+            $location.url("/home");
+        }
 
        $scope.update = function (){
 

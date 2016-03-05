@@ -9,7 +9,7 @@
 
         UserService.checkLoggedIn();
 
-        $scope.forms = FormService.getCurrentForms();
+
         $scope.error = null;
         $scope.selectedForm = null;
 
@@ -19,7 +19,7 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
-        $scope.forms = FormService.getCurrentForms();
+        $scope.forms = FormService.getCurrentForms($scope.user_id);
 
 
         function addForm(form){

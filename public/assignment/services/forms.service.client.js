@@ -18,6 +18,7 @@
             findAllFormsForUser: findAllFormsForUser,
             deleteFormById: deleteFormById,
             updateFormById: updateFormById,
+            findUserForms : findUserForms,
             getCurrentForms: getCurrentForms
         };
 
@@ -87,7 +88,7 @@
             }
         }
 
-        function findAllFormsForUser(userId){
+        function findUserForms(userId){
             var userForm=[];
             for(var i in forms){
                 if(forms[i].userId == userId){

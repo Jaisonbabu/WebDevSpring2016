@@ -19,7 +19,7 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
-        $scope.forms = FormService.getCurrentForms($scope.user_id);
+        $scope.forms = FormService.getCurrentForms();
 
 
         function addForm(form){

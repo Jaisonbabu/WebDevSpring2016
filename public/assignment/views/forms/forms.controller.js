@@ -28,7 +28,7 @@
                 if(form === null){
                     $scope.error = "Please enter form name";
                 }else{
-                   // $scope.forms = FormService.findUserForms($scope.user._id);
+                   $scope.forms = FormService.findUserForms($scope.user._id);
                     //console.log(forms);
                     $scope.error = null;
                 }
@@ -48,6 +48,7 @@
                 if(updatedForm == null){
                     $scope.error = "Form name cannot be empty";
                 }else{
+                    $scope.forms = FormService.findUserForms($scope.user._id);
                     $scope.error = null;
                 }
             };
@@ -59,7 +60,8 @@
         function deleteForm(index){
 
             var callback = function (forms){
-                $scope.forms = forms;
+                $scope.forms = FormService.findUserForms($scope.user._id);
+                $scope.error = null;
             };
             FormService.deleteFormById($scope.forms[index]._id, callback);
         }

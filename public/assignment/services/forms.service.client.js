@@ -95,8 +95,8 @@
                     userForm.push(forms[i]);
                 }
             }
-            forms = userForm;
-            return forms;
+            //forms = userForm;
+            return userForm;
         }
 
         function getCurrentForms(){

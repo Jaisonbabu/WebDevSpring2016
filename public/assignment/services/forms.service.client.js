@@ -87,6 +87,17 @@
             }
         }
 
+        function findAllFormsForUser(userId){
+            var userForm=[];
+            for(var i in forms){
+                if(forms[i].userId == userId){
+                    userForm.push(forms[i]);
+                }
+            }
+            forms = userForm;
+            return forms;
+        }
+
         function getCurrentForms(){
             return forms;
         }

@@ -19,17 +19,18 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
+        $scope.forms = FormService.getCurrentForms();
 
 
         function addForm(form){
 
-         var newForm = function (form){
-             if(form === null){
-                 $scope.error = "Please enter form name";
-             }else{
-                 $scope.error = null;
-             }
-         };
+            var newForm = function (form){
+                if(form === null){
+                    $scope.error = "Please enter form name";
+                }else{
+                    $scope.error = null;
+                }
+            };
             FormService.createFormForUser($scope.user._id, form, newForm);
             $scope.form = null;
         }

@@ -1,0 +1,64 @@
+
+.form-horizontal .control-label{
+    text-align:left;
+    white-space: nowrap;
+}
+
+th {
+    background-color: darkgray;
+    color: black;
+}
+
+.invalid-field
+{
+    border:1px solid #f00;
+}
+
+.errorMsg{
+    text-align: center;
+    font-style: italic;
+    color: red;
+}
+
+.table-responsive th, .table-responsive td{
+    white-space: nowrap;
+}
+
+.glyphicon{
+    font-size: 20px;
+}
+
+.glyphicon-triangle-bottom{
+    font-size: 10px;
+}
+
+.glyphicon-plus{
+    color:deepskyblue;
+}
+.glyphicon-remove{
+    color:red;
+}
+.glyphicon-ok{
+    color:green;
+}
+
+.glyphicon-pencil{
+    color:darkslategrey;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    color: #333;
+    background-color: #333;
+}
+
+/*.nav.navbar-nav.navbar-right li a {*/
+    /*color: #fff;*/
+/*}*/
+/*.nav.navbar-nav.navbar-right > .active > a,*/
+/*.nav.navbar-nav.navbar-right > .active > a:hover,*/
+/*.nav.navbar-nav.navbar-right > .active > a:focus {*/
+    /*color: #fff;*/
+    /*background-color: #0099cc;*/
+/*}*/

@@ -20,15 +20,15 @@
                     <input ng-model = "form.title" type = "text" class="form-control" placeholder="name">
                 </td>
                 <td>
-                    <a ng-click = "addForm(form)"><span class="glyphicon glyphicon-plus"></span></a>
-                    <a ng-click = "updateForm(form)"><span class="glyphicon glyphicon-ok"></span></a>
+                    <a ng-click = "addForm(form)" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a ng-click = "updateForm(form)" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span></a>
                 </td>
             </tr>
             <tr ng-repeat="form in forms">
                 <td><a href="fields.view.html" >{{form.title}}</a></td>
                 <td>
-                    <a ng-click="deleteForm($index)"><span  class="glyphicon glyphicon-remove"></span></a>
-                    <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a ng-click="deleteForm($index)" class="btn btn-default"><span  class="glyphicon glyphicon-remove"></span></a>
+                    <a ng-click="selectForm($index)" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
                 </td>
             </tr>
             </tbody>

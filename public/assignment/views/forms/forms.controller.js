@@ -19,7 +19,7 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
-        $scope.forms = FormService.getCurrentForms();
+        $scope.forms = FormService.findUserForms($scope.user._id);
 
 
         function addForm(form){
@@ -28,6 +28,8 @@
                 if(form === null){
                     $scope.error = "Please enter form name";
                 }else{
+                   // $scope.forms = FormService.findUserForms($scope.user._id);
+                    //console.log(forms);
                     $scope.error = null;
                 }
             };

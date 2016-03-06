@@ -3,7 +3,8 @@
         .module("BonAppetitApp")
         .config(configuration);
 
-    function configuration($routeProvider) {
+    function configuration($routeProvider,$httpProvider) {
+
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/home.view.html",
@@ -29,5 +30,7 @@
             .otherwise({
                 redirectTo: "/"
             });
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common["X-Requested-With"];
     }
 })();

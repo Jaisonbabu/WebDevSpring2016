@@ -5,6 +5,12 @@
 
     function configuration($routeProvider,$httpProvider) {
 
+        //$httpProvider.defaults.useXDomain = true;
+        //$httpProvider.defaults.withCredentials = true;
+        //delete $httpProvider.defaults.headers.common["X-Requested-With"];
+        //$httpProvider.defaults.headers.common["Accept"] = "application/json";
+        //$httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/home.view.html",
@@ -30,7 +36,7 @@
             .otherwise({
                 redirectTo: "/"
             });
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common["X-Requested-With"];
+
+
     }
 })();

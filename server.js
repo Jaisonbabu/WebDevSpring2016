@@ -2,7 +2,7 @@ var express = require('express');
 var http = require('http');
 var request = require('request');
 var mongoose = require ('mongoose');
-var cors = require('cors');
+//var cors = require('cors');
 var app = express();
 //app.use(cors());
 //app.options('*', cors());

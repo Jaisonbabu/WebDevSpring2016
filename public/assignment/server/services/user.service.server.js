@@ -1,4 +1,4 @@
-module.exports = function (app, userModel, formModel){
+module.exports = function (app, userModel){
 
     app.post("/api/assignment/user",createUser);
     app.get("/api/assignment/user",findAllUsers);
@@ -33,6 +33,7 @@ module.exports = function (app, userModel, formModel){
             res.json({message: "Cannot Delete"});
         }
     }
+
     function userResponse(user){
         if(user != null){
             res.json(user);
@@ -41,6 +42,7 @@ module.exports = function (app, userModel, formModel){
             res.json({message: "Cannot find user"});
         }
     }
+
     function findUserById(req,res){
         var user = userModel.findUserById(req.params.id);
         userResponse(user);

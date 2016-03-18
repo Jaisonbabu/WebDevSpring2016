@@ -82,10 +82,8 @@
                 if(forms[i]._id === formId){
                     return forms[i];
                 }
-                else{
-                    return null;
-                }
             }
+            return null;
         }
 
         function findUserForms(userId){

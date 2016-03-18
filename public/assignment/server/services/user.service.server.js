@@ -15,7 +15,7 @@ module.exports = function (app, userModel){
     }
 
     function updateUser(req,res){
-        var updatedUsers = userModel.updateUser(req.params.id);
+        var updatedUsers = userModel.updateUser(req.body,req.params.id);
         if (updatedUsers != null){
             res.json(updatedUsers);
         }
@@ -25,9 +25,9 @@ module.exports = function (app, userModel){
     }
 
     function deleteUser(req,res){
-        var user = userModel.deleteUser(req.params.id);
-        if(user != null){
-            res.json(user);
+        var users = userModel.deleteUser(req.params.id);
+        if(users != null){
+            res.json(users);
         }
         else{
             res.json({message: "Cannot Delete"});

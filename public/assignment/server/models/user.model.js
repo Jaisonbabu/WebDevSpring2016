@@ -1,5 +1,18 @@
 var users = require("user.mock.json");
-module.exports = function(app, userModel, formModel) {
+
+module.exports = function() {
+
+    var api = {
+        createUser:createUser,
+        updateUser:updateUser,
+        deleteUser:deleteUser,
+        findAllUsers:findAllUsers,
+        findUserById:findUserById,
+        findUserByUsername:findUserByUsername,
+        findUserByCredentials:findUserByCredentials
+    };
+
+    return api;
 
     function createUser(user){
         var newUser = {

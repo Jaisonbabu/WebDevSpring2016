@@ -12,18 +12,24 @@
         $scope.error = null;
         $scope.login = function (user){
 
-            var userLogin = function (user){
-                if (user != null){
-                    UserService.setUser(user);
-                    $location.url('/profile');
-                    console.log($rootScope.currentUser);
-                }
-                else {
-                    $scope.error = "Invalid Username or Password";
-                }
-            };
 
-           UserService.findUserByCredentials(user.username,user.password, userLogin);
+            UserService.findUserByCredentials(user.username,user.password)
+            .then(
+                function (user){
+                    if (user.data != null){
+                        UserService.setUser(user.data);
+                        $location.url('/profile');
+                        console.log($rootScope.currentUser);
+                    }
+                    else {
+                        $scope.error = "Invalid Username or Password";
+                    }
+                },
+                function (err){
+                    $scope.error = "Login Failed, Please try again";
+                }
+            );
+
 
         }
     }

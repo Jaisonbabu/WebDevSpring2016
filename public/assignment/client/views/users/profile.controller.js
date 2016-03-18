@@ -23,6 +23,17 @@
                 console.log($rootScope.currentUser);
            };
            UserService.updateUser( $rootScope.currentUser._id, $scope.user, updateUserDetail);
+            UserService.updateUser( $rootScope.currentUser._id, $scope.user)
+            .then(
+                function (updatedUser){
+                    if (updatedUser.data != null) {
+                        UserService.setUser(updatedUser.data);
+                        $scope.message = "User updated successfully";
+                    }
+            },
+            function (error){
+
+            });
 
         }
     }

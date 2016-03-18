@@ -1,7 +1,8 @@
-var forms = require("form.mock.json");
-var newFormId = require('node-uuid');
 
 module.exports = function (){
+
+    var forms = require("./form.mock.json");
+    var newFormId = require('node-uuid');
 
     var api = {
         findFormByUserId:findFormByUserId,

@@ -1,6 +1,5 @@
-var users = require("user.mock.json");
-
-module.exports = function() {
+module.exports = function(app) {
+    var users = require("./user.mock.json");
 
     var api = {
         createUser:createUser,
@@ -34,12 +33,10 @@ module.exports = function() {
                 users[i].password = user.password;
                 users[i].email = user.email;
 
-                return users;
-            }
-            else{
-                return null;
+                return users[i];
             }
         }
+        return null;
     }
 
     function deleteUser(userId){
@@ -77,6 +74,7 @@ module.exports = function() {
     }
 
     function findUserByCredentials(credentials){
+        console.log("inside model");
         for (var i in users){
             if(users[i].username == credentials.username && users[i].password == credentials.password){
                 return users[i];

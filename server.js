@@ -16,8 +16,13 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+
 //NOTE: PLease keep this before all http calls
 app.listen(port, ipaddress);
+
+console.log("In Server.js");
+require("./public/assignment/server/app.js")(app);
 //app.all('*', function(req, res, next) {
 //    res.setHeader("Access-Control-Allow-Origin", "*");
 //    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -147,8 +152,6 @@ app.options('*', function(req, res) {
     //});
     //});
 
-
-        require("./public/assignment/server/app.js")  (app)  ;
 
 });
 

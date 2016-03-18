@@ -1,10 +1,8 @@
 module.exports = function (app, userModel){
 
     app.post("/api/assignment/user",createUser);
-    app.get("/api/assignment/user",findAllUsers);
+    app.get("/api/assignment/user",findUser);
     app.get("/api/assignment/user/:id",findUserById);
-    app.get("/api/assignment/user?username=username",findUserByUsername);
-    app.get("/api/assignment/user?username=alice&password=wonderland",findUserByCredentials);
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
@@ -15,13 +13,9 @@ module.exports = function (app, userModel){
     }
 
     function updateUser(req,res){
-        var updatedUsers = userModel.updateUser(req.body,req.params.id);
-        if (updatedUsers != null){
-            res.json(updatedUsers);
-        }
-        else{
-            res.json({message: "Cannot Update"});
-        }
+        var updatedUser = userModel.updateUser(req.body,req.params.id);
+            res.json(updatedUser);
+
     }
 
     function deleteUser(req,res){
@@ -34,7 +28,7 @@ module.exports = function (app, userModel){
         }
     }
 
-    function userResponse(user){
+    function userResponse(user,res){
         if(user != null){
             res.json(user);
         }
@@ -45,25 +39,28 @@ module.exports = function (app, userModel){
 
     function findUserById(req,res){
         var user = userModel.findUserById(req.params.id);
-        userResponse(user);
+        userResponse(user,res);
     }
 
-    function findAllUsers(req,res){
-        var users = userModel.findAllUsers();
-        res.json(users);
-    }
-
-    function findUserByUsername(req,res){
-        var userName = req.query.username;
-        var user = userModel.findUserByUsername(userName);
-        userResponse(user);
-    }
-
-    function findUserByCredentials(req,res){
+    function findUser(req,res){
         var userName = req.query.username;
         var password = req.query.password;
-        var credentials = {username : userName, password : password};
-        var user = userModel.findUserByCredentials(credentials);
-        userResponse(user);
+        console.log("Inside findUser");
+
+        if (userName != null && password != null){
+            var credentials = {username : userName, password : password};
+            var user = userModel.findUserByCredentials(credentials);
+            userResponse(user,res);
+        }
+        if(userName!=null && password == null){
+            var user = userModel.findUserByUsername(userName);
+            userResponse(user,res);
+        }
+        if(userName ==null && password == null){
+            var users = userModel.findAllUsers();
+            res.json(users);
+        }
     }
+
+
 };

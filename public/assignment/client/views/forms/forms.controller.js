@@ -28,13 +28,27 @@
                 if(form === null){
                     $scope.error = "Please enter form name";
                 }else{
-                   $scope.forms = FormService.findUserForms($scope.user._id);
+                    $scope.forms = FormService.findUserForms($scope.user._id);
                     //console.log(forms);
                     $scope.error = null;
                 }
             };
-            FormService.createFormForUser($scope.user._id, form, newForm);
-            $scope.form = null;
+            if (form != null && form.title != ""){
+                FormService.createFormForUser($scope.user._id, form)
+                    .then(function (form){
+                            $scope.forms = FormService.findUserForms($scope.user._id);
+                            //console.log(forms);
+                            $scope.error = null;
+                        },
+                        function (err){
+
+                        });
+            }
+            else{
+                $scope.error = "Please enter form name";
+            }
+
+
         }
 
         function updateForm(form){

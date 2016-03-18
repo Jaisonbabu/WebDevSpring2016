@@ -5,23 +5,13 @@
         .factory("UserService", UserService);
 
     function UserService($http, $rootScope, $location) {
-        var users = [];
 
-        users = [
-                    {	"_id":123, "firstName":"Alice",            "lastName":"Wonderland",
-                         "username":"alice",  "password":"alice",   "roles": ["student"]		},
-                    {	"_id":234, "firstName":"Bob",              "lastName":"Hope",
-                        "username":"bob",    "password":"bob",     "roles": ["admin"]		},
-                    {	"_id":345, "firstName":"Charlie",          "lastName":"Brown",
-                        "username":"charlie","password":"charlie", "roles": ["faculty"]		},
-                    {	"_id":456, "firstName":"Dan",              "lastName":"Craig",
-                        "username":"dan",    "password":"dan",     "roles": ["faculty", "admin"]},
-                    {	"_id":567, "firstName":"Edward",           "lastName":"Norton",
-                        "username":"ed",     "password":"ed",      "roles": ["student"]		}
-                ];
+
+
 
         var userService = {
             findUserByCredentials: findUserByCredentials,
+            findUserByUsername:findUserByUsername,
             findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
@@ -37,68 +27,49 @@
 
         return userService;
 
-        function findUserByCredentials(username, password, callback) {
+        function findUserByCredentials(username, password) {
+            console.log("inside client service");
+            return $http.get("/api/assignment/user?username="+username+"&password="+password);
+        }
 
-            for (var i in users){
-                if(users[i].username == username && users[i].password == password)
-                    callback(users[i]);
-            }
-            callback(null);
+        function findUserByUsername(username){
+            return $http.get("/api/assignment/user?username="+username);
         }
 
         function findUserbyId(userId){
-            for(var i in users){
-                if(users[i]._id == userId){
-                    return users[i];
-                }
-            }
-            return null;
+            return $http.get("/api/assignment/user/:"+userId);
         }
 
-        function findAllUsers(callback) {
-            callback(users);
+        function findAllUsers() {
+           return $http.get("/api/assignment/user");
         }
 
-        function createUser(user, callback){
-
-            var newUser = {
-                _id : (new Date).getTime(),
-                username :  user.username,
-                password : user.password,
-                email: user.email
-
-            };
-            users.push(newUser);
-            console.log(users);
-            callback(newUser);
+        function createUser(user){
+            return $http.post("/api/assignment/user",user);
         }
 
-        function deleteUserById(userId, callback){
-            for(var i in users){
-                if(users[i]._id == userId){
-                    users.pop(users[i]);
-                    callback(users);
-                }
-            }
+        function deleteUserById(userId){
+           return  $http.delete("/api/assignment/user/"+userId);
         }
 
-        function updateUser(userId, user, callback){
-            var currentUser = findUserbyId(userId);
-            console.log(currentUser + "inside updateUser");
-            console.log(currentUser);
-
-            if(currentUser != null){
-                $.extend(true,currentUser,{
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    username: user.username,
-                    password: user.password,
-                    email:user.email
-                });
-                callback(currentUser);
-            }
-
-            callback(null);
+        function updateUser(userId, user){
+            return $http.put("/api/assignment/user/"+userId, user);
+            //var currentUser = findUserbyId(userId);
+            //console.log(currentUser + "inside updateUser");
+            //console.log(currentUser);
+            //
+            //if(currentUser != null){
+            //    $.extend(true,currentUser,{
+            //        firstName: user.firstName,
+            //        lastName: user.lastName,
+            //        username: user.username,
+            //        password: user.password,
+            //        email:user.email
+            //    });
+            //    callback(currentUser);
+            //}
+            //
+            //callback(null);
         }
 
         function userExists(userName){

@@ -7,11 +7,52 @@ module.exports = function(app, userModel, formModel) {
             username :  user.username,
             password : user.password,
             email: user.email
-
         };
         users.push(newUser);
         return users;
     }
+
+    function updateUser(userId, user){
+        for(var i in users){
+            if(users[i]._id == userId){
+                users[i].firstName = user.firstName;
+                users[i].lastName = user.lastName;
+                users[i].username = user.username;
+                users[i].password = user.password;
+                users[i].email = user.email;
+
+                return users;
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
+    function deleteUser(userId){
+        var user = findUserById(userId);
+        if(user != null){
+            users.splice(user,1);
+            return users;
+        }
+        else{
+            return null;
+        }
+    }
+
+    function findAllUsers(){
+        return users;
+    }
+
+    function findUserById(userId){
+        for(var i in users){
+            if(users[i]._id == userId){
+                return users[i];
+            }
+        }
+        return null;
+    }
+
 
     function findUserByUsername(userName){
         for(var i in users){
@@ -23,7 +64,12 @@ module.exports = function(app, userModel, formModel) {
     }
 
     function findUserByCredentials(credentials){
-
+        for (var i in users){
+            if(users[i].username == credentials.username && users[i].password == credentials.password){
+                return users[i];
+            }
+        }
+       return null;
     }
 
 };

@@ -119,7 +119,7 @@ app.options('*', function(req, res) {
             if (!error) {
                 var info = JSON.parse(JSON.stringify(body));
                 //console.log(info);
-                console.log(response.body.venues[1]);
+                //console.log(response.body.venues[1]);
                 res.send(response);
             }
             else {

@@ -36,8 +36,8 @@
            // //  $http.post(url,JSON.stringify(data)).success(responseHandler);
            //
             var data = {
-                api_key : "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368",
-                fields : [ "name", "location", "contact" ],
+
+                fields : [ "name", "location", "contact", "menus","media" ],
                 venue_queries : [
                     {
                         name : "bistro"

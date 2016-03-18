@@ -40,7 +40,7 @@
         function findUserByCredentials(username, password, callback) {
 
             for (var i in users){
-                if(users[i].username == username && users[i].password == password)
+                if(users[i].username == username && users[i].password =     = password)
                     callback(users[i]);
             }
             callback(null);

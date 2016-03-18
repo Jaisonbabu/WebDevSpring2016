@@ -1,6 +1,8 @@
 var express = require('express');
 var http = require('http');
-//var cors = require('cors');
+var request = require('request');
+var mongoose = require ('mongoose');
+var cors = require('cors');
 var app = express();
 //app.use(cors());
 //app.options('*', cors());
@@ -83,38 +85,70 @@ app.listen(port, ipaddress);
 //    });
 //});
 
+app.options('*', function(req, res) {
+
+    res.send(200);
+
+});
+
 
     app.post('/Project', function(req,res){
         console.log("Inside Server");
+        console.log(req.body.venue_queries);
+
+        var data = {
+            api_key : "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368",
+            fields : req.body.fields,
+            venue_queries : req.body.venue_queries
+        };
+
 
         var post_options = {
             host: 'api.locu.com',
             path:'/v2/venue/search',
+            url: "https://api.locu.com/v2/venue/search",
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
                 //'Content-Length': Buffer.byteLength(post_data)
-            }
+            },
+            json:data
+        };
 
-        };
-        var post_req= http.request(post_options,function(res){
-           console.log("Success");
-            console.log(res);
-        });
-        var data = {
-            api_key : "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368",
-            fields : [ "name", "location", "contact" ],
-            venue_queries : [
-                {
-                    name : req.body.venue
-                }
-            ]
-        };
-        post_req.write(JSON.stringify(data));
-        post_req.end();
-        res.send();
+        function callback(error, response, body) {
+            if (!error) {
+                var info = JSON.parse(JSON.stringify(body));
+                //console.log(info);
+                console.log(response.body.venues[1]);
+                res.send(response);
+            }
+            else {
+                console.log('Error happened: '+ error);
+            }
+        }
+
+//send request
+        request(post_options, callback);
+        //var post_req= locu.request(post_options,function(res){
+        //   console.log("Success");
+        //    console.log(res);
+        //});
+
+        //post_req.write(JSON.stringify(data));
+        //post_req.end();
+        //post_req.on('response', function (response) {
+        //    console.log('STATUS: ' + response.statusCode);
+        //    console.log('HEADERS: ' + JSON.stringify(response.headers));
+        //    response.setEncoding('utf8');
+        //    response.on('data', function (chunk) {
+        //        console.log('BODY: ' + chunk);
+        //    });
+        //});
     //});
     //});
+
+
+        require("./public/assignment/server/app.js")  (app)  ;
 
 });
 

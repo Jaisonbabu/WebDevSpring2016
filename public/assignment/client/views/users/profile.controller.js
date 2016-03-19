@@ -11,7 +11,9 @@
         UserService.checkLoggedIn();
 
         $scope.user = UserService.getUser();
-        $scope.update = function (user){
+        $scope.update = update;
+
+        function update(user){
 
             UserService.updateUser( $rootScope.currentUser._id, user)
             .then(

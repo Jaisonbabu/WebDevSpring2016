@@ -10,17 +10,20 @@
 
         $scope.message = null;
 
-        $scope.register = function(user){
+        $scope.register = register;
+
+        function register(user){
 
             console.log("Inside register controller");
 
             var userName = user.username;
+
             UserService.findUserByUsername(userName)
                 .then(function (user){
                         if(user.data == null) {
                             UserService.createUser(user)
                                 .then(function (users){
-                                        UserService.findUserByUsername(user.username)
+                                        UserService.findUserByUsername(userName)
                                             .then(function (user){
                                                     UserService.setUser(user.data);
                                                     $location.url("/profile");

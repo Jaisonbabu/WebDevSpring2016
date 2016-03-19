@@ -21,12 +21,13 @@
         $scope.user = UserService.getUser();
 
         FormService.findUserForms($scope.user._id)
-        .then(function(forms){
-                $scope.forms = forms.data;
-            },
-        function(err){
+            .then(function(forms){
+                    $scope.forms = forms.data;
+                },
+                function(err){
 
-        });
+                });
+
         function setForm(){
             FormService.findUserForms($scope.user._id)
                 .then(function(forms){
@@ -40,15 +41,14 @@
         console.log($scope.forms);
 
         function addForm(form){
-
-                FormService.createFormForUser($scope.user._id, form)
-                    .then(function (forms){
-                            setForm();
-                            $scope.error = null;
-                        },
-                        function (err){
-                            $scope.error = "No Forms";
-                        });
+            FormService.createFormForUser($scope.user._id, form)
+                .then(function (forms){
+                        setForm();
+                        $scope.error = null;
+                    },
+                    function (err){
+                        $scope.error = "No Forms";
+                    });
         }
 
         function updateForm(form){
@@ -60,35 +60,35 @@
             };
 
             FormService.updateFormById(formUpdated._id, form)
-            .then(function(forms){
-                    if(forms != null){
-                        setForm();
-                        $scope.error = null;
-                    }
-                    else{
-                        $scope.error = "Form name cannot be empty";
-                    }
-            },
-            function(err){
-                scope.error = "Cannot Update";
-            });
+                .then(function(forms){
+                        if(forms != null){
+                            setForm();
+                            $scope.error = null;
+                        }
+                        else{
+                            $scope.error = "Form name cannot be empty";
+                        }
+                    },
+                    function(err){
+                        scope.error = "Cannot Update";
+                    });
         }
 
         function deleteForm(index){
 
             FormService.deleteFormById($scope.forms[index]._id)
-            .then(function(forms){
-                    if(forms != null){
-                        setForm();
-                        $scope.error = null;
-                    }
-                    else{
-                        $scope.error = "Form Not Present";
-                    }
-                },
-                function(err){
-                    scope.error = "Cannot Delete";
-                });
+                .then(function(forms){
+                        if(forms != null){
+                            setForm();
+                            $scope.error = null;
+                        }
+                        else{
+                            $scope.error = "Form Not Present";
+                        }
+                    },
+                    function(err){
+                        scope.error = "Cannot Delete";
+                    });
         }
 
         function selectForm(index){

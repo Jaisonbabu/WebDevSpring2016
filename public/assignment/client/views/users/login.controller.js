@@ -12,7 +12,7 @@
         $scope.error = null;
         $scope.login = login;
 
-        var login = function (user){
+        function login (user){
 
             UserService.findUserByCredentials(user.username,user.password)
             .then(

@@ -10,29 +10,23 @@
         //console.log($rootScope.currentUser.username + " inside profile controller");
         UserService.checkLoggedIn();
 
-
         $scope.user = UserService.getUser();
-        $scope.update = function (){
+        $scope.update = function (user){
 
-           var updateUserDetail = function (updatedUser) {
-               console.log("inside update updateUsercallback");
-               if (updatedUser != null) {
-                   UserService.setUser(updatedUser);
-                   $scope.message = "User updated successfully";
-               }
-                console.log($rootScope.currentUser);
-           };
-           UserService.updateUser( $rootScope.currentUser._id, $scope.user, updateUserDetail);
-            UserService.updateUser( $rootScope.currentUser._id, $scope.user)
+            UserService.updateUser( $rootScope.currentUser._id, user)
             .then(
                 function (updatedUser){
                     if (updatedUser.data != null) {
                         UserService.setUser(updatedUser.data);
                         $scope.message = "User updated successfully";
                     }
+                    else
+                    {
+                        $scope.message = "Cannot update User";
+                    }
             },
             function (error){
-
+                $scope.message = "Cannot update User";
             });
 
         }

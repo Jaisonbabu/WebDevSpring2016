@@ -13,6 +13,7 @@ module.exports = function (app, userModel){
     }
 
     function updateUser(req,res){
+        console.log("inside update :"+req.params.id);
         var updatedUser = userModel.updateUser(req.body,req.params.id);
             res.json(updatedUser);
 
@@ -20,21 +21,7 @@ module.exports = function (app, userModel){
 
     function deleteUser(req,res){
         var users = userModel.deleteUser(req.params.id);
-        if(users != null){
-            res.json(users);
-        }
-        else{
-            res.json({message: "Cannot Delete"});
-        }
-    }
-
-    function userResponse(user,res){
-        if(user != null){
-            res.json(user);
-        }
-        else{
-            res.json({message: "Cannot find user"});
-        }
+        res.json(users);
     }
 
     function findUserById(req,res){
@@ -50,11 +37,11 @@ module.exports = function (app, userModel){
         if (userName != null && password != null){
             var credentials = {username : userName, password : password};
             var user = userModel.findUserByCredentials(credentials);
-            userResponse(user,res);
+            res.json(user);
         }
         if(userName!=null && password == null){
             var user = userModel.findUserByUsername(userName);
-            userResponse(user,res);
+            res.json(user);
         }
         if(userName ==null && password == null){
             var users = userModel.findAllUsers();

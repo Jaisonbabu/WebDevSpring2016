@@ -19,36 +19,36 @@
         $scope.selectForm=selectForm;
 
         $scope.user = UserService.getUser();
-        $scope.forms = FormService.findUserForms($scope.user._id);
 
+        FormService.findUserForms($scope.user._id)
+        .then(function(forms){
+                $scope.forms = forms.data;
+            },
+        function(err){
+
+        });
+        function setForm(){
+            FormService.findUserForms($scope.user._id)
+                .then(function(forms){
+                        $scope.forms = forms.data;
+                    },
+                    function(err){
+
+                    });
+        }
+
+        console.log($scope.forms);
 
         function addForm(form){
 
-            var newForm = function (form){
-                if(form === null){
-                    $scope.error = "Please enter form name";
-                }else{
-                    $scope.forms = FormService.findUserForms($scope.user._id);
-                    //console.log(forms);
-                    $scope.error = null;
-                }
-            };
-            if (form != null && form.title != ""){
                 FormService.createFormForUser($scope.user._id, form)
-                    .then(function (form){
-                            $scope.forms = FormService.findUserForms($scope.user._id);
-                            //console.log(forms);
+                    .then(function (forms){
+                            setForm();
                             $scope.error = null;
                         },
                         function (err){
-
+                            $scope.error = "No Forms";
                         });
-            }
-            else{
-                $scope.error = "Please enter form name";
-            }
-
-
         }
 
         function updateForm(form){
@@ -58,16 +58,22 @@
                 title : form.title,
                 userId : form.userId
             };
-            var callback = function (updatedForm){
-                if(updatedForm == null){
-                    $scope.error = "Form name cannot be empty";
-                }else{
-                    $scope.forms = FormService.findUserForms($scope.user._id);
-                    $scope.error = null;
-                }
-            };
 
-            FormService.updateFormById(formUpdated._id, formUpdated, callback);
+            FormService.updateFormById(formUpdated._id, form)
+            .then(function(forms){
+                    if(forms != null){
+                        setForm();
+                        $scope.error = null;
+                    }
+                    else{
+                        $scope.error = "Form name cannot be empty";
+                    }
+            },
+            function(err){
+
+            });
+
+
 
         }
 

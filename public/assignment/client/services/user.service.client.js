@@ -6,9 +6,6 @@
 
     function UserService($http, $rootScope, $location) {
 
-
-
-
         var userService = {
             findUserByCredentials: findUserByCredentials,
             findUserByUsername:findUserByUsername,
@@ -28,7 +25,6 @@
         return userService;
 
         function findUserByCredentials(username, password) {
-            console.log("inside client service");
             return $http.get("/api/assignment/user?username="+username+"&password="+password);
         }
 
@@ -53,33 +49,26 @@
         }
 
         function updateUser(userId, user){
+            console.log("inside client updateUser"+ user);
             return $http.put("/api/assignment/user/"+userId, user);
-            //var currentUser = findUserbyId(userId);
-            //console.log(currentUser + "inside updateUser");
-            //console.log(currentUser);
-            //
-            //if(currentUser != null){
-            //    $.extend(true,currentUser,{
-            //        firstName: user.firstName,
-            //        lastName: user.lastName,
-            //        username: user.username,
-            //        password: user.password,
-            //        email:user.email
-            //    });
-            //    callback(currentUser);
-            //}
-            //
-            //callback(null);
         }
 
         function userExists(userName){
-            for(var i in users){
-                if(users[i].username == userName){
-                    console.log(users[i].username );
-                    return true;
-                }
-            }
-            return false;
+            findAllUsers()
+            .then(function (users){
+               var allUser = users.data;
+                    for(var i in allUser){
+                        if(allUser[i].username == userName){
+                            console.log(allUser[i].username );
+                            return true;
+                        }
+                    }
+                    return false;
+            },
+            function(err){
+
+            });
+
         }
 
         function checkLoggedIn(){

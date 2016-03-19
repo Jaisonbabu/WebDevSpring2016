@@ -46,7 +46,6 @@ module.exports = function (){
     }
 
     function createForm(form, userId){
-       // TODO: Check this is in client
         if (form != null && form.title != ""){
             var newForm = {
                 _id : newFormId.v1(),
@@ -61,19 +60,21 @@ module.exports = function (){
     }
 
     function updateFormById(newForm,formId){
-        for (var i in forms){
-            if(forms[i]._id === formId){
-                forms[i] ={
-                    _id : newForm._id,
-                    title : newForm.title,
-                    userId : newForm.userId,
-                    fields : newForm.fields
-                };
-
-                return forms;
+        if(newForm.title != "") {
+            for (var i in forms) {
+                if (forms[i]._id === formId) {
+                    forms[i] = {
+                        _id: newForm._id,
+                        title: newForm.title,
+                        userId: newForm.userId,
+                        fields: newForm.fields
+                    };
+                    return forms;
                 }
             }
+        }else{
             return null;
+        }
     }
 
     function findFormByTitle(title){

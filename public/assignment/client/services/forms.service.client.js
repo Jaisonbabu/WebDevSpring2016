@@ -17,18 +17,8 @@
         return formService;
 
 
-        function createFormForUser(userId, form, callback){
-            if (form != null && form.title != ""){
-                var newForm = {
-                    _id : (new Date).getTime(),
-                    title: form.title,
-                    userId : userId
-                };
-                forms.push(newForm);
-                callback(newForm);
-                return;
-            }
-            callback(null);
+        function createFormForUser(userId, form){
+           return $http.post("/api/assignment/user/"+userId+"/form", form);
         }
 
         function findAllFormsForUser(userId, callback){
@@ -49,44 +39,16 @@
             callback(forms);
         }
 
-        function updateFormById(formId, newForm, callback){
-            if(newForm.title != ""){
-                for (var i in forms){
-                    if(forms[i]._id === formId){
-                        forms[i] ={
-                            _id : newForm._id,
-                            title : newForm.title,
-                            userId : newForm.userId
-                        };
-
-                        callback(forms[i]);
-                        return;
-                    }
-                }
-            }
-            else{
-                callback(null);
-            }
+        function updateFormById(formId, newForm){
+         return $http.put("/api/assignment/form/"+formId, newForm)
         }
 
         function findFormById(formId){
-            for( var i in forms){
-                if(forms[i]._id === formId){
-                    return forms[i];
-                }
-            }
-            return null;
+           return $http.get("/api/assignment/form/"+formId);
         }
 
         function findUserForms(userId){
-            var userForm=[];
-            for(var i in forms){
-                if(forms[i].userId == userId){
-                    userForm.push(forms[i]);
-                }
-            }
-            //forms = userForm;
-            return userForm;
+            return $http.get("/api/assignment/user/"+userId+"/form");
         }
 
         function getCurrentForms(){

@@ -8,18 +8,15 @@ module.exports = function (app, formModel){
 
 
     function findFormByUserId(req,res){
+        console.log("inside server service");
         var forms = formModel.findFormByUserId(req.params.userId);
-        if(forms.length > 0){
-            res.json(forms);
-        }
-        else{
-            res.json({message: "Cannot find forms"});
-        }
+        console.log(forms);
+        res.json(forms);
     }
 
     function findFormById(req,res){
         var form = formModel.findFormById(req.params.formId);
-        formResponse(form);
+        res.json(form)
     }
 
     function deleteFormById(req,res){
@@ -39,12 +36,7 @@ module.exports = function (app, formModel){
 
     function updateFormById(req,res){
         var forms = formModel.updateFormById(req.body, req.params.formId);
-        if(forms != null){
-            res.json(forms);
-        }
-        else{
-            res.json({message: "Cannot update form"});
-        }
+        res.json(forms);
     }
 
     function formResponse(form){

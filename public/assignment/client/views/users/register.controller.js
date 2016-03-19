@@ -21,11 +21,21 @@
                 return;
             }
 
-            UserService.createUser(user, function (user){
-                UserService.setUser(user)
+            UserService.createUser(user)
+            .then(function (users){
+                UserService.findUserByUsername(user.username)
+                .then(function (user){
+                        UserService.setUser(user.data);
+                        $location.url("/profile");
+                },
+                function (err){
+                    $scope.message = "Cannot register";
+                });
+            },
+            function (err){
+                $scope.message = "Cannot register";
             });
 
-            $location.url("/profile");
 
         };
 

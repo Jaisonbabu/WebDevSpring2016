@@ -24,7 +24,8 @@ module.exports = function(app) {
         return users;
     }
 
-    function updateUser(userId, user){
+    function updateUser(user, userId){
+        console.log("inside updateUser "+userId+" "+user);
         for(var i in users){
             if(users[i]._id == userId){
                 users[i].firstName = user.firstName;
@@ -74,7 +75,6 @@ module.exports = function(app) {
     }
 
     function findUserByCredentials(credentials){
-        console.log("inside model");
         for (var i in users){
             if(users[i].username == credentials.username && users[i].password == credentials.password){
                 return users[i];

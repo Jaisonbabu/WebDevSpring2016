@@ -8,7 +8,5 @@
     function HomeController ($scope, $location) {
         console.log($location.path());
         $scope.$location = $location;
-
-
     }
 })();

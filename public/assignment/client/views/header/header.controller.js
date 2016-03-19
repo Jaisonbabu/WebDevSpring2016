@@ -13,8 +13,9 @@
         $scope.$location = $location;
 
         $scope.logout = function logout() {
-            $location.url("/");
             UserService.setUser(null);
+            $location.url("/");
+
 
         }
     }

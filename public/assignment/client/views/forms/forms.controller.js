@@ -70,20 +70,25 @@
                     }
             },
             function(err){
-
+                scope.error = "Cannot Update";
             });
-
-
-
         }
 
         function deleteForm(index){
 
-            var callback = function (forms){
-                $scope.forms = FormService.findUserForms($scope.user._id);
-                $scope.error = null;
-            };
-            FormService.deleteFormById($scope.forms[index]._id, callback);
+            FormService.deleteFormById($scope.forms[index]._id)
+            .then(function(forms){
+                    if(forms != null){
+                        setForm();
+                        $scope.error = null;
+                    }
+                    else{
+                        $scope.error = "Form Not Present";
+                    }
+                },
+                function(err){
+                    scope.error = "Cannot Delete";
+                });
         }
 
         function selectForm(index){
@@ -92,7 +97,8 @@
             $scope.form  =  {
                 _id : $scope.selectedForm._id,
                 title : $scope.selectedForm.title,
-                userId : $scope.selectedForm.userId
+                userId : $scope.selectedForm.userId,
+                fields : $scope.selectedForm.fields
             };
             console.log($scope.selectedForm);
 

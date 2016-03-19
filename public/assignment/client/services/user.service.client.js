@@ -54,20 +54,7 @@
         }
 
         function userExists(userName){
-            findAllUsers()
-            .then(function (users){
-               var allUser = users.data;
-                    for(var i in allUser){
-                        if(allUser[i].username == userName){
-                            console.log(allUser[i].username );
-                            return true;
-                        }
-                    }
-                    return false;
-            },
-            function(err){
 
-            });
 
         }
 

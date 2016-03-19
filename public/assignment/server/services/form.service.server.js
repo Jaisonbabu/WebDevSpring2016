@@ -21,12 +21,7 @@ module.exports = function (app, formModel){
 
     function deleteFormById(req,res){
         var forms = formModel.deleteFormById(req.params.formId);
-        if(forms != null){
-            res.json(forms);
-        }
-        else{
-            res.json({message: "Cannot delete form"});
-        }
+        res.json(forms);
     }
 
     function createForm(req,res){

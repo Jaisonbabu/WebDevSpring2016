@@ -14,29 +14,31 @@
 
             console.log("Inside register controller");
 
-            var userExists = UserService.userExists(user.username);
-
-            if(userExists){
-                $scope.message = "Username Already Exists";
-                return;
-            }
-
-            UserService.createUser(user)
-            .then(function (users){
-                UserService.findUserByUsername(user.username)
+            var userName = user.username;
+            UserService.findUserByUsername(userName)
                 .then(function (user){
-                        UserService.setUser(user.data);
-                        $location.url("/profile");
-                },
-                function (err){
-                    $scope.message = "Cannot register";
-                });
-            },
-            function (err){
-                $scope.message = "Cannot register";
-            });
+                        if(user.data == null) {
+                            UserService.createUser(user)
+                                .then(function (users){
+                                        UserService.findUserByUsername(user.username)
+                                            .then(function (user){
+                                                    UserService.setUser(user.data);
+                                                    $location.url("/profile");
+                                                },
+                                                function (err){
+                                                    $scope.message = "Cannot register";
+                                                });
+                                    },
+                                    function (err){
+                                        $scope.message = "Cannot register";
+                                    });
+                        }else{
+                            $scope.message = "Username Already Exists";
+                        }
+                    },
+                    function(err){
 
-
+                    });
         };
 
 

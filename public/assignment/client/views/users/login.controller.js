@@ -10,8 +10,9 @@
         console.log($rootScope.currentUser + " inside login controller");
 
         $scope.error = null;
-        $scope.login = function (user){
+        $scope.login = login;
 
+        var login = function (user){
 
             UserService.findUserByCredentials(user.username,user.password)
             .then(

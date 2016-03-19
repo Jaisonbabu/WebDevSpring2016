@@ -31,12 +31,8 @@
             callback(userForm);
         }
 
-        function deleteFormById(formId, callback){
-
-            forms = forms.filter( function(form){
-                return form._id != formId;
-            });
-            callback(forms);
+        function deleteFormById(formId){
+            return $http.delete("/api/assignment/form/"+formId);
         }
 
         function updateFormById(formId, newForm){

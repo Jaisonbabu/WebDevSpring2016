@@ -13,7 +13,10 @@ module.exports = function (){
         findFormByTitle:findFormByTitle,
         // Field Functions
         createFieldForForm: createFieldForForm,
-        getFieldsForForm:getFieldsForForm
+        getFieldsForForm:getFieldsForForm,
+        getFieldForForm:getFieldForForm,
+        deleteFieldFromForm:deleteFieldFromForm,
+        updateField:updateField
     };
 
     return api;
@@ -108,11 +111,54 @@ module.exports = function (){
             options:field.options
         };
         for (var i in forms) {
-            if (forms[i]._id === formId) {
+            if (forms[i]._id == formId) {
+                console.log("Inside server create");
                 forms[i].fields.push(newField);
+                console.log(JSON.stringify(forms[i].fields));
                 return forms[i].fields;
             }
         }
+    }
 
+    function getFieldForForm(formId,fieldId){
+        var form = findFormById(formId);
+        if (form != null){
+            for (var i in form.fields){
+                if(form.fields[i]._id == fieldId){
+                    return form.fields[i];
+                }
+            }
+        }
+    }
+
+    function deleteFieldFromForm(formId,fieldId){
+        var field  = getFieldForForm(formId,fieldId);
+        var fields = getFieldsForForm(formId);
+        if(field != null){
+            fields.splice(field,1);
+            return fields;
+        }
+        else{
+            return null;
+        }
+    }
+
+    function updateField(formId,fieldId,field){
+        for (var i in forms) {
+            if (forms[i]._id == formId) {
+                for (var j in forms[i].fields){
+                    if(forms[i].fields[j]._id == fieldId){
+                        forms[i].fields[j] = {
+                            _id : field._id,
+                            label : field.label,
+                            type: field.type,
+                            placeholder: field.placeholder,
+                            option: field.option
+                        };
+                        return forms[i].fields;
+                    }
+                }
+            }
+        }
     }
 };

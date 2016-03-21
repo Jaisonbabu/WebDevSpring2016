@@ -13,7 +13,6 @@ module.exports = function (app, userModel){
     }
 
     function updateUser(req,res){
-        console.log("inside update :"+req.params.id);
         var updatedUser = userModel.updateUser(req.body,req.params.id);
             res.json(updatedUser);
 
@@ -26,21 +25,20 @@ module.exports = function (app, userModel){
 
     function findUserById(req,res){
         var user = userModel.findUserById(req.params.id);
-        userResponse(user,res);
+        res.json(user);
     }
 
     function findUser(req,res){
         var userName = req.query.username;
         var password = req.query.password;
-        console.log("Inside findUser");
-
+        var user = null;
         if (userName != null && password != null){
             var credentials = {username : userName, password : password};
-            var user = userModel.findUserByCredentials(credentials);
+             user = userModel.findUserByCredentials(credentials);
             res.json(user);
         }
         if(userName!=null && password == null){
-            var user = userModel.findUserByUsername(userName);
+            user = userModel.findUserByUsername(userName);
             res.json(user);
         }
         if(userName ==null && password == null){

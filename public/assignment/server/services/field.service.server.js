@@ -7,8 +7,8 @@ module.exports = function (app, formModel){
     app.put("/api/assignment/form/:formId/field/:fieldId",updateField);
 
     function createFieldForForm(req,res){
-        var field = formModel.createFieldForForm(req.params.formId,req.body);
-        res.json(field);
+        var fields = formModel.createFieldForForm(req.params.formId,req.body);
+        res.json(fields);
     }
 
     function getFieldsForForm(req,res){

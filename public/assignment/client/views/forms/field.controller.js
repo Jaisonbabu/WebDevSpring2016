@@ -10,10 +10,18 @@
         var userId = $rootScope.currentUser._id;
         var formId = $routeParams.formId;
 
-        $scope.fields = FieldService.getFieldsForForm(formId);
+        FieldService.getFieldsForForm(formId)
+            .then(function (formFields){
+                    $scope.fields = formFields.data;
+                    console.log($scope.fields);
+                },
+                function(err){
 
+                });
 
         $scope.addField=addField;
+        $scope.removeField=removeField;
+        $scope.updateField=updateField;
 
         //$scope.fieldType = [
         //    {title : 'Single Line Text Field',va;},
@@ -54,20 +62,40 @@
             ]}
         ];
 
-       function addField(fieldTypeIndex){
-           if (fieldTypeIndex) {
-               FieldService.createFieldForForm(formId,fieldTypes[fieldTypeIndex])
-               .then(function (userFields){
-                   $scope.fields = userFields;
-                   console.log($scope.fields);
-               },
-               function (err){
+        function addField(fieldTypeIndex){
+            if (fieldTypeIndex) {
+                FieldService.createFieldForForm(formId,fieldTypes[fieldTypeIndex])
+                    .then(function (userFields){
+                            $scope.fields = userFields.data;
+                        },
+                        function (err){
 
-               });
-           }
-           console.log(fieldTypes[fieldTypeIndex]);
+                        });
+            }
+            console.log(fieldTypes[fieldTypeIndex]);
+        }
+
+        function removeField(field){
+            FieldService.deleteFieldFromForm(formId,field._id)
+                .then(function (userFields){
+                        $scope.fields = userFields.data;
+                        console.log($scope.fields);
+                    },
+                    function (err){
+
+                    });
+        }
+
+        function updateField(field){
+            FieldService.updateField(formId,field._id,field)
+                .then(function (userFields){
+                        $scope.fields =userFields.data;
+                        console.log($scope.fields);
+                    },
+                    function (err){
+
+                    })
         }
     }
-
 })();
 

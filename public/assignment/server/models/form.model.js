@@ -156,7 +156,7 @@ module.exports = function (){
                             placeholder: field.placeholder,
                             options: field.options
                         };
-                        console.log(JSON.stringify(forms[i].fields));
+                        console.log(JSON.stringify(forms[i].fields[j].options));
                         return forms[i].fields;
                     }
                 }

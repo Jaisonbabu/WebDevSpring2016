@@ -8,7 +8,6 @@
 
         var formService = {
             createFormForUser: createFormForUser,
-            findAllFormsForUser: findAllFormsForUser,
             deleteFormById: deleteFormById,
             updateFormById: updateFormById,
             findUserForms : findUserForms,
@@ -19,16 +18,6 @@
 
         function createFormForUser(userId, form){
            return $http.post("/api/assignment/user/"+userId+"/form", form);
-        }
-
-        function findAllFormsForUser(userId, callback){
-            var userForm=[];
-            for(var i in forms){
-                if(forms[i].userId == userId){
-                    userForm.push(forms[i]);
-                }
-            }
-            callback(userForm);
         }
 
         function deleteFormById(formId){

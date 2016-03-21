@@ -28,22 +28,12 @@
 
                 });
 
-        function setForm(){
-            FormService.findUserForms($scope.user._id)
-                .then(function(forms){
-                        $scope.forms = forms.data;
-                    },
-                    function(err){
-
-                    });
-        }
-
         console.log($scope.forms);
 
         function addForm(form){
             FormService.createFormForUser($scope.user._id, form)
-                .then(function (forms){
-                        setForm();
+                .then(function (userForms){
+                        $scope.forms = userForms.data;
                         $scope.error = null;
                     },
                     function (err){
@@ -60,9 +50,9 @@
             };
 
             FormService.updateFormById(formUpdated._id, form)
-                .then(function(forms){
-                        if(forms != null){
-                            setForm();
+                .then(function(userForms){
+                        if(userForms != null){
+                            $scope.forms = userForms.data;
                             $scope.error = null;
                         }
                         else{
@@ -77,9 +67,9 @@
         function deleteForm(index){
 
             FormService.deleteFormById($scope.forms[index]._id)
-                .then(function(forms){
-                        if(forms != null){
-                            setForm();
+                .then(function(userForms){
+                        if(userForms != null){
+                            $scope.forms = userForms.data;
                             $scope.error = null;
                         }
                         else{

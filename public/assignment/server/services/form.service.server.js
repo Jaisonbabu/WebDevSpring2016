@@ -34,13 +34,13 @@ module.exports = function (app, formModel){
         res.json(forms);
     }
 
-    function formResponse(form){
-        if(form != null){
-            res.json(form);
-        }
-        else{
-            res.json({message: "Cannot find form"});
-        }
-    }
+    //function formResponse(form){
+    //    if(form != null){
+    //        res.json(form);
+    //    }
+    //    else{
+    //        res.json({message: "Cannot find form"});
+    //    }
+    //}
 
 };

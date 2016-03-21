@@ -10,7 +10,10 @@ module.exports = function (){
         deleteFormById:deleteFormById,
         createForm:createForm,
         updateFormById:updateFormById,
-        findFormByTitle:findFormByTitle
+        findFormByTitle:findFormByTitle,
+        // Field Functions
+        createFieldForForm: createFieldForForm,
+        getFieldsForForm:getFieldsForForm
     };
 
     return api;
@@ -38,7 +41,7 @@ module.exports = function (){
         var form = findFormById(formId);
         if(form != null){
             forms.splice(form,1);
-            return forms;
+            return findFormByUserId(form.userId);
         }
         else{
             return null;
@@ -54,7 +57,7 @@ module.exports = function (){
                 fields : form.fields
             };
             forms.push(newForm);
-            return forms;
+            return findFormByUserId(userId);
         }
         return null;
     }
@@ -69,7 +72,7 @@ module.exports = function (){
                         userId: newForm.userId,
                         fields: newForm.fields
                     };
-                    return forms;
+                    return findFormByUserId(newForm.userId);
                 }
             }
         }else{
@@ -84,5 +87,32 @@ module.exports = function (){
             }
         }
         return null;
+    }
+
+    function getFieldsForForm(formId){
+        var form = findFormById(formId);
+        if(form != null){
+            return form.fields;
+        }else{
+            return null;
+        }
+    }
+
+    function createFieldForForm(formId,field){
+
+        var newField = {
+            _id:newFormId.v1(),
+            type:field.type,
+            placeholder:field.placeholder,
+            label:field.label,
+            options:field.options
+        };
+        for (var i in forms) {
+            if (forms[i]._id === formId) {
+                forms[i].fields.push(newField);
+                return forms[i].fields;
+            }
+        }
+
     }
 };

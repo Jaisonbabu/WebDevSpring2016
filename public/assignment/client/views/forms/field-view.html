@@ -1,11 +1,9 @@
-
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller = "FieldController">
         <h1 class="page-header">Forms : Registration Form</h1>
         <ul class="nav nav-tabs">
-            <li role="presentation"><a href="forms.view.html">Forms</a></li>
-            <li role="presentation" class="active"><a href="#">Fields</a></li>
+            <li role="presentation"><a href="#/forms">Forms</a></li>
+            <li role="presentation" class="active"><a href="#/fields">Fields</a></li>
         </ul>
-
     <form>
         <label for="firstName">First Name:</label>
         <div class="row">
@@ -20,7 +18,7 @@
             </div>
         </div>
 
-        <label for="firstName">Last Name:</label>
+        <label for="lastName">Last Name:</label>
         <div class="row">
             <div class="form-group col-xs-6 col-lg-6">
                 <input type="text" class="form-control" id="lastName" placeholder="Last Name"/>
@@ -105,17 +103,17 @@
         <label for="addNewField">Add New Field:</label>
         <div class=" row">
             <div class=" form-group col-xs-6 col-lg-6">
-                <select name="addNewField" id="addNewField" class="form-control" >
-                    <option value="singleLineText">Single Line Text</option>
-                    <option value="date">Date</option>
-                    <option value="dropdown">Dropdown</option>
-                    <option value="checkboxes">Checkboxes</option>
-                    <option value="radioButton">Radio Buttons</option>
-                    <option value="paraTextFields">Paragraph Text Fields</option>
+                <select ng-model = "field.newFieldOption"  name="addNewField" id="addNewField" class="form-control" >
+                    <option value="0">Single Line Text Field</option>
+                    <option value="1">Multi Line Text Field</option>
+                    <option value="2">Date Field</option>
+                    <option value="3">Dropdown Field</option>
+                    <option value="4">Checkboxes Field</option>
+                    <option value="5">Radio Buttons Field</option>
                 </select>
             </div>
             <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
+                <a  ng-click = "addField(field.newFieldOption)" class="btn btn-default"><span  class="glyphicon glyphicon-plus "></span></a>
             </div>
         </div>
 

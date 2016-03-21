@@ -9,23 +9,20 @@
 
 
         $scope.message = null;
-
         $scope.register = register;
 
         function register(user){
 
-            console.log("Inside register controller");
-
             var userName = user.username;
 
             UserService.findUserByUsername(userName)
-                .then(function (user){
-                        if(user.data == null) {
+                .then(function (userPresent){
+                        if(userPresent.data == null) {
                             UserService.createUser(user)
                                 .then(function (users){
                                         UserService.findUserByUsername(userName)
-                                            .then(function (user){
-                                                    UserService.setUser(user.data);
+                                            .then(function (userPresent){
+                                                    UserService.setUser(userPresent.data);
                                                     $location.url("/profile");
                                                 },
                                                 function (err){
@@ -42,7 +39,7 @@
                     function(err){
 
                     });
-        };
+        }
 
 
     }

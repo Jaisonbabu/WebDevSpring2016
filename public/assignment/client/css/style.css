@@ -50,6 +50,10 @@ th {
     top: 30px;
 }
 
+textarea {
+    resize: none;
+}
+
 hr {
     border: none;
     height: 1px;

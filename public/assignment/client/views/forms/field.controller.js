@@ -5,10 +5,18 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController($scope,$rootScope, FormService,FieldService,UserService,$routeParams){
+    function FieldController($scope,$rootScope, FormService, FieldService,$routeParams){
 
         var userId = $rootScope.currentUser._id;
         var formId = $routeParams.formId;
+
+        FormService.findFormById(formId)
+        .then(function (form){
+            $scope.form = form.data;
+        },
+        function (err){
+
+        });
 
         //Setting the form fields
         FieldService.getFieldsForForm(formId)
@@ -77,16 +85,16 @@
                     });
         }
 
-        function updateField(field){
-            FieldService.updateField(formId,field._id,field)
-                .then(function (userFields){
-                        $scope.fields =userFields.data;
-                        console.log($scope.fields);
-                    },
-                    function (err){
-
-                    })
-        }
+        //function updateField(field){
+        //    FieldService.updateField(formId,field._id,field)
+        //        .then(function (userFields){
+        //                $scope.fields =userFields.data;
+        //                console.log($scope.fields);
+        //            },
+        //            function (err){
+        //
+        //            })
+        //}
 
         function showField(formField){
             var field = formField;
@@ -102,12 +110,38 @@
 
                 for(var i in optionsLocal){
                     var option = optionsLocal[i].label+ ":"+optionsLocal[i].value+"\n";
-                     modaloptions.push(option);
+                    modaloptions.push(option);
+
                 }
                 fieldLocal.options = modaloptions.join("");
             }
 
             $scope.modal = fieldLocal;
+        }
+
+        function updateField(field){
+            var options = [];
+            if(field.type== "CHECKBOXES"|| field.type== "RADIOS"|| field.type == "DROPDOWN"|| field.type == "OPTIONS"){
+                var fieldOptions = field.options.split("\n");
+                for(var option in fieldOptions){
+                    var optionField = fieldOptions[option].split(":");
+                    if(optionField[0] != ""){
+                        options.push({
+                            "label":optionField[0],
+                            "value":optionField[1]
+                        });
+                    }
+                }
+                field.options = options;
+            }
+
+            FieldService.updateField(formId,field._id,field)
+                .then(function (formFields){
+                        $scope.fields = formFields.data;
+                    },
+                    function (err){
+
+                    });
         }
     }
 })();

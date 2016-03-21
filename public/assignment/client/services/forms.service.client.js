@@ -11,6 +11,7 @@
             deleteFormById: deleteFormById,
             updateFormById: updateFormById,
             findUserForms : findUserForms,
+            findFormById:findFormById,
             getCurrentForms: getCurrentForms
         };
         return formService;

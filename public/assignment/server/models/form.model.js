@@ -57,7 +57,7 @@ module.exports = function (){
                 _id : newFormId.v1(),
                 title: form.title,
                 userId : userId,
-                fields : form.fields
+                fields : []
             };
             forms.push(newForm);
             return findFormByUserId(userId);
@@ -154,8 +154,9 @@ module.exports = function (){
                             label : field.label,
                             type: field.type,
                             placeholder: field.placeholder,
-                            option: field.option
+                            options: field.options
                         };
+                        console.log(JSON.stringify(forms[i].fields));
                         return forms[i].fields;
                     }
                 }

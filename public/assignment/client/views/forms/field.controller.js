@@ -24,18 +24,7 @@
         $scope.addField=addField;
         $scope.removeField=removeField;
         $scope.updateField=updateField;
-
-        //$scope.fieldType = [
-        //    {title : 'Single Line Text Field',va;},
-        //    {title : 'Multiple Line Text Field'},
-        //    {title : 'Date Field'},
-        //    {title : 'Dropdown Field'},
-        //    {title : 'Checkboxes Field'},
-        //    {title : 'Radio Buttons Field'}
-        //];
-        //
-        //$scope.newFieldOptions =  $scope.fieldType[0];
-        //$scope.field = {newFieldOptions : $scope.newFieldOptions};
+        $scope.showField=showField;
 
         var fieldTypes = [
             //Single Line Text Field
@@ -97,6 +86,28 @@
                     function (err){
 
                     })
+        }
+
+        function showField(formField){
+            var field = formField;
+            var  fieldLocal={
+                _id:field._id,
+                label:field.label,
+                type:field.type,
+                placeholder:field.placeholder
+            };
+            var modaloptions=[];
+            var optionsLocal = field.options;
+            if(field.type == "OPTIONS" || field.type== "CHECKBOXES" || field.type== "RADIOS"){
+
+                for(var i in optionsLocal){
+                    var option = optionsLocal[i].label+ ":"+optionsLocal[i].value+"\n";
+                     modaloptions.push(option);
+                }
+                fieldLocal.options = modaloptions.join("");
+            }
+
+            $scope.modal = fieldLocal;
         }
     }
 })();

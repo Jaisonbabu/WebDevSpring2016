@@ -142,19 +142,6 @@ module.exports = function (){
                 }
             }
         }
-
-        //var field  = getFieldForForm(formId,fieldId);
-        //console.log(JSON.stringify(field));
-        //var fields = getFieldsForForm(formId);
-        //console.log(JSON.stringify(fields));
-        //if(field != null){
-        //    for(var i in forms)
-        //    fields.splice(field,1);
-        //    return fields;
-        //}
-        //else{
-        //    return null;
-        //}
     }
 
     function updateField(formId,fieldId,field){

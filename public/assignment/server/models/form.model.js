@@ -132,15 +132,29 @@ module.exports = function (){
     }
 
     function deleteFieldFromForm(formId,fieldId){
-        var field  = getFieldForForm(formId,fieldId);
-        var fields = getFieldsForForm(formId);
-        if(field != null){
-            fields.splice(field,1);
-            return fields;
+        for (var i in forms) {
+            if (forms[i]._id == formId) {
+                for (var j in forms[i].fields){
+                    if(forms[i].fields[j]._id == fieldId){
+                        forms[i].fields.splice(j,1);
+                        return forms[i].fields;
+                    }
+                }
+            }
         }
-        else{
-            return null;
-        }
+
+        //var field  = getFieldForForm(formId,fieldId);
+        //console.log(JSON.stringify(field));
+        //var fields = getFieldsForForm(formId);
+        //console.log(JSON.stringify(fields));
+        //if(field != null){
+        //    for(var i in forms)
+        //    fields.splice(field,1);
+        //    return fields;
+        //}
+        //else{
+        //    return null;
+        //}
     }
 
     function updateField(formId,fieldId,field){

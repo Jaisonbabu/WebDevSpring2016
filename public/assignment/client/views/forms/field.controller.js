@@ -10,6 +10,7 @@
         var userId = $rootScope.currentUser._id;
         var formId = $routeParams.formId;
 
+        //Setting the form fields
         FieldService.getFieldsForForm(formId)
             .then(function (formFields){
                     $scope.fields = formFields.data;
@@ -19,6 +20,7 @@
 
                 });
 
+        // Functions
         $scope.addField=addField;
         $scope.removeField=removeField;
         $scope.updateField=updateField;

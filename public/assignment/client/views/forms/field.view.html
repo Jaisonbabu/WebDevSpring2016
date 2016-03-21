@@ -1,100 +1,56 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller = "FieldController">
-        <h1 class="page-header">Forms : Registration Form</h1>
-        <ul class="nav nav-tabs">
-            <li role="presentation"><a href="#/forms">Forms</a></li>
-            <li role="presentation" class="active"><a href="#/fields">Fields</a></li>
-        </ul>
+    <h1 class="page-header">Forms : Registration Form</h1>
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="#/forms">Forms</a></li>
+        <li role="presentation" class="active"><a href="#/fields">Fields</a></li>
+    </ul>
     <form>
-        <label for="firstName">First Name:</label>
-        <div class="row">
-            <div class="form-group col-xs-6 col-lg-6">
-                <input type="text" class="form-control" id="firstName" placeholder="First Name"/>
-            </div>
-            <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-pencil "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-list-alt "></span></a>
-            </div>
-        </div>
 
-        <label for="lastName">Last Name:</label>
-        <div class="row">
-            <div class="form-group col-xs-6 col-lg-6">
-                <input type="text" class="form-control" id="lastName" placeholder="Last Name"/>
+        <div class = "row" ng-switch ="field.type" ng-repeat = "field in fields">
+            <div ng-switch-when = "TEXT" class="form-group col-xs-6 col-lg-6">
+                <label for="text">{{field.label}}</label>
+                <input type="text" class="form-control" id="text" placeholder="{{field.placeholder}}"/>
             </div>
-            <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-pencil "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-list-alt "></span></a>
+            <div ng-switch-when = "TEXTAREA" class="form-group col-xs-6 col-lg-6">
+                <label for="textarea">{{field.label}}</label>
+                <textarea class="form-control" id="textarea" placeholder="{{field.placeholder}}"></textarea>
             </div>
-        </div>
-
-        <label for="dob">Date of Birth:</label>
-        <div class=" row">
-            <div class=" form-group col-xs-6 col-lg-6">
-                <input type="date" class="form-control" id="dob"/>
+            <div ng-switch-when = "DATE" class="form-group col-xs-6 col-lg-6">
+                <label for="date">{{field.label}}</label>
+                <input type="date" class="form-control" id="date"/>
             </div>
-            <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-pencil "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-list-alt "></span></a>
-            </div>
-        </div>
-
-        <label for="gender">Gender:</label>
-        <div class=" row">
-            <div class=" form-group col-xs-6 col-lg-6">
-                <select name="gender" id="gender" class="form-control" >
-                    <option value="male">Male</option>
-                     <option value="female">Female</option>
+            <div ng-switch-when = "OPTIONS" class="form-group col-xs-6 col-lg-6">
+                <label for="options">{{field.label}}</label>
+                <select name="{{field.label}}" id="options" class="form-control" >
+                    <option  ng-repeat = "option in field.options" value="{{option.value}}">{{option.label}}</option>
                 </select>
             </div>
-            <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-pencil "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-list-alt "></span></a>
+            <div ng-switch-when = "EMAIL" class="form-group col-xs-6 col-lg-6">
+                <label for="email">{{field.label}}</label>
+                <input type="email" class="form-control" id="email" placeholder="{{field.placeholder}}"/>
             </div>
-        </div>
+            <div ng-switch-when = "CHECKBOXES" class="form-group col-xs-6 col-lg-6">
+                <label for="checkbox">{{field.label}}</label>
+                <div ng-repeat = "option in field.options">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="checkbox"/>{{option.label}}</label>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when = "RADIOS" class="form-group col-xs-6 col-lg-6">
+                <label for="radio">{{field.label}}</label>
+                <div ng-repeat = "option in field.options">
+                    <div class="radio">
+                        <label><input type="radio" id="radio" />{{option.label}}</label>
+                    </div>
+                </div>
+            </div>
 
-        <label>Roles:</label>
-        <div class="row">
-            <div class=" form-group col-xs-6 col-lg-6">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="admin" checked >Admin</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="student" >Student</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" id="user" checked >User</label>
-                </div>
-            </div>
             <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-pencil "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-list-alt "></span></a>
-            </div>
-        </div>
-        <label>Licence Agreement:</label>
-        <div class="row">
-            <div class=" form-group col-xs-6 col-lg-6">
-                <div class="radio">
-                    <label><input type="radio" id="licenceYes" checked >Yes</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" id="LicenceNo" >No</label>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <a href="#"><span class="glyphicon glyphicon-pencil "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-plus "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove "></span></a>
-                <a href="#"><span class="glyphicon glyphicon-list-alt "></span></a>
+                <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil align-horizontally"></span></a>
+                <a ng-click = "removeField(field)" class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove align-horizontally" class="btn btn-default"></span>
+                </a>
             </div>
         </div>
 
@@ -119,4 +75,4 @@
 
     </form>
 
-    </div>
+</div>

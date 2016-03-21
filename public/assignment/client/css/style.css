@@ -46,6 +46,10 @@ th {
     color:darkslategrey;
 }
 
+.align-horizontally{
+    top: 30px;
+}
+
 hr {
     border: none;
     height: 1px;

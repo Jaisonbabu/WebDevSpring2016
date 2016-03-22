@@ -9,7 +9,7 @@
 
         console.log($rootScope.currentUser + " inside login controller");
 
-        $scope.error = null;
+        $scope.message = null;
         $scope.login = login;
 
         function login (user){
@@ -23,11 +23,11 @@
                         console.log($rootScope.currentUser);
                     }
                     else {
-                        $scope.error = "Invalid Username or Password";
+                        $scope.message = "Invalid Username or Password";
                     }
                 },
                 function (err){
-                    $scope.error = "Login Failed, Please try again";
+                    $scope.message = "Login Failed, Please try again";
                 }
             );
 

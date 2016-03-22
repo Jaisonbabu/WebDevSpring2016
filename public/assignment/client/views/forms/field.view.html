@@ -4,7 +4,7 @@
         <li role="presentation"><a href="#/forms">Forms</a></li>
         <li role="presentation" class="active"><a href="#/fields">Fields</a></li>
     </ul>
-    <form>
+    <form  ui-sortable="fields">
 
         <div class = "row" ng-switch ="field.type" ng-repeat = "field in fields">
             <div ng-switch-when = "TEXT" class="form-group col-xs-6 col-lg-6">
@@ -92,6 +92,13 @@
                             <label>Placeholder</label>
                             <input type="text" class="form-control"  ng-model = "modal.placeholder"/>
                         </div>
+                        <div ng-switch-when = "EMAIL" class="form-group col-xs-6 col-lg-6">
+                            <label>Label</label>
+                            <input type="text" class="form-control"  ng-model = "modal.label"/>
+                            <br/>
+                            <label>Placeholder</label>
+                            <input type="text" class="form-control"  ng-model = "modal.placeholder"/>
+                        </div>
                         <div ng-switch-when = "TEXTAREA" class="form-group col-xs-6 col-lg-6">
                             <label>Label</label>
                             <input type="text" class="form-control"  ng-model = "modal.label"/>
@@ -135,3 +142,4 @@
         </div>
 
     </div>
+</div>

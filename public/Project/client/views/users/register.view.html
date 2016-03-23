@@ -10,7 +10,7 @@
             <div class="col-sm-10">
                 <input ng-model = "user.username" type="text" class="form-control" id="username"
                        placeholder="Username" name = "username"  required autofocus>
-                       <!--ng-class="{invalid-field: registrationForm.username.$dirty  registrationForm.username.$error.required}">-->
+                <!--ng-class="{invalid-field: registrationForm.username.$dirty  registrationForm.username.$error.required}">-->
                 <span class="error errorMsg"
                       ng-show="registrationForm.username.$dirty && registrationForm.username.$error.required">
 										* Username is required. </span>
@@ -21,7 +21,7 @@
             <div class="col-sm-10">
                 <input ng-model = "user.password" type="password" class="form-control" id="password" name = "password"
                        placeholder="Password" match = "user.verifyPassword" required>
-                       <!--ng-class="{invalid-field: registrationForm.password.$dirty registrationForm.password.$error.required}">-->
+                <!--ng-class="{invalid-field: registrationForm.password.$dirty registrationForm.password.$error.required}">-->
                 <span class="error errorMsg"
                       ng-show="registrationForm.password.$dirty && registrationForm.password.$error.required">
 								* Password is required. </span>

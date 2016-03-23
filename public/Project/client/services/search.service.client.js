@@ -8,7 +8,6 @@
         $http.defaults.headers.post['Content-Type']= 'application/x-www-form-urlencoded;charset=utf-8';
         var searchService = {
             fetchResult: fetchResult
-
         };
 
         return searchService;

@@ -16,7 +16,6 @@
             UserService.setUser(null);
             $location.url("/");
 
-
         }
     }
 })();

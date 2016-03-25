@@ -20,7 +20,14 @@
 
         };
 
-        SearchService.fetchResult(searchResponsehandler);
+        SearchService.fetchResult()
+        .then(function (response){
+            console.log(response);
+            $scope.response = response.data;
+        },
+        function(err){
+
+        });
 
 
 

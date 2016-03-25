@@ -23,7 +23,7 @@ app.listen(port, ipaddress);
 
 console.log("In Server.js");
 require("./public/assignment/server/app.js")(app);
-require("./public/Project/server/app.js")(app);
+require("./public/Project/server/app.js")(app,request);
 //app.all('*', function(req, res, next) {
 //    res.setHeader("Access-Control-Allow-Origin", "*");
 //    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -96,7 +96,6 @@ app.options('*', function(req, res) {
     res.send(200);
 
 });
-
 
     app.post('/Project', function(req,res){
         console.log("Inside Server");

@@ -13,7 +13,7 @@
         return searchService;
 
 
-        function fetchResult(responseHandler){
+        function fetchResult(){
             console.log("In fetchresult");
            // var url = "https://api.locu.com/v1_0/venue/search/?name=pizza&locality=Boston&api_key=9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368";
            // var url = "https://api.locu.com/v2/venue/search/";
@@ -36,7 +36,7 @@
            //
             var data = {
 
-                fields : [ "name", "location", "contact", "menus","media" ],
+                fields : [ "name", "location", "contact", "menus" ],
                 venue_queries : [
                     {
                         name : "bistro"
@@ -91,17 +91,21 @@
             //};
             //$http.post('/Project', {id:"test"})
             //    .success(responseHandler);
-            $http({
-                url:"/Project",
-                method:"POST",
-                data:data,
-                headers: {
-                            'Content-Type': 'application/json'
-                            //'Content-Length': Buffer.byteLength(post_data)
-                        }
-            }).then(responseHandler,function(response){
-                console.log("Error");
-            });
+            //$http({
+            //    url:"/Project",
+            //    method:"POST",
+            //    data:data,
+            //    headers: {
+            //                'Content-Type': 'application/json'
+            //                //'Content-Length': Buffer.byteLength(post_data)
+            //            }
+            //}).then(responseHandler,function(response){
+            //    console.log("Error");
+            //});
+
+
+            return $http.get("/api/search");
+
         }
 
     }

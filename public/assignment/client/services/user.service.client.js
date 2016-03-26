@@ -13,7 +13,6 @@
             createUser: createUser,
             deleteUserById: deleteUserById,
             updateUser: updateUser,
-            userExists: userExists,
             setUser: setUser,
             getUser: getUser,
             findUserbyId: findUserbyId,
@@ -53,10 +52,6 @@
             return $http.put("/api/assignment/user/"+userId, user);
         }
 
-        function userExists(userName){
-
-
-        }
 
         function checkLoggedIn(){
             if( $rootScope.currentUser == null){

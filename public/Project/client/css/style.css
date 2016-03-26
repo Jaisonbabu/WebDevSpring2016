@@ -8,6 +8,28 @@ th {
     background-color: darkgray;
     color: black;
 }
+.imgResp{
+    max-width: 100%;
+    height: auto
+}
+
+.col {
+    width: 200px;
+    float: left;
+}
+
+.tableProp {border-collapse:collapse; table-layout:fixed;}
+.tdProp { width:100px; word-wrap:break-word;}
+
+.thumb{
+    width: 200px;
+    height: 150px
+}
+
+.search-box{
+    width:250px;
+    margin: auto;
+}
 
 .invalid-field
 {

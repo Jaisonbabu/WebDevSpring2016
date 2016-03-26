@@ -22,8 +22,9 @@
 
         SearchService.fetchResult()
         .then(function (response){
-            console.log(response);
-            $scope.response = response.data;
+            console.log(response.data.restaurants);
+            $scope.restaurants = response.data.restaurants;
+            console.log($scope.restaurants[1].restau)
         },
         function(err){
 

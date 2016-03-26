@@ -1,12 +1,9 @@
-module.exports = function (app, searchModel,request){
+module.exports = function (app,request){
     app.get("/api/search",fetchAllResult);
 
     var apiKey = "7fd3272e638174d575e8ae2c29d0ea71";
+
     function fetchAllResult(req,res){
-        //var results = searchModel.fetchAllResult();
-        //
-        //console.log("Result :"+JSON.stringify(results));
-        //res.send(results);
 
         var fetch_options = {
             host: 'developers.zomato.com',
@@ -17,7 +14,6 @@ module.exports = function (app, searchModel,request){
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'user-key':apiKey
-                //'Content-Length': Buffer.byteLength(post_data)
             }
         };
 

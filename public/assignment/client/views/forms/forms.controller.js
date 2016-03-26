@@ -33,8 +33,13 @@
         function addForm(form){
             FormService.createFormForUser($scope.user._id, form)
                 .then(function (userForms){
-                        $scope.forms = userForms.data;
-                        $scope.error = null;
+                        if(userForms.data != null){
+                            $scope.forms = userForms.data;
+                            $scope.error = null;
+                        }
+                        else{
+                            $scope.error = "Form name cannot be empty";
+                        }
                     },
                     function (err){
                         $scope.error = "No Forms";
@@ -51,7 +56,7 @@
 
             FormService.updateFormById(formUpdated._id, form)
                 .then(function(userForms){
-                        if(userForms != null){
+                        if(userForms.data != null){
                             $scope.forms = userForms.data;
                             $scope.error = null;
                         }

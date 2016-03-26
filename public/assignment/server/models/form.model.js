@@ -52,7 +52,7 @@ module.exports = function (){
     }
 
     function createForm(form, userId){
-        if (form != null && form.title != ""){
+        if (!form || form.title !=""){
             var newForm = {
                 _id : newFormId.v1(),
                 title: form.title,

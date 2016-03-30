@@ -7,11 +7,16 @@
     function SearchService($http, $rootScope, $location) {
         $http.defaults.headers.post['Content-Type']= 'application/x-www-form-urlencoded;charset=utf-8';
         var searchService = {
-            fetchResult: fetchResult
+            fetchResult: fetchResult,
+            getSearchDetail:getSearchDetail
         };
 
         return searchService;
 
+
+        function getSearchDetail(resId){
+            return http.get("/api/search/"+resId);
+        }
 
         function fetchResult(){
             console.log("In fetchresult");

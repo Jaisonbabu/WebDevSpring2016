@@ -33,6 +33,10 @@
                 templateUrl: "views/users/login.view.html",
                 controller: "LoginController"
             })
+            .when("/api/search/:id", {
+                templateUrl: "views/detail/hotel.detail.view.html",
+                controller: "HotelDetailController"
+            })
             .otherwise({
                 redirectTo: "/"
             });

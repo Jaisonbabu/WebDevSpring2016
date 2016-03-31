@@ -12,20 +12,6 @@ var cors             = require('cors');
 
 var app = express();
 
-app.use(cors());
-app.options('*', cors());
-
-app.use(cookieParser());
-app.use(multer());
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());       // to support JSON-encoded bodies
-app.use(express.urlencoded()); // to support URL-encoded bodies
-app.use(express.static( __dirname + '/public'));
-
-
 var connectionString = 'mongodb://127.0.0.1:27017/WebDev2016';
 
 // use remote connection string
@@ -40,6 +26,22 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 
 // connect to the database
 var db = mongoose.connect(connectionString);
+
+app.use(cors());
+app.options('*', cors());
+
+app.use(cookieParser());
+app.use(multer());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
+app.use(express.static( __dirname + '/public'));
+
+
+
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;

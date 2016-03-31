@@ -9,14 +9,6 @@ th {
     color: black;
 }
 
-.results {
-    float: left;
-    border: 1px solid black;
-    overflow: hidden;
-    width: 300px;
-    padding:5px;
-}
-
 .invalid-field
 {
     border:1px solid #f00;

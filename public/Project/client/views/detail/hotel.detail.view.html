@@ -1,6 +1,15 @@
-<div class = "container" ng-controller = "HotelDetailController">
+<div class="col-sm-12 col-md-12  main bgColor" ng-controller = "HotelDetailController">
 
-{{searchDetail}}
+<div>
+    <span>
+        <img class = "img-responsive center-block" ng-src="{{searchDetail.image}}" alt="Image currently unavailable" />
+    </span>
+    <span class = "results">
+        <h2>{{searchDetail.name}}</h2>
+        <h3>Cuisines :{{searchDetail.cuisines}}</h3>
+        <h3>Address : {{searchDetail.location.address}} </h3>
+        <h3>Expensive rating : {{searchDetail.currency}}</h3>
+    </span>
 
-
+</div>
 </div>

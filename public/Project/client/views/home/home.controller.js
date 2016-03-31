@@ -15,7 +15,7 @@
             //response.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
             $scope.response = response;
 
-            console.log("INside Response handler");
+            console.log("Inside Response handler");
             console.log(response);
 
         };
@@ -29,9 +29,6 @@
         function(err){
 
         });
-
-
-
 
     }
 })();

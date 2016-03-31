@@ -7,6 +7,9 @@ module.exports = function (app,request){
 
     function getSearchDetail(req,res){
 
+        console.log("inside getSearch");
+        console.log(req.params.id);
+
         var fetch_options = {
             host: 'developers.zomato.com',
             path:'/api/v2.1/search',

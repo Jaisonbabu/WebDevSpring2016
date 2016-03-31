@@ -15,7 +15,7 @@
 
 
         function getSearchDetail(resId){
-            return http.get("/api/search/"+resId);
+            return $http.get("/api/search/"+resId);
         }
 
         function fetchResult(){

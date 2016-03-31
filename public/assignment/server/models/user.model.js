@@ -1,5 +1,13 @@
-module.exports = function(app) {
+// load q promise library
+var q = require("q");
+
+// pass db and mongoose reference to model
+module.exports = function(db,mongoose) {
     var users = require("./user.mock.json");
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+
+    // create user model from schema
+    var UserModel = mongoose.model('user', UserSchema);
 
     var api = {
         createUser:createUser,
@@ -14,14 +22,31 @@ module.exports = function(app) {
     return api;
 
     function createUser(user){
-        var newUser = {
-            _id : (new Date).getTime(),
-            username :  user.username,
-            password : user.password,
-            email: user.email
-        };
-        users.push(newUser);
-        return users;
+        //var newUser = {
+        //    _id : (new Date).getTime(),
+        //    username :  user.username,
+        //    password : user.password,
+        //    email: user.email
+        //};
+        //users.push(newUser);
+        //return users;
+
+        // use q to defer the response
+        var deferred = q.defer();
+        console.log(JSON.stringify(user));
+        // insert new user with mongoose user model's create()
+        UserModel.create(user, function (err, doc) {
+            if(err){
+                // reject promise if error
+                deferred.reject(err);
+            }else{
+                // resolve promise
+                deferred.resolve(doc);
+            }
+        });
+
+        // return a promise
+        return deferred.promise;
     }
 
     function updateUser(user, userId){
@@ -66,12 +91,35 @@ module.exports = function(app) {
 
 
     function findUserByUsername(userName){
-        for(var i in users){
-            if(users[i].username == userName){
-                return users[i];
-            }
-        }
-        return null;
+        //for(var i in users){
+        //    if(users[i].username == userName){
+        //        return users[i];
+        //    }
+        //}
+        //return null;
+
+
+        var deferred = q.defer();
+
+        // find one retrieves one document
+        UserModel.findOne(
+            // first argument is predicate
+            {username: userName},
+
+            // doc is unique instance matches predicate
+            function(err, doc) {
+
+                if (err) {
+                    // reject promise if error
+                    deferred.reject(err);
+                } else {
+                    // resolve promise
+                    deferred.resolve(doc);
+                }
+
+            });
+
+        return deferred.promise;
     }
 
     function findUserByCredentials(credentials){
@@ -80,7 +128,7 @@ module.exports = function(app) {
                 return users[i];
             }
         }
-       return null;
+        return null;
     }
 
 };

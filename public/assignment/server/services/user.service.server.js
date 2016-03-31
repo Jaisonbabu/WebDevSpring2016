@@ -8,8 +8,22 @@ module.exports = function (app, userModel){
 
 
     function createUser(req,res){
-        var newUsers = userModel.createUser(req.body);
-        res.json(newUsers);
+        console.log("req body"+JSON.stringify(req.body));
+        var newUsers = userModel.createUser(req.body)
+            // handle model promise
+            .then(
+                // login user if promise resolved
+                function ( doc ) {
+                    console.log("model resolve server service");
+                    console.log(JSON.stringify(doc));
+                    //req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                // send error if promise rejected
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+
     }
 
     function updateUser(req,res){
@@ -38,8 +52,21 @@ module.exports = function (app, userModel){
             res.json(user);
         }
         if(userName!=null && password == null){
-            user = userModel.findUserByUsername(userName);
-            res.json(user);
+            user = userModel.findUserByUsername(userName)
+                //res.json(user);
+                // handle model promise
+                .then(
+                    // login user if promise resolved
+                    function ( doc ) {
+                        console.log("model resolve server service");
+                        console.log(JSON.stringify(user));
+                        //req.session.currentUser = doc;
+                        res.json(user);
+                    },
+                    // send error if promise rejected
+                    function ( err ) {
+                        res.status(400).send(err);
+                    });
         }
         if(userName ==null && password == null){
             var users = userModel.findAllUsers();

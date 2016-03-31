@@ -17,7 +17,9 @@
 
             UserService.findUserByUsername(userName)
                 .then(function (userPresent){
-                        if(userPresent.data == null) {
+                        if(Object.keys(userPresent.data).length == 0)
+                        // userPresent.data == null)
+                        {
                             UserService.createUser(user)
                                 .then(function (users){
                                         UserService.findUserByUsername(userName)

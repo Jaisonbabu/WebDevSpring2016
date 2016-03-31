@@ -1,8 +1,11 @@
-
-module.exports = function (){
+// pass db and mongoose reference to model
+module.exports = function (db,mongoose){
 
     var forms = require("./form.mock.json");
     var newFormId = require('node-uuid');
+
+    var FieldSchema = require("./field.schema.server.js")(mongoose);
+    var FormSchema = require("./form.schema.server.js")(mongoose);
 
     var api = {
         findFormByUserId:findFormByUserId,

@@ -1,5 +1,4 @@
 var express         = require('express');
-var http            = require('http');
 var request         = require('request');
 var bodyParser      = require('body-parser');
 var passport        = require('passport');

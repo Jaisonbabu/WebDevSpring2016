@@ -8,7 +8,6 @@ module.exports = function (app, formModel){
 
 
     function findFormByUserId(req,res){
-        console.log("inside server service");
         var forms = formModel.findFormByUserId(req.params.userId);
         console.log(forms);
         res.json(forms);
@@ -25,6 +24,7 @@ module.exports = function (app, formModel){
     }
 
     function createForm(req,res){
+        console.log(req.body);
         var newForms = formModel.createForm(req.body, req.params.userId);
         res.json(newForms);
     }

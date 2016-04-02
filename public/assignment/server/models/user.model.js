@@ -7,7 +7,7 @@ module.exports = function(db,mongoose) {
     var UserSchema = require("./user.schema.server.js")(mongoose);
 
     // create user model from schema
-    var UserModel = mongoose.model('user', UserSchema);
+    var UserModel = mongoose.model('user',UserSchema);
 
     var api = {
         createUser:createUser,
@@ -33,6 +33,7 @@ module.exports = function(db,mongoose) {
 
         // use q to defer the response
         var deferred = q.defer();
+        console.log("Inside User Model");
         console.log(JSON.stringify(user));
         // insert new user with mongoose user model's create()
         UserModel.create(user, function (err, doc) {
@@ -123,12 +124,35 @@ module.exports = function(db,mongoose) {
     }
 
     function findUserByCredentials(credentials){
-        for (var i in users){
-            if(users[i].username == credentials.username && users[i].password == credentials.password){
-                return users[i];
-            }
-        }
-        return null;
+        //for (var i in users){
+        //    if(users[i].username == credentials.username && users[i].password == credentials.password){
+        //        return users[i];
+        //    }
+        //}
+        //return null;
+
+        var deferred = q.defer();
+
+        // find one retrieves one document
+        UserModel.findOne(
+
+            // first argument is predicate
+            { username: credentials.username,
+                password: credentials.password },
+
+            function(err, doc) {
+
+                if (err) {
+                    // reject promise if error
+                    deferred.reject(err);
+                } else {
+                    // resolve promise
+                    deferred.resolve(doc);
+                }
+
+            });
+
+        return deferred.promise;
     }
 
 };

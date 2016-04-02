@@ -1,15 +1,14 @@
 var express         = require('express');
-var request         = require('request');
 var bodyParser      = require('body-parser');
-var passport        = require('passport');
+var request         = require('request');
+var app             = express();
 var mongoose        = require ('mongoose');
-var multer          = require('multer');
-var localStrategy   = require('passport-local').Strategy;
+//var multer          = require('multer');
+//var passport        = require('passport');
+//var localStrategy   = require('passport-local').Strategy;
 var cookieParser    = require('cookie-parser');
 var session         = require('express-session');
-var cors             = require('cors');
-
-var app = express();
+//var cors            = require('cors');
 
 var connectionString = 'mongodb://127.0.0.1:27017/WebDev2016';
 
@@ -26,35 +25,35 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 // connect to the database
 var db = mongoose.connect(connectionString);
 
-app.use(cors());
-app.options('*', cors());
+var ipaddress    = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port         = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
-app.use(cookieParser());
-app.use(multer());
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(cors());
+//app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({ secret: "secret", resave: true,
+    saveUninitialized: true}));
+//app.use(multer());
+app.use(cookieParser());
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 app.use(express.static( __dirname + '/public'));
 
-
-
-
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-
-console.log("secret");
+//console.log("secret");
 //console.log(process.env.PASSPORT_SECRET);
 
-
-//NOTE: PLease keep this before all http calls
-app.listen(port, ipaddress);
 
 console.log("In Server.js");
 require("./public/assignment/server/app.js")(app,db,mongoose);
 require("./public/Project/server/app.js")(app,request);
+
+//NOTE: PLease keep this before all http calls
+app.listen(port, ipaddress);
+
 //app.all('*', function(req, res, next) {
 //    res.setHeader("Access-Control-Allow-Origin", "*");
 //    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -118,7 +117,7 @@ require("./public/Project/server/app.js")(app,request);
 //    res.setEncoding('utf8');
 //    res.on('data', function (chunk) {
 //        console.log('Response: uest(req, function(res){
-    //    console.log(re' + chunk);
+//    console.log(re' + chunk);
 //    });
 //});
 
@@ -128,61 +127,43 @@ app.options('*', function(req, res) {
 
 });
 
-    app.post('/Project', function(req,res){
-        console.log("Inside Server");
-        console.log(req.body.venue_queries);
+app.post('/Project', function(req,res) {
+    console.log("Inside Server");
+    console.log(req.body.venue_queries);
 
-        var data = {
-            api_key : "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368",
-            fields : req.body.fields,
-            venue_queries : req.body.venue_queries
-        };
+    var data = {
+        api_key: "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368",
+        fields: req.body.fields,
+        venue_queries: req.body.venue_queries
+    };
 
 
-        var post_options = {
-            host: 'api.locu.com',
-            path:'/v2/venue/search',
-            url: "https://api.locu.com/v2/venue/search",
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                //'Content-Length': Buffer.byteLength(post_data)
-            },
-            json:data
-        };
+    var post_options = {
+        host: 'api.locu.com',
+        path: '/v2/venue/search',
+        url: "https://api.locu.com/v2/venue/search",
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            //'Content-Length': Buffer.byteLength(post_data)
+        },
+        json: data
+    };
 
-        function callback(error, response, body) {
-            if (!error) {
-                var info = JSON.parse(JSON.stringify(body));
-                //console.log(info);
-                //console.log(response.body.venues[1]);
-                res.send(response);
-            }
-            else {
-                console.log('Error happened: '+ error);
-            }
+    function callback(error, response, body) {
+        if (!error) {
+            var info = JSON.parse(JSON.stringify(body));
+            //console.log(info);
+            //console.log(response.body.venues[1]);
+            res.send(response);
         }
+        else {
+            console.log('Error happened: ' + error);
+        }
+    }
 
 //send request
-        request(post_options, callback);
-        //var post_req= locu.request(post_options,function(res){
-        //   console.log("Success");
-        //    console.log(res);
-        //});
-
-        //post_req.write(JSON.stringify(data));
-        //post_req.end();
-        //post_req.on('response', function (response) {
-        //    console.log('STATUS: ' + response.statusCode);
-        //    console.log('HEADERS: ' + JSON.stringify(response.headers));
-        //    response.setEncoding('utf8');
-        //    response.on('data', function (chunk) {
-        //        console.log('BODY: ' + chunk);
-        //    });
-        //});
-    //});
-    //});
-
+    request(post_options, callback);
 
 });
 

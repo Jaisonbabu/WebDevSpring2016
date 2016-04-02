@@ -17,19 +17,11 @@
 
             UserService.findUserByUsername(userName)
                 .then(function (userPresent){
-                        if(Object.keys(userPresent.data).length == 0)
-                        // userPresent.data == null)
-                        {
+                        if(userPresent.data == null){
                             UserService.createUser(user)
-                                .then(function (users){
-                                        UserService.findUserByUsername(userName)
-                                            .then(function (userPresent){
-                                                    UserService.setUser(userPresent.data);
-                                                    $location.url("/profile");
-                                                },
-                                                function (err){
-                                                    $scope.message = "Cannot register";
-                                                });
+                                .then(function (user) {
+                                        UserService.setUser(user.data);
+                                        $location.url("/profile");
                                     },
                                     function (err){
                                         $scope.message = "Cannot register";
@@ -39,7 +31,7 @@
                         }
                     },
                     function(err){
-
+                        $scope.message = "Username Already Exists";
                     });
         }
 

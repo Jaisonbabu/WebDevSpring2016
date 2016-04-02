@@ -8,18 +8,16 @@ module.exports = function (app, userModel){
 
 
     function createUser(req,res){
-        console.log("req body "+JSON.stringify(req.body));
-        var newUsers = userModel.createUser(req.body)
-            // handle model promise
+        var user = req.body;
+        console.log("req body in web service:"+JSON.stringify(req.body));
+        userModel.createUser(user)
             .then(
-                // login user if promise resolved
-                function ( doc ) {
-                    console.log("model resolve server service");
+                function (doc) {
+                    console.log("Inside user web service");
                     console.log(JSON.stringify(doc));
                     //req.session.currentUser = doc;
                     res.json(doc);
                 },
-                // send error if promise rejected
                 function ( err ) {
                     res.status(400).send(err);
                 });
@@ -48,20 +46,25 @@ module.exports = function (app, userModel){
         var user = null;
         if (userName != null && password != null){
             var credentials = {username : userName, password : password};
-            user = userModel.findUserByCredentials(credentials);
-            res.json(user);
+            user = userModel.findUserByCredentials(credentials)
+                .then( function(user){
+                        res.json(user);
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                );
         }
         if(userName!=null && password == null){
-            user = userModel.findUserByUsername(userName)
+            userModel.findUserByUsername(userName)
                 //res.json(user);
                 // handle model promise
                 .then(
                     // login user if promise resolved
-                    function ( doc ) {
-                        console.log("model resolve server service");
-                        console.log(JSON.stringify(user));
-                        //req.session.currentUser = doc;
-                        res.json(user);
+                    function(doc) {
+                        console.log("Inside user web service findByUsername");
+                        console.log(JSON.stringify(doc));
+                        res.json(doc);
                     },
                     // send error if promise rejected
                     function ( err ) {

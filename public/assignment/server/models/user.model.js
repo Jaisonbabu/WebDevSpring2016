@@ -52,18 +52,43 @@ module.exports = function(db,mongoose) {
 
     function updateUser(user, userId){
         console.log("inside updateUser "+userId+" "+user);
-        for(var i in users){
-            if(users[i]._id == userId){
-                users[i].firstName = user.firstName;
-                users[i].lastName = user.lastName;
-                users[i].username = user.username;
-                users[i].password = user.password;
-                users[i].email = user.email;
+        //for(var i in users){
+        //    if(users[i]._id == userId){
+        //        users[i].firstName = user.firstName;
+        //        users[i].lastName = user.lastName;
+        //        users[i].username = user.username;
+        //        users[i].password = user.password;
+        //        users[i].email = user.email;
+        //
+        //        return users[i];
+        //    }
+        //}
+        //return null;
 
-                return users[i];
+        var deferred = q.defer();
+
+        UserModel.findById({_id:userId}, function(err,userFound){
+            if(err){
+                deferred.reject(err);
             }
-        }
-        return null;
+            else{
+                userFound.username = user.username;
+                userFound.firstName = user.firstName;
+                userFound.lastName = user.lastName;
+                userFound.password = user.password;
+                userFound.email.push(user.email);
+                userFound.phones.push(user.phone);
+                userFound.save(function(err,userUpdated){
+                    if(err){
+                        deferred.reject(err);
+                    }
+                    else{
+                        deferred.resolve(userUpdated);
+                    }
+                });
+            }
+        });
+        return deferred.promise;
     }
 
     function deleteUser(userId){

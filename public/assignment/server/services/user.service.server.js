@@ -25,9 +25,14 @@ module.exports = function (app, userModel){
     }
 
     function updateUser(req,res){
-        var updatedUser = userModel.updateUser(req.body,req.params.id);
-        res.json(updatedUser);
-
+        userModel.updateUser(req.body,req.params.id)
+            .then( function(updatedUser){
+                    res.json(updatedUser);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function deleteUser(req,res){
@@ -46,7 +51,7 @@ module.exports = function (app, userModel){
         var user = null;
         if (userName != null && password != null){
             var credentials = {username : userName, password : password};
-            user = userModel.findUserByCredentials(credentials)
+            userModel.findUserByCredentials(credentials)
                 .then( function(user){
                         res.json(user);
                     },

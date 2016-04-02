@@ -1,10 +1,10 @@
 module.exports = function (db,mongoose,formModel){
 
+    var q = require('q');
     var FieldSchema = require("./field.schema.server.js")(mongoose);
     var FormSchema = require("./form.schema.server.js")(mongoose);
 
     var fieldModel =  mongoose.model('field',FieldSchema);
-    var formModel  =  mongoose.model('form',FormSchema);
 
     var api = {
         createFieldForForm: createFieldForForm,
@@ -17,6 +17,23 @@ module.exports = function (db,mongoose,formModel){
     return api;
 
     function createFieldForForm(formId,field){
+
+        // use q to defer the response
+        var deferred = q.defer();
+        var newField = new fieldModel(field);
+        console.log("Inside Field Model");
+        console.log(JSON.stringify(newField));
+
+        formModel.findById(formId)
+            .then(function (form) {
+                form.fields.push(newField);
+                form.save();
+                deferred.resolve(form.fields);
+            }, function (err){
+                  deferred.reject(err);
+            });
+
+        return deferred.promise;
 
         //var newField = {
         //    _id:newFormId.v1(),
@@ -34,24 +51,7 @@ module.exports = function (db,mongoose,formModel){
         //    }
         //}
 
-        // use q to defer the response
-        var deferred = q.defer();
-        var newField = new fieldModel(field);
-        console.log("Inside Field Model");
-        console.log(JSON.stringify(user));
-        // insert new user with mongoose user model's create()
-        fieldModel.create(user, function (err, doc) {
-            if(err){
-                // reject promise if error
-                deferred.reject(err);
-            }else{
-                // resolve promise
-                deferred.resolve(doc);
-            }
-        });
 
-        // return a promise
-        return deferred.promise;
     }
 
     function getFieldsForForm(formId){

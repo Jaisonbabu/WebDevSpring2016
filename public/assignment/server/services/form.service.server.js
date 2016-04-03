@@ -8,9 +8,15 @@ module.exports = function (app, formModel){
 
 
     function findFormByUserId(req,res){
-        var forms = formModel.findFormByUserId(req.params.userId);
-        console.log(forms);
-        res.json(forms);
+        console.log("Inside webservice");
+        formModel.findFormByUserId(req.params.userId)
+            .then(function(forms){
+                    res.json(forms);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+
     }
 
     function findFormById(req,res){
@@ -24,20 +30,25 @@ module.exports = function (app, formModel){
     }
 
     function createForm(req,res){
-        console.log(req.body);
         formModel.createForm(req.body, req.params.userId)
-        .then( function(forms){
-                res.json(forms);
+            .then( function(form){
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function updateFormById(req,res){
+        formModel.updateFormById(req.body, req.params.formId)
+        .then(function (updatedForm){
+                res.json(updatedForm);
             },
             function(err){
                 res.status(400).send(err);
             }
         );
-    }
-
-    function updateFormById(req,res){
-        var forms = formModel.updateFormById(req.body, req.params.formId);
-        res.json(forms);
     }
 
     //function formResponse(form){

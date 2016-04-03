@@ -3,7 +3,6 @@ module.exports = function (db,mongoose){
 
     var q = require('q');
     var forms = require("./form.mock.json");
-    var newFormId = require('node-uuid');
 
     var FormSchema = require("./form.schema.server.js")(mongoose);
 
@@ -29,18 +28,16 @@ module.exports = function (db,mongoose){
     function findFormByUserId(userId){
 
         var deferred = q.defer();
-        FormModel.find({userId : userId}, function(err,forms){
+        FormModel.find({"userId":userId}, function(err,forms){
             if(err){
                 deferred.reject(err);
             }
             else{
-                console.log("Inside findFormByUserId");
-                console.log(forms);
                 deferred.resolve(forms);
             }
-            return deferred.promise;
         });
 
+        return deferred.promise;
         //var userForm=[];
         //for(var i in forms){
         //    if(forms[i].userId == userId){
@@ -60,9 +57,9 @@ module.exports = function (db,mongoose){
                 deferred.resolve(forms);
             }
 
-            return deferred.promise;
-        });
 
+        });
+            return deferred.promise;
         //for( var i in forms){
         //    if(forms[i]._id === formId){
         //        return forms[i];
@@ -72,17 +69,8 @@ module.exports = function (db,mongoose){
     }
 
     function deleteFormById(formId){
-        //var form = findFormById(formId);
-        //if(form != null){
-        //    forms.splice(form,1);
-        //    return findFormByUserId(form.userId);
-        //}
-        //else{
-        //    return null;
-        //}
-
         var deferred = q.defer();
-        FormModel.remove({"_id":formId}, function(err,forms){
+        FormModel.findByIdAndRemove({"_id": formId}, function(err,forms){
             if(err){
                 deferred.reject(err);
             }
@@ -92,12 +80,21 @@ module.exports = function (db,mongoose){
         });
 
         return deferred.promise;
+        //var form = findFormById(formId);
+        //if(form != null){
+        //    forms.splice(form,1);
+        //    return findFormByUserId(form.userId);
+        //}
+        //else{
+        //    return null;
+        //}
     }
 
     function createForm(form, userId){
         console.log("createForm");
         console.log(form);
-        if (!form || form.title !=""){
+        if (form !== undefined){
+
             var newForm = {
                 title: form.title,
                 userId : userId,
@@ -108,16 +105,9 @@ module.exports = function (db,mongoose){
             FormModel.create(newForm, function(err,form){
                 if(err){
                     deferred.reject(err);
-                    console.log(err);
                 }
                 else{
-                    console.log("new form");
-                    console.log(form);
-                    var forms="";
-                    forms = findFormByUserId(userId);
-                    console.log("model success");
-                    console.log(forms);
-                    deferred.resolve(forms);
+                    deferred.resolve(form);
                 }
             });
 
@@ -159,7 +149,6 @@ module.exports = function (db,mongoose){
                             deferred.resolve(updatedForm);
                         }
                     });
-
                 }
 
             });

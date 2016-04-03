@@ -20,30 +20,36 @@
 
         $scope.user = UserService.getUser();
 
+        console.log("Inside controller");
         FormService.findUserForms($scope.user._id)
             .then(function(forms){
                     $scope.forms = forms.data;
                 },
                 function(err){
-
+                    $scope.error = null;
                 });
 
-        console.log($scope.forms);
 
         function addForm(form){
+
             FormService.createFormForUser($scope.user._id, form)
-                .then(function (userForms){
-                        if(userForms.data != null){
-                            $scope.forms = userForms.data;
-                            $scope.error = null;
-                        }
-                        else{
-                            $scope.error = "Form name cannot be empty";
-                        }
-                    },
+                .then(function (newForm){
+                        if(newForm !== null || newForm.title != ""){
+                            FormService.findUserForms($scope.user._id)
+                                .then(function(userForms){
+                                        $scope.forms = userForms.data;
+                                        $scope.error = null;
+                                    },
+                                    function(err){
+                                        $scope.error = "No Forms for user";
+                                    });
+                        }else{
+                            $scope.error = "Form title cannot be empty";
+                        }},
                     function (err){
-                        $scope.error = "No Forms";
+                        $scope.error = "Cannot create form";
                     });
+
         }
 
         function updateForm(form){
@@ -54,35 +60,42 @@
                 userId : form.userId
             };
 
-            FormService.updateFormById(formUpdated._id, form)
-                .then(function(userForms){
-                        if(userForms.data != null){
-                            $scope.forms = userForms.data;
-                            $scope.error = null;
-                        }
-                        else{
-                            $scope.error = "Form name cannot be empty";
-                        }
-                    },
-                    function(err){
-                        scope.error = "Cannot Update";
-                    });
+            if(form.title != ""){
+                FormService.updateFormById(formUpdated._id, form)
+                    .then(function(updatedForm){
+                            FormService.findUserForms($scope.user._id)
+                                .then(function(userForms){
+                                        $scope.forms = userForms.data;
+                                        $scope.error = null;
+                                    },
+                                    function(err){
+                                        $scope.error = "No Forms for user";
+                                    });
+                        },
+                        function(err){
+                            $scope.error = "Cannot Update";
+                        });
+            }
+            else{
+                $scope.error = "Form name cannot be empty";
+            }
         }
 
         function deleteForm(index){
 
             FormService.deleteFormById($scope.forms[index]._id)
                 .then(function(userForms){
-                        if(userForms != null){
-                            $scope.forms = userForms.data;
-                            $scope.error = null;
-                        }
-                        else{
-                            $scope.error = "Form Not Present";
-                        }
+                        FormService.findUserForms($scope.user._id)
+                            .then(function(userForms){
+                                    $scope.forms = userForms.data;
+                                    $scope.error = null;
+                                },
+                                function(err){
+                                    $scope.error = "No Forms for user";
+                                });
                     },
                     function(err){
-                        scope.error = "Cannot Delete";
+                        $scope.error = "Cannot Delete";
                     });
         }
 

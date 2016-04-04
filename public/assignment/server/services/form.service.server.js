@@ -20,13 +20,26 @@ module.exports = function (app, formModel){
     }
 
     function findFormById(req,res){
-        var form = formModel.findFormById(req.params.formId);
-        res.json(form)
+       formModel.findFormById(req.params.formId)
+           .then( function(form){
+                   res.json(form);
+               },
+               function(err){
+                   res.status(400).send(err);
+               }
+           );
+
     }
 
     function deleteFormById(req,res){
-        var forms = formModel.deleteFormById(req.params.formId);
-        res.json(forms);
+        formModel.deleteFormById(req.params.formId)
+            .then( function(form){
+                    res.json(form);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function createForm(req,res){
@@ -42,13 +55,13 @@ module.exports = function (app, formModel){
 
     function updateFormById(req,res){
         formModel.updateFormById(req.body, req.params.formId)
-        .then(function (updatedForm){
-                res.json(updatedForm);
-            },
-            function(err){
-                res.status(400).send(err);
-            }
-        );
+            .then(function (updatedForm){
+                    res.json(updatedForm);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     //function formResponse(form){

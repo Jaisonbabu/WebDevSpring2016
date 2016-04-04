@@ -22,28 +22,34 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
             placeholder:field.placeholder,
             label:field.label,
             options:field.options};
-        console.log("Inside Field Model");
-        console.log(JSON.stringify(newField));
 
-        FormModel.findById(formId)
-            .then(function (form) {
-                form.fields.push(newField);
-                form.save(function(err,newForm){
-                    if(err){
+        FieldModel.create(newField, function(err,field){
+            if(!err){
+
+                console.log("Inside Field Model");
+                console.log(JSON.stringify(newField));
+
+                FormModel.findById(formId)
+                    .then(function (form) {
+                        form.fields.push(newField);
+                        form.save(function(err,newForm){
+                            if(err){
+                                deferred.reject(err);
+                                console.log(err);
+                            }else{
+                                console.log(newForm);
+                                deferred.resolve(newForm.fields);
+                            }
+                        })
+
+                    }, function (err){
                         deferred.reject(err);
-                        console.log(err);
-                    }else{
-                        console.log(newForm);
-                        deferred.resolve(newForm.fields);
-                    }
-                })
+                    });
 
-            }, function (err){
-                deferred.reject(err);
-            });
+            }
+        });
 
         return deferred.promise;
-
         //var newField = {
         //    _id:newFormId.v1(),
         //    type:field.type,

@@ -32,24 +32,27 @@
 
         function addForm(form){
 
-            FormService.createFormForUser($scope.user._id, form)
-                .then(function (newForm){
-                        if(newForm !== null || newForm.title != ""){
-                            FormService.findUserForms($scope.user._id)
-                                .then(function(userForms){
-                                        $scope.forms = userForms.data;
-                                        $scope.error = null;
-                                    },
-                                    function(err){
-                                        $scope.error = "No Forms for user";
-                                    });
-                        }else{
-                            $scope.error = "Form title cannot be empty";
-                        }},
-                    function (err){
-                        $scope.error = "Cannot create form";
-                    });
-
+            if(typeof form != "undefined"){
+                FormService.createFormForUser($scope.user._id, form)
+                    .then(function (newForm){
+                            if(newForm.data !== null){
+                                FormService.findUserForms($scope.user._id)
+                                    .then(function(userForms){
+                                            $scope.forms = userForms.data;
+                                            $scope.error = null;
+                                        },
+                                        function(err){
+                                            $scope.error = "No Forms for user";
+                                        });
+                            }else{
+                                $scope.error = "Form title cannot be empty";
+                            }},
+                        function (err){
+                            $scope.error = "Cannot create form";
+                        });
+            }else{
+                $scope.error = "Form title cannot be empty";
+            }
         }
 
         function updateForm(form){

@@ -94,7 +94,8 @@ module.exports = function (db,mongoose,FormModel){
     function createForm(form, userId){
         console.log("createForm");
         console.log(form);
-        if (form !== undefined){
+        var deferred = q.defer();
+        if ( form.title != "" ){
 
             var newForm = {
                 title: form.title,
@@ -102,19 +103,20 @@ module.exports = function (db,mongoose,FormModel){
                 fields : []
             };
 
-            var deferred = q.defer();
             FormModel.create(newForm, function(err,form){
                 if(err){
                     deferred.reject(err);
                 }
                 else{
+                    console.log(form);
                     deferred.resolve(form);
                 }
             });
 
             return deferred.promise;
         }
-        return null;
+        deferred.resolve(null);
+        return deferred.promise;
 
         //if (!form || form.title !=""){
         //    var newForm = {

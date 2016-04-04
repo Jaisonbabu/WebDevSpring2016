@@ -5,7 +5,7 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController ($scope, $location, $rootScope, UserService) {
+    function ProfileController ($scope, $rootScope, UserService) {
 
         //console.log($rootScope.currentUser.username + " inside profile controller");
         UserService.checkLoggedIn();

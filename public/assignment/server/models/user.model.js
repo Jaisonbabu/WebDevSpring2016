@@ -51,7 +51,7 @@ module.exports = function(db,mongoose) {
     }
 
     function updateUser(user, userId){
-        console.log("inside updateUser "+userId+" "+user);
+        console.log(user);
         //for(var i in users){
         //    if(users[i]._id == userId){
         //        users[i].firstName = user.firstName;
@@ -76,8 +76,8 @@ module.exports = function(db,mongoose) {
                 userFound.firstName = user.firstName;
                 userFound.lastName = user.lastName;
                 userFound.password = user.password;
-                userFound.email.push(user.email);
-                userFound.phones.push(user.phone);
+                userFound.email = user.email;
+                userFound.phones = user.phones;
                 userFound.save(function(err,userUpdated){
                     if(err){
                         deferred.reject(err);

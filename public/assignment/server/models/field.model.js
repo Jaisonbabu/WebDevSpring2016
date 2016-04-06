@@ -50,23 +50,6 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
         });
 
         return deferred.promise;
-        //var newField = {
-        //    _id:newFormId.v1(),
-        //    type:field.type,
-        //    placeholder:field.placeholder,
-        //    label:field.label,
-        //    options:field.options
-
-        //for (var i in forms) {
-        //    if (forms[i]._id == formId) {
-        //        console.log("Inside server create");
-        //        forms[i].fields.push(newField);
-        //        console.log(JSON.stringify(forms[i].fields));
-        //        return forms[i].fields;
-        //    }
-        //}
-
-
     }
 
     function getFieldsForForm(formId){
@@ -83,12 +66,6 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
                 }
             });
         return deferred.promise;
-        //var form = FormModel.findFormById(formId);
-        //if(form != null){
-        //    return form.fields;
-        //}else{
-        //    return null;
-        //}
     }
 
     function getFieldForForm(formId,fieldId){
@@ -104,15 +81,6 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
 
             });
         return deferred.promise;
-
-        //var form = FormModel.findFormById(formId);
-        //if (form != null){
-        //    for (var i in form.fields){
-        //        if(form.fields[i]._id == fieldId){
-        //            return form.fields[i];
-        //        }
-        //    }
-        //}
     }
 
     function deleteFieldFromForm(formId,fieldId){
@@ -136,16 +104,6 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
             });
         return deferred.promise;
 
-        //for (var i in forms) {
-        //    if (forms[i]._id == formId) {
-        //        for (var j in forms[i].fields){
-        //            if(forms[i].fields[j]._id == fieldId){
-        //                forms[i].fields.splice(j,1);
-        //                return forms[i].fields;
-        //            }
-        //        }
-        //    }
-        //}
     }
 
     function updateField(formId,fieldId,field){
@@ -171,24 +129,6 @@ module.exports = function (db,mongoose,FormModel,FieldModel){
             });
 
         return deferred.promise;
-
-        //for (var i in forms) {
-        //    if (forms[i]._id == formId) {
-        //        for (var j in forms[i].fields){
-        //            if(forms[i].fields[j]._id == fieldId){
-        //                forms[i].fields[j] = {
-        //                    _id : field._id,
-        //                    label : field.label,
-        //                    type: field.type,
-        //                    placeholder: field.placeholder,
-        //                    options: field.options
-        //                };
-        //                console.log(JSON.stringify(forms[i].fields[j].options));
-        //                return forms[i].fields;
-        //            }
-        //        }
-        //    }
-        //}
     }
 
 };

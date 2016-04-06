@@ -62,7 +62,6 @@ module.exports = function (app, userModel){
         }
         if(userName!=null && password == null){
             userModel.findUserByUsername(userName)
-                //res.json(user);
                 // handle model promise
                 .then(
                     // login user if promise resolved

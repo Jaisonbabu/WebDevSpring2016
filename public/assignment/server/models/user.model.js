@@ -22,14 +22,6 @@ module.exports = function(db,mongoose) {
     return api;
 
     function createUser(user){
-        //var newUser = {
-        //    _id : (new Date).getTime(),
-        //    username :  user.username,
-        //    password : user.password,
-        //    email: user.email
-        //};
-        //users.push(newUser);
-        //return users;
 
         // use q to defer the response
         var deferred = q.defer();
@@ -52,19 +44,6 @@ module.exports = function(db,mongoose) {
 
     function updateUser(user, userId){
         console.log(user);
-        //for(var i in users){
-        //    if(users[i]._id == userId){
-        //        users[i].firstName = user.firstName;
-        //        users[i].lastName = user.lastName;
-        //        users[i].username = user.username;
-        //        users[i].password = user.password;
-        //        users[i].email = user.email;
-        //
-        //        return users[i];
-        //    }
-        //}
-        //return null;
-
         var deferred = q.defer();
 
         UserModel.findById({_id:userId}, function(err,userFound){
@@ -117,14 +96,6 @@ module.exports = function(db,mongoose) {
 
 
     function findUserByUsername(userName){
-        //for(var i in users){
-        //    if(users[i].username == userName){
-        //        return users[i];
-        //    }
-        //}
-        //return null;
-
-
         var deferred = q.defer();
 
         // find one retrieves one document
@@ -149,13 +120,6 @@ module.exports = function(db,mongoose) {
     }
 
     function findUserByCredentials(credentials){
-        //for (var i in users){
-        //    if(users[i].username == credentials.username && users[i].password == credentials.password){
-        //        return users[i];
-        //    }
-        //}
-        //return null;
-
         var deferred = q.defer();
 
         // find one retrieves one document

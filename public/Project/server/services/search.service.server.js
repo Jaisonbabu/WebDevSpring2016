@@ -4,6 +4,7 @@ module.exports = function (app,request){
     app.get("/api/search/:id",getSearchDetail);
 
     var apiKey = "7fd3272e638174d575e8ae2c29d0ea71";
+    var locuApiKey = "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368";
 
     function getSearchDetail(req,res){
 
@@ -53,6 +54,52 @@ module.exports = function (app,request){
                 console.log(info);
                 //console.log(JSON.parse(JSON.stringify(response)));
                res.send(body)
+            }
+            else {
+                console.log('Error happened: '+ error);
+            }
+        }
+        request(fetch_options, callback);
+
+    }
+
+    function getMenu(req,res){
+
+        var data = {
+            api_key: locuApiKey,
+            "fields" : [ "name", "menus","location" ],
+            "venue_queries" : [
+                {
+                    "name" : "Tremont house of pizza",
+                    "location" :  {
+                        "geo" : {
+                            "$in_lat_lng_radius" : [42.3601, -71.0589, 50000]
+                        }
+                    }
+
+
+                }
+            ]
+        };
+
+        var fetch_options = {
+            host: 'api.locu.com',
+            path: '/v2/venue/search',
+            url: "https://api.locu.com/v2/venue/search",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                //'Content-Length': Buffer.byteLength(post_data)
+            },
+            json: data
+        };
+
+        function callback(error, response, body) {
+            if (!error) {
+                var info = JSON.parse(JSON.stringify(body));
+                console.log(info);
+                //console.log(JSON.parse(JSON.stringify(response)));
+                res.send(body)
             }
             else {
                 console.log('Error happened: '+ error);

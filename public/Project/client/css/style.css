@@ -58,15 +58,15 @@ td {
     color: black;
 }
 
-.card {
-    background: white;
-    margin-top: 20px;
-    z-index: 1;
-}
-.card-padding{
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
+/*.card {*/
+    /*background: white;*/
+    /*margin-top: 20px;*/
+    /*z-index: 1;*/
+/*}*/
+/*.card-padding{*/
+    /*padding-top: 20px;*/
+    /*padding-bottom: 20px;*/
+/*}*/
 /*.table-responsive th, .table-responsive td{*/
     /*white-space: nowrap;*/
 /*}*/

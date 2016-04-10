@@ -25,6 +25,7 @@
   "dependencies": {
     "angular-ui-sortable": "^0.13.4",
     "body-parser": "^1.15.0",
+    "bootstrap-material-design": "^4.0.1",
     "cookie-parser": "^1.4.1",
     "cors": "^2.7.1",
     "express": "^3.4.8",

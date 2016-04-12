@@ -1,16 +1,24 @@
 <div class="col-sm-12 col-md-12  main">
-    <h1 class="page-header">Welcome to BonAppetit!</h1>
+    <h1 class="page-header font-weight-bold " >Welcome to BonAppetit!</h1>
 
-    <!--<div class="col-sm-9 col-sm-offset-3  col-md-10 col-md-offset-2">-->
-    <!--<span>-->
-    <!--<img ng-src="{{restaurants[0].restaurant.thumb}}" alt="Image currently unavailable">-->
-    <!--</span>-->
-    <!--</div>-->
-    <div class ="search-box">
-        <input type="text"
-               class="form-control align-center" placeholder="eg. Boston..."
-               id="txtLocation"/>
+    <div class = "row"  >
+        <div class="col-sm-3 col-md-3 col-lg-3 hidden-md hidden-sm hidden-xs"></div>
+        <div class = "col-lg-6 container fluid">
+            <div class = "row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <input ng-model="search.query" class="form-control text-input center-block ng-pristine ng-untouched ng-valid" name="search" value="" placeholder="Pizza, Indian, Sushi ..." type="text">
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <input ng-model="search.place" class="form-control text-input center-block ng-pristine ng-untouched ng-valid" name="search" value="" placeholder="Enter City, State ..." type="text">
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <button ng-click="userSearch(search)" class="btn btn-info form-control search center-block " type="button" name="button">
+                        <span class="glyphicon glyphicon-search"></span> Search</button>
+                </div>
+            </div>
+        </div>
     </div>
+
     <br/>
 
     <div ng-hide="restaurants.length>0" class="tablediv row">
@@ -28,9 +36,9 @@
             <tbody>
             <tr  ng-repeat="restaurant  in restaurants">
                 <td>
-                <div  class="vcenter">
-                    <img class = "col img-responsive img-rounded center-block" ng-src="{{restaurant.restaurant.thumb}}" alt="Image currently unavailable" />
-                </div>
+                    <div  class="vcenter">
+                        <img class = "col img-responsive img-rounded center-block" ng-src="{{restaurant.restaurant.thumb}}" alt="Image currently unavailable" />
+                    </div>
                 </td>
                 <td><a href="#/api/search/{{restaurant.restaurant.R.res_id}}" >
                     <span class ="results"><h3>{{restaurant.restaurant.name}}</h3>
@@ -51,6 +59,12 @@
                     <h4 class = "card-text">{{restaurant.restaurant.location.address}}</h4></span>
             </a>
         </div>
+    </div>
+
+
+    <div class="card">
+        <aside class="card-side pull-left"> LEFT  </aside>
+        <div class="card-main"> MAIN </div>
     </div>
 
     <!--<div  ng-repeat="restaurant  in restaurants">-->

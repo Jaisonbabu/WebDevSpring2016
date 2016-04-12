@@ -9,6 +9,8 @@
         console.log($location.path());
         $scope.$location = $location;
 
+        $scope.userSearch = userSearch;
+
         var searchResponsehandler = function (response){
             //response.header('Access-Control-Allow-Origin', '*');
             //response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -29,6 +31,16 @@
         function(err){
 
         });
+
+        function userSearch(){
+            SearchService.userSearch()
+            .then(function (response){
+                    $scope.restaurants = response.data.restaurants;
+            },
+            function (err){
+
+            })
+        }
 
     }
 })();

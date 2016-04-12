@@ -34,7 +34,5 @@
                         $scope.message = "Username Already Exists";
                     });
         }
-
-
     }
 })();

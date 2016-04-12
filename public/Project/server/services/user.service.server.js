@@ -8,6 +8,7 @@ module.exports = function (app, userModel){
 
 
     function createUser(req,res){
+        console.log(req.body);
         var newUsers = userModel.createUser(req.body);
         res.json(newUsers);
     }

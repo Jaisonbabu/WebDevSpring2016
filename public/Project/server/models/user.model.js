@@ -33,7 +33,6 @@ module.exports = function(db,mongoose) {
                 deferred.resolve(doc);
             }
         });
-
         // return a promise
         return deferred.promise;
     }
@@ -53,6 +52,8 @@ module.exports = function(db,mongoose) {
                 userFound.password = user.password;
                 userFound.email = user.email;
                 userFound.phones = user.phones;
+                userFound.review = user.review;
+                userFound.likes = user.likes;
                 userFound.save(function(err,userUpdated){
                     if(err){
                         deferred.reject(err);
@@ -67,27 +68,53 @@ module.exports = function(db,mongoose) {
     }
 
     function deleteUser(userId){
-        var user = findUserById(userId);
-        if(user != null){
-            users.splice(user,1);
-            return users;
-        }
-        else{
-            return null;
-        }
+        var deferred = q.defer();
+        UserModel.findByIdAndRemove({"_id": userId}, function(err,users){
+            if(err){
+                deferred.reject(err);
+            }
+            else{
+                deferred.resolve(users);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findAllUsers(){
-        return users;
+        var deferred = q.defer();
+
+        UserModel.find(
+            function(err, doc) {
+                if (err) {
+                    // reject promise if error
+                    deferred.reject(err);
+                } else {
+                    // resolve promise
+                    deferred.resolve(doc);
+                }
+
+            });
+
+        return deferred.promise;
     }
 
     function findUserById(userId){
-        for(var i in users){
-            if(users[i]._id == userId){
-                return users[i];
-            }
-        }
-        return null;
+        var deferred = q.defer();
+
+        UserModel.findById(userId,
+            function(err, doc) {
+                if (err) {
+                    // reject promise if error
+                    deferred.reject(err);
+                } else {
+                    // resolve promise
+                    deferred.resolve(doc);
+                }
+
+            });
+
+        return deferred.promise;
     }
 
 

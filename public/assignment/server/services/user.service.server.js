@@ -36,8 +36,13 @@ module.exports = function (app, userModel){
     }
 
     function deleteUser(req,res){
-        var users = userModel.deleteUser(req.params.id);
-        res.json(users);
+        userModel.deleteUser(req.params.id)
+        .then(function(updatedUser){
+                res.json(updatedUser);
+            },
+            function(err){
+                res.status(400).send(err);
+            });
     }
 
     function findUserById(req,res){

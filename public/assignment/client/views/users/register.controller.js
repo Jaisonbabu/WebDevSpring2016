@@ -32,7 +32,8 @@
                     },
                     function(err){
                         $scope.message = "Username Already Exists";
-                    });
+                    }
+                );
         }
     }
 })();

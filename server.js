@@ -39,8 +39,8 @@ app.use(session({ secret: "secret", resave: true,
 app.use(cookieParser());
 //app.use(passport.initialize());
 //app.use(passport.session());
-app.use(express.json());       // to support JSON-encoded bodies
-app.use(express.urlencoded()); // to support URL-encoded bodies
+//app.use(express.json());       // to support JSON-encoded bodies
+//app.use(express.urlencoded()); // to support URL-encoded bodies
 app.use(express.static( __dirname + '/public'));
 
 //console.log("secret");
@@ -48,8 +48,9 @@ app.use(express.static( __dirname + '/public'));
 
 
 console.log("In Server.js");
-require("./public/assignment/server/app.js")(app,db,mongoose);
 require("./public/Project/server/app.js")(app,request,db,mongoose);
+require("./public/assignment/server/app.js")(app,db,mongoose);
+
 
 //NOTE: PLease keep this before all http calls
 app.listen(port, ipaddress);

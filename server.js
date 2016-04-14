@@ -33,7 +33,7 @@ var port         = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: "secret", resave: true,
+app.use(session({ secret: "this is secret", resave: true,
     saveUninitialized: true}));
 //app.use(multer());
 app.use(cookieParser());

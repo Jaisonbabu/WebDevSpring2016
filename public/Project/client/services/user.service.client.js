@@ -17,7 +17,9 @@
             getUser: getUser,
             findUserbyId: findUserbyId,
             checkLoggedIn: checkLoggedIn,
-            checkUserAdmin: checkUserAdmin
+            checkUserAdmin: checkUserAdmin,
+            getCurrentUser: getCurrentUser,
+            logout:logout
 
         };
 
@@ -33,6 +35,14 @@
 
         function findUserbyId(userId){
             return $http.get("/api/project/user/:"+userId);
+        }
+
+        function getCurrentUser(){
+            return $http.get("/api/project/loggedin");
+        }
+
+        function logout() {
+            return $http.post("/api/project/logout");
         }
 
         function findAllUsers() {
@@ -72,7 +82,6 @@
         function getUser(){
             return $rootScope.currentUser;
         }
-
 
     }
 })();

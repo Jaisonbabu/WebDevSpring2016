@@ -18,7 +18,10 @@
             })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
-                controller: "ProfileController"
+                controller: "ProfileController",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
@@ -31,7 +34,8 @@
             })
             .when("/login", {
                 templateUrl: "views/users/login.view.html",
-                controller: "LoginController"
+                controller: "LoginController",
+                controllerAs: "model"
             })
             .when("/api/search/:id", {
                 templateUrl: "views/detail/hotel.detail.view.html",
@@ -40,7 +44,39 @@
             .otherwise({
                 redirectTo: "/"
             });
+    }
 
+    function getLoggedIn(UserService, $q) {
+        var deferred = $q.defer();
 
+        UserService
+            .getCurrentUser()
+            .then(function(response){
+                var currentUser = response.data;
+                UserService.setCurrentUser(currentUser);
+                deferred.resolve();
+            });
+
+        return deferred.promise;
+    }
+
+    function checkLoggedIn(UserService, $q, $location) {
+
+        var deferred = $q.defer();
+
+        UserService
+            .getCurrentUser()
+            .then(function(response) {
+                var currentUser = response.data;
+                if(currentUser) {
+                    UserService.setUser(currentUser);
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                    $location.url("/");
+                }
+            });
+
+        return deferred.promise;
     }
 })();

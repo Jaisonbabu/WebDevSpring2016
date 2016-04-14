@@ -7,15 +7,37 @@
 
     function HeaderController ($scope, $location, UserService) {
 
-        UserService.checkLoggedIn();
+        var vm = this;
 
-        //console.log($location);
-        //$scope.$location = $location;
+        vm.logout = logout;
 
-        $scope.logout = function logout() {
-            UserService.setUser(null);
-            $location.url("/");
-
+        function init() {
+            vm.$location = $location;
         }
+        init();
+
+        function logout() {
+            UserService
+                .logout()
+                .then(function(){
+                    UserService.setUser(null);
+                    $location.url("/");
+                });
+        }
+        //UserService.checkLoggedIn();
+        //
+        ////console.log($location);
+        ////$scope.$location = $location;
+        //
+        //$scope.logout = function logout() {
+        //    UserService
+        //        .logout()
+        //        .then(function(){
+        //            UserService.setUser(null);
+        //            $location.url("/");
+        //        });
+        //}
+
+
     }
 })();

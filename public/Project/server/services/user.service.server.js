@@ -2,6 +2,8 @@ module.exports = function (app, userModel){
 
     app.post("/api/project/user",createUser);
     app.get("/api/project/user",findUser);
+    app.get("/api/project/loggedin", loggedin);
+    app.post("/api/project/logout", logout);
     app.get("/api/project/user/:id",findUserById);
     app.put("/api/project/user/:id", updateUser);
     app.delete("/api/project/user/:id", deleteUser);
@@ -14,7 +16,7 @@ module.exports = function (app, userModel){
                 function (doc) {
                     console.log("Inside user web service");
                     console.log(JSON.stringify(doc));
-                    //req.session.currentUser = doc;
+                    req.session.currentUser = doc;
                     res.json(doc);
                 },
                 function ( err ) {
@@ -61,6 +63,7 @@ module.exports = function (app, userModel){
             var credentials = {username : userName, password : password};
             userModel.findUserByCredentials(credentials)
                 .then( function(user){
+                        req.session.currentUser = user;
                         res.json(user);
                     },
                     function(err){
@@ -92,6 +95,15 @@ module.exports = function (app, userModel){
                         res.status(400).send(err);
                     });
         }
+    }
+
+    function loggedin(req,res){
+        res.json(req.session.currentUser);
+    }
+
+    function logout(req, res) {
+        req.session.destroy();
+        res.send(200);
     }
 
     //function createUser(req,res){

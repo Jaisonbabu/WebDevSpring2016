@@ -8,10 +8,16 @@
     function ProfileController ($scope, $location, $rootScope, UserService) {
 
         //console.log($rootScope.currentUser.username + " inside profile controller");
-        UserService.checkLoggedIn();
+       // UserService.checkLoggedIn();
+        var vm = this;
 
-        $scope.user = UserService.getUser();
-        $scope.update = update;
+        vm.update= update;
+        function init() {
+            vm.user = UserService.getUser();
+        }
+        init();
+        //$scope.user = UserService.getUser();
+
 
         function update(user){
 
@@ -20,15 +26,15 @@
                     function (updatedUser){
                         if (updatedUser.data != null) {
                             UserService.setUser(updatedUser.data);
-                            $scope.message = "User updated successfully";
+                            vm.message = "User updated successfully";
                         }
                         else
                         {
-                            $scope.message = "Cannot update User";
+                            vm.message = "Cannot update User";
                         }
                     },
                     function (error){
-                        $scope.message = "Cannot update User";
+                        vm.message = "Cannot update User";
                     });
         }
     }

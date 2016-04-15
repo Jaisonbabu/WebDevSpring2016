@@ -1,4 +1,4 @@
-<div class="col-sm-12 col-md-12  main" ng-controller = "HotelDetailController">
+<div class="col-sm-12 col-md-12  main" >
 
 <div>
     <span>
@@ -11,5 +11,35 @@
         <h3>Expensive rating : {{searchDetail.currency}}</h3>
     </div>
 
+    <div class="row">
+        <div class="col-lg-8">
+
+            <div class="card elevation1 card-padding">
+                <!-- ngRepeat: rev in model.curr_review -->
+                <div>
+
+                    <!-- ngIf: model.revZero() --><div class="text-center more-button ng-scope" ng-if="model.revZero()">No reviews posted...Be the first one to post a review!!</div><!-- end ngIf: model.revZero() -->
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-4">
+
+            <div class="card elevation1">
+                <div class="form-header">
+                    <h3 class="container-fluid site-color ng-binding">Been to {{searchDetail.name}}? Write a review below!</h3>
+                </div>
+                <div class="container-fluid review">
+                    <label >Rating: </label>
+                    <form class="form-horizontal ng-pristine ng-valid">
+                        <textarea placeholder="Write a review!" class="form-control review-textarea ng-pristine ng-valid ng-touched" name="name" rows="8" cols="40" ng-model="review.text"></textarea>
+                        <button class="btn btn-primary square-button site-color-background form-control" ng-click="createReview(review)">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3"></div>
+    </div>
 </div>
 </div>

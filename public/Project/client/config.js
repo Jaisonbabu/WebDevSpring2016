@@ -14,11 +14,15 @@
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/home.view.html",
-                controller:"HomeController"
+                controller:"HomeController",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }
@@ -53,7 +57,7 @@
             .getCurrentUser()
             .then(function(response){
                 var currentUser = response.data;
-                UserService.setCurrentUser(currentUser);
+                UserService.setUser(currentUser);
                 deferred.resolve();
             });
 

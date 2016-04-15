@@ -5,10 +5,22 @@
         .module("BonAppetitApp")
         .controller("HotelDetailController", HotelDetailController);
 
-    function HotelDetailController($scope,$routeParams,SearchService){
+    function HotelDetailController($scope,$routeParams,UserService,SearchService){
 
         var resId = $routeParams.id;
+
         console.log(resId);
+
+        var vm = this;
+        var currentUser = "";
+
+        function init() {
+            UserService.getCurrentUser()
+                .then(function(user){
+                     currentUser = user.data;
+                });
+        }
+        init();
 
 
         var successHandler = function (response){
@@ -28,8 +40,26 @@
         };
 
         SearchService.getSearchDetail(resId)
-        .then(successHandler,errorHandler);
+            .then(successHandler,errorHandler);
 
+        $scope.createReview = createReview;
+
+        function createReview(review){
+            var newReview = {
+                resId: resId,
+                userId: currentUser._id,
+                text: review.text,
+                created :  (new Date).getTime()
+            };
+
+            SearchService.addReview(newReview)
+                .then(function (review){
+
+                    },
+                    function (err){
+
+                    })
+        }
 
     }
 })();

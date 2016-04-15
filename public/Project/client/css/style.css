@@ -64,10 +64,26 @@ td {
     margin-top: 20px;
     z-index: 1;
 }
-/*.card-padding{*/
-    /*padding-top: 20px;*/
-    /*padding-bottom: 20px;*/
-/*}*/
+.card-padding{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.square-button {
+    border: none;
+    min-height: 50px;
+    border-radius: 0;
+    box-shadow: none;
+}
+.elevation1 {
+    box-shadow: 0 1px 3px #999;
+}
+.elevation2 {
+    box-shadow: 0 2px 5px #999;
+}
+.elevation3 {
+    box-shadow: 0 5px 7px #999;
+}
+
 .table-responsive th, .table-responsive td{
     white-space: nowrap;
 }

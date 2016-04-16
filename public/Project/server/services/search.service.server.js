@@ -1,10 +1,27 @@
-module.exports = function (app,request){
+module.exports = function (app,request,reviewModel){
 
     app.get("/api/search",fetchAllResult);
     app.get("/api/search/:id",getSearchDetail);
+    app.post("/api/review",addReview);
 
     var apiKey = "7fd3272e638174d575e8ae2c29d0ea71";
     var locuApiKey = "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368";
+
+    function addReview(req,res){
+        var review = req.body;
+        console.log("Review Web Service ");
+        console.log(review);
+        reviewModel.addReview(review)
+            .then(
+                function (createdReview) {
+                    console.log("Inside user web service");
+                    console.log(JSON.stringify(createdReview));
+                    res.json(createdReview);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+    }
 
     function getSearchDetail(req,res){
 

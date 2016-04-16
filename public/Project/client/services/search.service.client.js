@@ -9,7 +9,8 @@
         var searchService = {
             fetchResult: fetchResult,
             getSearchDetail:getSearchDetail,
-            userSearch:userSearch
+            userSearch:userSearch,
+            addReview:addReview
         };
 
         return searchService;
@@ -25,6 +26,10 @@
 
         function userSearch(){
             return $http.get("/api/search");
+        }
+
+        function addReview(review){
+            return $http.post("/api/review");
         }
 
     }

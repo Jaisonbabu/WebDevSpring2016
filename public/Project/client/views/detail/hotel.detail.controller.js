@@ -44,22 +44,29 @@
 
         $scope.createReview = createReview;
 
-        function createReview(review){
+        function createReview(review) {
             var newReview = {
                 resId: resId,
                 userId: currentUser._id,
                 text: review.text,
-                created :  (new Date).getTime()
+                created: (new Date).getTime()
             };
 
             SearchService.addReview(newReview)
-                .then(function (review){
-
+                .then(function (review) {
+                        console.log(review);
                     },
-                    function (err){
+                    function (err) {
 
                     })
         }
+
+
+
+
+
+
+
 
     }
 })();

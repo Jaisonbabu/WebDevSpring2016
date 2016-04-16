@@ -26,7 +26,7 @@
                     function (user){
                         if (user.data != null){
                             UserService.setUser(user.data);
-                            $location.url('/profile');
+                            $location.url('/');
                             console.log($rootScope.currentUser);
                         }
                         else {

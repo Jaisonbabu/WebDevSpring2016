@@ -4,11 +4,10 @@ module.exports = function(mongoose){
 
     var RestaurantSchema = mongoose.Schema({
         resId: String,
-        title: String,
-        fields: [FieldSchema],
-        created: Date,
-        updated: Date
-        // set collection name to 'form'
+        name : String,
+        cuisines : String,
+        currency : String,
+        image : String
     }, {collection: 'hotel'});
     return RestaurantSchema;
 };

@@ -6,4 +6,5 @@ module.exports = function (app,request,db,mongoose){
     var reviewModel = require("./models/review.model.js")(request,db,mongoose);
     var searchService = require("./services/search.service.server.js")(app,request,reviewModel);
 
+
 };

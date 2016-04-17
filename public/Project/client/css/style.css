@@ -13,6 +13,9 @@ th {
     height: auto
 }
 
+.opacity{
+    opacity: 0.7;
+}
 .col {
     width: 200px;
     float: left;
@@ -52,13 +55,19 @@ th {
     font-style: italic;
     color: red;
 }
+hr{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
 
 td {
     background-color: #ff9436;
             /*#c0392b;*/
     color: black;
 }
-
+/*new section*/
 .card {
     background: white;
     margin-top: 20px;
@@ -74,14 +83,87 @@ td {
     border-radius: 0;
     box-shadow: none;
 }
-.elevation1 {
+
+.restaurant-logo-image {
+    /*width: 200px;*/
+    height: 200px;
+    margin-top: -50px;
+    border: 10px solid #c0392b;
+}
+.box-shadow1 {
     box-shadow: 0 1px 3px #999;
 }
-.elevation2 {
+.box-shadow2 {
     box-shadow: 0 2px 5px #999;
 }
 .elevation3 {
     box-shadow: 0 5px 7px #999;
+}
+.inverted-color {
+    color: #eee;
+}
+.dark-color {
+    color: #222;
+}
+.site-color-background {
+    background-color: #c0392b;
+}
+
+.footer {
+    background: #c0392b;
+    min-height: 200px;
+    margin-top: -20px;
+    padding: 75px 100px 50px 100px;
+    z-index: -999;
+}
+
+.form-heading{
+    font-size: 22px;
+}
+
+.restaurant-header {
+    height: auto;
+    padding-bottom: 20px;
+}
+
+.review-user{
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    margin-right: -40px;
+}
+.form-header {
+    padding: 10px 10px 10px 10px;
+}
+.review {
+    padding: 20px;
+}
+.review-textarea {
+    border: none;
+    border-radius: 1px;
+    max-width: 100%;
+    min-width: 100%;
+    margin-bottom: 20px;
+    background-color: #eee;
+}
+.review-textarea:focus {
+    color: #eee;
+    background-color: #c0392b;
+}
+.edit-review-textarea {
+    border: none;
+    border-radius: 1px;
+    outline: none;
+    max-width: 100%;
+    min-width: 100%;
+    background-color: white;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    border-style: none;
+}
+.edit-review-textarea:focus {
+    color: #eee;
+    background-color: #c0392b;
 }
 
 .table-responsive th, .table-responsive td{
@@ -157,13 +239,6 @@ body {
 
 .glyphicon-pencil{
     color:darkslategrey;
-}
-
-hr {
-    border: none;
-    height: 1px;
-    color: #333;
-    background-color: #333;
 }
 
 h3 h4{

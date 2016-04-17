@@ -1,45 +1,93 @@
 <div class="col-sm-12 col-md-12  main" >
 
-<div>
+    <div>
     <span>
         <img class = "img-responsive center-block" ng-src="{{searchDetail.image}}" alt="Image currently unavailable" />
     </span>
-    <div class = "detailResults">
-        <h2>{{searchDetail.name}}</h2>
-        <h3>Cuisines :{{searchDetail.cuisines}}</h3>
-        <h3>Address : {{searchDetail.location.address}} </h3>
-        <h3>Expensive rating : {{searchDetail.currency}}</h3>
-    </div>
+        <div class = "detailResults">
+            <h2>{{searchDetail.name}}</h2>
+            <h3>Cuisines :{{searchDetail.cuisines}}</h3>
+            <h3>Address : {{searchDetail.location.address}} </h3>
+            <h3>Expensive rating : {{searchDetail.currency}}</h3>
+        </div>
 
-    <div class="row">
-        <div class="col-lg-8">
+        <div class="container-fluid site-color-background restaurant-header elevation3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 pull-left">
+                        <img class="img img-responsive img-thumbnail restaurant-logo-image"  ng-src="{{searchDetail.image}}" alt="Image currently unavailable"  >
+                    </div>
+                    <div class="col-lg-3 pull-right">
+                        <h1 class="inverted-color pull-right big-bold ">{{searchDetail.rating.aggregate_rating}}</h1>
+                    </div>
 
-            <div class="card elevation1 card-padding">
-                <!-- ngRepeat: rev in model.curr_review -->
-                <div>
+                    <div class="col-lg-6">
+                        <div class="inverted-color">
+                            <h1>{{searchDetail.name}}</h1>
+                            <p class="subtext">{{searchDetail.location.address}}</p>
+                            <p class="subtext">Cuisines: {{searchDetail.cuisines}}</p>
+                            <uib-rating ng-model="rate" class = "inverted-color" max="max" read-only="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating">
 
-                    <!-- ngIf: model.revZero() --><div class="text-center more-button ng-scope" ng-if="model.revZero()">No reviews posted...Be the first one to post a review!!</div><!-- end ngIf: model.revZero() -->
+                            </uib-rating>
+                    <!--<span ng-mouseleave="reset()" ng-keydown="onKeydown($event)" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" ng-model="model.rating" readonly="readonly" class="ng-isolate-scope ng-valid">-->
+    <!--&lt;!&ndash; ngRepeat: r in range track by $index &ndash;&gt;<span ng-repeat-start="r in range track by $index" class="sr-only ">(*)</span>-->
+    <!--<i ng-repeat-end="" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" class="glyphicon ng-scope glyphicon-star" ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')" ng-attr-title="{{r.title}}" aria-valuetext="one" title="one"></i>&lt;!&ndash; end ngRepeat: r in range track by $index &ndash;&gt;<span ng-repeat-start="r in range track by $index" class="sr-only ng-binding ng-scope">(*)</span>-->
+    <!--<i ng-repeat-end="" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" class="glyphicon ng-scope glyphicon-star" ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')" ng-attr-title="{{r.title}}" aria-valuetext="two" title="two"></i>&lt;!&ndash; end ngRepeat: r in range track by $index &ndash;&gt;<span ng-repeat-start="r in range track by $index" class="sr-only ng-binding ng-scope">(*)</span>-->
+    <!--<i ng-repeat-end="" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" class="glyphicon ng-scope glyphicon-star" ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')" ng-attr-title="{{r.title}}" aria-valuetext="three" title="three"></i>&lt;!&ndash; end ngRepeat: r in range track by $index &ndash;&gt;<span ng-repeat-start="r in range track by $index" class="sr-only ng-binding ng-scope">(*)</span>-->
+    <!--<i ng-repeat-end="" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" class="glyphicon ng-scope glyphicon-star" ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')" ng-attr-title="{{r.title}}" aria-valuetext="four" title="four"></i>&lt;!&ndash; end ngRepeat: r in range track by $index &ndash;&gt;<span ng-repeat-start="r in range track by $index" class="sr-only ng-binding ng-scope">( )</span>-->
+    <!--<i ng-repeat-end="" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" class="glyphicon ng-scope glyphicon-star-empty" ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')" ng-attr-title="{{r.title}}" aria-valuetext="five" title="five"></i>&lt;!&ndash; end ngRepeat: r in range track by $index &ndash;&gt;-->
+<!--</span>-->
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </div>
-        <div class="col-lg-4">
+            <div class="container">
+                <h3 class="inverted-color"><i class="ng-binding">"500th review if this goes through in time?
 
-            <div class="card elevation1">
-                <div class="form-header">
-                    <h3 class="container-fluid site-color ng-binding">Been to {{searchDetail.name}}? Write a review below!</h3>
-                </div>
-                <div class="container-fluid review">
-                    <label >Rating: </label>
-                    <form class="form-horizontal ng-pristine ng-valid">
-                        <textarea placeholder="Write a review!" class="form-control review-textarea ng-pristine ng-valid ng-touched" name="name" rows="8" cols="40" ng-model="review.text"></textarea>
-                        <button class="btn btn-primary square-button site-color-background form-control" ng-click="createReview(review)">Submit Review</button>
-                    </form>
-                </div>
+                    Had an excellent birthday meal. We enjoyed the Grand Omakase at the counter. All the dishes were exceptional,..."</i></h3>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-8">
 
-        <div class="col-lg-3"></div>
+                <div class="card box-shadow1 card-padding">
+
+                    <div ng-repeat = "review in reviews" class = "container-fluid">
+                        <div class = "container-fluid ">
+                            <h3>{{review.text}} </h3>
+
+                        <div class = "site-color-background inverted-color review-user pull-right box-shadow2">
+                            <h3>{{review.userName}}</h3>
+                        </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div ng-if = "reviews" class="text-center more-button ng-scope" >
+                        Write the first review for {{searchDetail.name}}!
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+
+                <div class="card box-shadow1">
+                    <div class="form-header">
+                        <h3 class="container-fluid site-color ng-binding">Been to {{searchDetail.name}}? Write a review below!</h3>
+                    </div>
+                    <div class="container-fluid review">
+                        <label >Rating: </label>
+                        <form class="form-horizontal ng-pristine ng-valid">
+                            <textarea placeholder="Write a review!" class="form-control review-textarea ng-pristine ng-valid ng-touched" name="name" rows="8" cols="40" ng-model="review.text"></textarea>
+                            <button class="btn btn-primary square-button site-color-background form-control" ng-click="createReview(review)">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3"></div>
+        </div>
     </div>
-</div>
+
+
 </div>

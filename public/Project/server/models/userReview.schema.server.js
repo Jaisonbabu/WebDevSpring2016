@@ -4,7 +4,7 @@ module.exports = function(mongoose) {
             reviewIds: [String]
 
         },
-        {collection: "bukreview.test4.bookfav"});
+        {collection: "review"});
 
-    return breBookFavSchema;
+    return userReview;
 };

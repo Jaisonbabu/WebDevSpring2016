@@ -1,8 +1,13 @@
 module.exports = function (app,request,reviewModel){
 
-    app.get("/api/search",fetchAllResult);
-    app.get("/api/search/:id",getSearchDetail);
-    app.post("/api/review",addReview);
+    //Search
+    app.get("/api/project/search",fetchAllResult);
+    app.get("/api/project/search/:id",getSearchDetail);
+
+    //Reviews
+    app.get("/api/project/restaurant/review/:id",getReviewsByResId);
+    app.get("/api/project/user/review/:id",getReviewsByUserId);
+    app.post("/api/project/review",addReview);
 
     var apiKey = "7fd3272e638174d575e8ae2c29d0ea71";
     var locuApiKey = "9f1a27ccdfdc6d8dbcf51c6ee8a19e0b7298b368";
@@ -14,9 +19,37 @@ module.exports = function (app,request,reviewModel){
         reviewModel.addReview(review)
             .then(
                 function (createdReview) {
-                    console.log("Inside user web service");
+                    console.log("Inside search web service");
                     console.log(JSON.stringify(createdReview));
                     res.json(createdReview);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function getReviewsByResId(req,res){
+        var resId = req.params.id;
+        reviewModel.getReviewsByResId(resId)
+            .then(
+                function (restaurantReviews) {
+                    console.log("Inside Review web service");
+                    console.log(JSON.stringify(restaurantReviews));
+                    res.json(restaurantReviews);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function getReviewsByUserId(req,res){
+        var userId = req.params.id;
+        reviewModel.getReviewsByUserId(userId)
+            .then(
+                function (restaurantReviews) {
+                    console.log("Inside Review web service");
+                    console.log(JSON.stringify(restaurantReviews));
+                    res.json(restaurantReviews);
                 },
                 function ( err ) {
                     res.status(400).send(err);
@@ -70,7 +103,7 @@ module.exports = function (app,request,reviewModel){
                 var info = JSON.parse(JSON.stringify(body));
                 console.log(info);
                 //console.log(JSON.parse(JSON.stringify(response)));
-               res.send(body)
+                res.send(body)
             }
             else {
                 console.log('Error happened: '+ error);

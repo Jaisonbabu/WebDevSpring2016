@@ -10,28 +10,32 @@
             fetchResult: fetchResult,
             getSearchDetail:getSearchDetail,
             userSearch:userSearch,
-            addReview:addReview
+            addReview:addReview,
+            getReviewsByResId:getReviewsByResId,
         };
 
         return searchService;
 
 
         function getSearchDetail(resId){
-            return $http.get("/api/search/"+resId);
+            return $http.get("/api/project/search/"+resId);
         }
 
         function fetchResult(){
-            return $http.get("/api/search");
+            return $http.get("/api/project/search");
         }
 
         function userSearch(){
-            return $http.get("/api/search");
+            return $http.get("/api/project/search");
         }
 
         function addReview(review){
-            return $http.post("/api/review");
+            return $http.post("/api/project/review",review,{headers: {'Content-Type': 'application/json'} });
         }
 
+        function getReviewsByResId(resId){
+            return $http.get("/api/project/restaurant/review/"+resId);
+        }
     }
 
 })();

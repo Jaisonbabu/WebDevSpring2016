@@ -30,6 +30,7 @@ module.exports = function(db,mongoose) {
             userId: review.userId,
             text: review.text,
             userName : review.userName,
+            rating : review.rating,
             created: (new Date).getTime(),
             updated: (new Date).getTime()
         };

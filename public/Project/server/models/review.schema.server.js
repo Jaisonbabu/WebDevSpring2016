@@ -5,6 +5,7 @@ module.exports = function(mongoose){
         userId: String,
         userName:String,
         text: String,
+        rating: Number,
         created: Date,
         updated: Date
     }, {collection: 'review'});

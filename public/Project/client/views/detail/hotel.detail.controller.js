@@ -22,8 +22,8 @@
         }
         init();
 
-        $scope.rate = 7;
-        $scope.max = 10;
+        $scope.rate = 0;
+        $scope.max = 5;
         $scope.isReadonly = false;
         $scope.hoveringOver = function(value) {
             $scope.overStar = value;
@@ -59,6 +59,12 @@
             SearchService.getReviewsByResId(resId)
             .then(function(rev){
                 $scope.reviews = rev.data;
+                if($scope.reviews.length > 0){
+                    $scope.noReviews = false;
+                }else{
+                    $scope.noReviews = true;
+                }
+
             },
             function(err){
 
@@ -73,13 +79,15 @@
                 userId: currentUser._id,
                 userName : currentUser.username,
                 text: review.text,
-                hotel: $scope.searchDetail
+                hotel: $scope.searchDetail,
+                rating:$scope.rate
             };
-
             SearchService.addReview(newReview)
                 .then(function (review) {
                         console.log(review.data);
                         getRestaurantReviews(review.data.resId);
+                        $scope.review = null;
+                        $scope.rate = 0;
                     },
                     function (err) {
 

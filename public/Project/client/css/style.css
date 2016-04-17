@@ -117,6 +117,33 @@ td {
     z-index: -999;
 }
 
+.map-prop {
+    height: 350px;
+    display:block;
+}
+.home-img-prop {
+    width: 100%;
+    height: auto;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.home-img {
+    background-image: url(res2.jpg);
+}
+.banner-image-restaurant {
+    background-image: url(../images/rest_banner.jpg);
+}
+
+.space-top-bottom {
+    padding-top: 200px;
+    padding-bottom: 200px;
+}
+
+.space-top-bottom-small {
+    padding-top: 55px;
+    padding-bottom: 200px;
+}
 .form-heading{
     font-size: 22px;
 }

@@ -15,6 +15,7 @@
             .when("/", {
                 templateUrl: "views/home/home.view.html",
                 controller:"HomeController",
+                controllerAs: "model",
                 resolve: {
                     getLoggedIn: getLoggedIn
                 }

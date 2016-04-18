@@ -11,7 +11,7 @@
             getSearchDetail:getSearchDetail,
             userSearch:userSearch,
             addReview:addReview,
-            getReviewsByResId:getReviewsByResId,
+            getReviewsByResId:getReviewsByResId
         };
 
         return searchService;
@@ -21,12 +21,13 @@
             return $http.get("/api/project/search/"+resId);
         }
 
-        function fetchResult(){
-            return $http.get("/api/project/search");
+        function fetchResult(pos){
+            console.log(pos);
+            return $http.get("/api/project/location/search?lat="+pos.lat+"&lng"+pos.lng);
         }
 
-        function userSearch(){
-            return $http.get("/api/project/search");
+        function userSearch(search){
+            return $http.get("/api/project/query/search?query="+search.query+"&loc"+search.place);
         }
 
         function addReview(review){

@@ -1,8 +1,9 @@
 module.exports = function (app,request,reviewModel){
 
     //Search
-    app.get("/api/project/search",fetchAllResult);
+    app.get("/api/project/location/search",fetchAllResult);
     app.get("/api/project/search/:id",getSearchDetail);
+    app.get("/api/project/query/search",getUserSearchResult);
 
     //Reviews
     app.get("/api/project/restaurant/review/:id",getReviewsByResId);
@@ -86,10 +87,14 @@ module.exports = function (app,request,reviewModel){
 
     function fetchAllResult(req,res){
 
+        var lat = req.query.lat;
+        var lng = req.query.lng;
+        console.log("inside fetch");
+        console.log(lat);
         var fetch_options = {
             host: 'developers.zomato.com',
             path:'/api/v2.1/search',
-            url: "https://developers.zomato.com/api/v2.1/search?lat=42.3742640000&lon=-71.1204150000",
+            url: "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng,
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -111,6 +116,38 @@ module.exports = function (app,request,reviewModel){
         }
         request(fetch_options, callback);
 
+    }
+
+    function getUserSearchResult (req,res){
+
+        var query = req.query.query;
+        var place = req.query.place;
+
+        console.log(query);
+        var fetch_options = {
+            host: 'developers.zomato.com',
+            path:'/api/v2.1/search',
+            url: "https://developers.zomato.com/api/v2.1/search?q="+query+"&lat="+42.3601+"&lon="+-71.0589,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'user-key':apiKey
+            }
+        };
+
+        function callback(error, response, body) {
+            if (!error) {
+                var info = JSON.parse(JSON.stringify(body));
+                console.log(info);
+                //console.log(JSON.parse(JSON.stringify(response)));
+                res.send(body)
+            }
+            else {
+                console.log('Error happened: '+ error);
+            }
+        }
+        request(fetch_options, callback);
     }
 
     function getMenu(req,res){

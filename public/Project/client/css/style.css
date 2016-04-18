@@ -16,11 +16,15 @@ th {
 .opacity{
     opacity: 0.7;
 }
-.col {
-    width: 200px;
-    float: left;
+.card-img {
+    width: 125px;
+    height: 90px;
+    max-height: 90px;
+    mix-width: 125px;
 }
-
+.home-card-move-up{
+    margin: 0;
+}
 .tableProp {border-collapse:collapse; table-layout:fixed;}
 .tdProp { width:100px; word-wrap:break-word;}
 
@@ -77,6 +81,10 @@ td {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+.card-heading {
+    padding: 20px 20px 10px 20px;
+}
 .square-button {
     border: none;
     min-height: 50px;
@@ -130,6 +138,13 @@ td {
 }
 .home-img {
     background-image: url(res2.jpg);
+}
+
+.home-cards{
+    color: #222;
+}
+.home-cards:hover{
+    color: #c0392b;
 }
 .banner-image-restaurant {
     background-image: url(../images/rest_banner.jpg);

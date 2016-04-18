@@ -87,14 +87,13 @@ module.exports = function (app,request,reviewModel){
 
     function fetchAllResult(req,res){
 
-        var lat = req.query.lat;
-        var lng = req.query.lng;
-        console.log("inside fetch");
-        console.log(lat);
+        var lat = parseFloat(req.query.lat);
+        var lng = parseFloat(req.query.lng);
+
         var fetch_options = {
             host: 'developers.zomato.com',
             path:'/api/v2.1/search',
-            url: "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng,
+            url: "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&sort=rating",
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,13 +120,15 @@ module.exports = function (app,request,reviewModel){
     function getUserSearchResult (req,res){
 
         var query = req.query.query;
-        var place = req.query.place;
+        var lat = parseFloat(req.query.lat);
+        var lng = parseFloat(req.query.lng);
 
-        console.log(query);
+
+        console.log(lng);
         var fetch_options = {
             host: 'developers.zomato.com',
             path:'/api/v2.1/search',
-            url: "https://developers.zomato.com/api/v2.1/search?q="+query+"&lat="+42.3601+"&lon="+-71.0589,
+            url: "https://developers.zomato.com/api/v2.1/search?q="+query+"&lat="+lat+"&lon="+lng+"&sort=rating",
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

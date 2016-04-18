@@ -11,7 +11,8 @@
             getSearchDetail:getSearchDetail,
             userSearch:userSearch,
             addReview:addReview,
-            getReviewsByResId:getReviewsByResId
+            getReviewsByResId:getReviewsByResId,
+            getLocationForAddress: getLocationForAddress
         };
 
         return searchService;
@@ -23,11 +24,11 @@
 
         function fetchResult(pos){
             console.log(pos);
-            return $http.get("/api/project/location/search?lat="+pos.lat+"&lng"+pos.lng);
+            return $http.get("/api/project/location/search?lat="+pos.lat+"&lng="+pos.lng);
         }
 
         function userSearch(search){
-            return $http.get("/api/project/query/search?query="+search.query+"&loc"+search.place);
+            return $http.get("/api/project/query/search?query="+search.query+"&lat="+search.lat+"&lng="+search.lng);
         }
 
         function addReview(review){
@@ -36,6 +37,10 @@
 
         function getReviewsByResId(resId){
             return $http.get("/api/project/restaurant/review/"+resId);
+        }
+
+        function getLocationForAddress(place){
+            return $http.get("https://maps.googleapis.com/maps/api/geocode/json?address="+place);
         }
     }
 

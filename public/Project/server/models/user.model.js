@@ -1,9 +1,13 @@
 var q = require("q");
 
-module.exports = function(db,mongoose) {
+module.exports = function(db,mongoose,RestaurantModel) {
 
     var UserSchema = require("./user.schema.server.js")(mongoose);
     var UserModel = mongoose.model('appUser',UserSchema);
+
+    var FavoriteSchema = require("./favorites.schema.server.js")(mongoose);
+    var FavoriteModel = mongoose.model('favorite',FavoriteSchema);
+
 
     var api = {
         createUser:createUser,
@@ -12,28 +16,128 @@ module.exports = function(db,mongoose) {
         findAllUsers:findAllUsers,
         findUserById:findUserById,
         findUserByUsername:findUserByUsername,
-        findUserByCredentials:findUserByCredentials
+        findUserByCredentials:findUserByCredentials,
+        addUserFavorite:addUserFavorite,
+        getUserFavorite:getUserFavorite
     };
 
     return api;
+
+    function addUserFavorite(userId,restaurant){
+        var deferred = q.defer();
+        console.log("Inside Model");
+        console.log(userId);
+        FavoriteModel.findOne({userId: userId},
+            function(err, userFav){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+
+                    var resId = restaurant.id;
+
+                    if(userFav.resIds.indexOf(resId) == -1 ) {
+
+                        userFav.resIds.push(resId);
+                        userFav.save(function (err, userFavObj) {
+                            if (err) {
+                                deferred.reject(err);
+                            } else {
+
+                                storeHotel(restaurant);
+                                deferred.resolve(userFavObj);
+                            }
+                        })
+                    }
+                    else{
+                        deferred.resolve(null);
+                    }
+                }
+            });
+        return deferred.promise;
+    }
+
+    function storeHotel(hotel){
+        var deferred = q.defer();
+        console.log("Store hotel");
+        console.log(hotel);
+        RestaurantModel.create({
+            resId: hotel.id,
+            name : hotel.name,
+            cuisines : hotel.cuisines,
+            currency : hotel.currency,
+            image : hotel.image,
+            location : hotel.location,
+            rating : hotel.rating
+
+        },function(err,hotel){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(hotel);
+            }
+        });
+        return deferred.promise;
+    }
+
+    function getUserFavorite(userId){
+        var deferred = q.defer();
+        FavoriteModel.findOne({userId: userId},
+            function(err, userFav){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+                    if(userFav.resIds == 0){
+                        deferred.resolve(null);
+                    }
+                    console.log("user found");
+                    console.log(userFav);
+                    RestaurantModel.find({$or: [{resId: {$in: userFav.resIds}}]},
+                        function(err, favRes){
+                            if(err){
+                                deferred.reject(err);
+                            }
+                            else
+                            {
+                                console.log("favRes");
+                                console.log(favRes);
+                                deferred.resolve(favRes);
+                            }
+                        });
+                }
+            });
+        return deferred.promise;
+    }
+
+
+
 
     function createUser(user){
 
         // use q to defer the response
         var deferred = q.defer();
+        var fullUser = {};
         console.log("Inside User Model");
         console.log(JSON.stringify(user));
         // insert new user with mongoose user model's create()
-        UserModel.create(user, function (err, doc) {
+        UserModel.create(user, function (err, newUser) {
             if(err){
-                // reject promise if error
                 deferred.reject(err);
             }else{
-                // resolve promise
-                deferred.resolve(doc);
+                FavoriteModel.create({userId: newUser._id, resIds: []},
+                    function(err, userFav) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            //finalResult.bookFav = bookFavObj;
+                            console.log("USER MODEL CREATE END");
+                            deferred.resolve(newUser);
+                        }
+                    }
+                );
             }
         });
-        // return a promise
         return deferred.promise;
     }
 

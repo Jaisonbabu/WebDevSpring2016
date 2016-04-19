@@ -17,7 +17,7 @@
         function init() {
             UserService.getCurrentUser()
                 .then(function(user){
-                     currentUser = user.data;
+                    currentUser = user.data;
                 });
         }
         init();
@@ -53,22 +53,23 @@
             .then(successHandler,errorHandler);
 
         $scope.createReview = createReview;
+        $scope.addFav = addFav;
         $scope.reviews= null;
 
         function getRestaurantReviews(resId){
             SearchService.getReviewsByResId(resId)
-            .then(function(rev){
-                $scope.reviews = rev.data;
-                if($scope.reviews.length > 0){
-                    $scope.noReviews = false;
-                }else{
-                    $scope.noReviews = true;
-                }
+                .then(function(rev){
+                        $scope.reviews = rev.data;
+                        if($scope.reviews.length > 0){
+                            $scope.noReviews = false;
+                        }else{
+                            $scope.noReviews = true;
+                        }
 
-            },
-            function(err){
+                    },
+                    function(err){
 
-            })
+                    })
         }
 
         getRestaurantReviews(resId);
@@ -92,6 +93,16 @@
                     function (err) {
 
                     })
+        }
+
+        function addFav(res){
+            UserService.addUserFavorite(currentUser._id,res)
+                .then(function(res){
+                        alert("Favorite added");
+                    },function(err){
+
+                    }
+                )
         }
 
 

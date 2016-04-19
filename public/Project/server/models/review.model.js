@@ -3,13 +3,11 @@
 var q = require("q");
 
 
-module.exports = function(db,mongoose) {
+module.exports = function(db,mongoose,RestaurantModel) {
 
     var ReviewSchema = require("./review.schema.server.js")(mongoose);
     var ReviewModel = mongoose.model('review',ReviewSchema);
 
-    var RestaurantSchema = require("./restaurant.schema.server.js")(mongoose);
-    var RestaurantModel = mongoose.model('hotel',RestaurantSchema);
 
     var review = {
         addReview:addReview,

@@ -1,0 +1,36 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <ul class="nav nav-tabs">
+        <li role="presentation" ><a href="#/profile">Profile</a></li>
+        <li role="presentation" class="active"><a href="#/favorite">Favorites</a></li>
+    </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-3 col-lg-3 hidden-sm hidden-xs hidden-md"></div>
+            <div class="col-lg-6">
+                <div ng-if ="model.restaurants" ng-repeat="restaurant  in model.restaurants">
+                    <a class="home-cards" href="#/api/search/{{restaurant.resId}}">
+                        <div class="card box-shadow2">
+                            <div class="row card-heading">
+
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <img class="img img-responsive card-img "   ng-src="{{restaurant.image}}" alt=" Image currently unavailable">
+                                </div>
+                                <div class="col-sm-9 col-md-9 col-lg-9 center-block" >
+                                    <h2 class ="home-card-move-up">{{restaurant.name}}</h2>
+                                    <h4 class="subtitle ">{{restaurant.location.address}}</h4>
+                                    <h4>Rating: {{restaurant.rating}}</h4>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3 hidden-sm hidden-xs hidden-md"></div>
+        </div>
+    </div>
+</div>

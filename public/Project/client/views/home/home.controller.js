@@ -57,13 +57,11 @@
         //$scope.userSearch = userSearch;
 
 
-
-
         function userSearch(search){
             if(typeof search == "undefined") {
                 console.log("Do Nothing");
             }else
-            if(typeof search.place == "undefined"){
+            if(typeof search.place == "undefined" ||  search.place ==""){
                 console.log("place empty");
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
@@ -73,7 +71,8 @@
                             };
                             var newSearch = {
                                 query : search.query,
-                                place : pos
+                                lat : pos.lat,
+                                lng : pos.lng
                             };
 
                             SearchService.userSearch(newSearch)

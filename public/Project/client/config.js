@@ -46,6 +46,14 @@
                 templateUrl: "views/detail/hotel.detail.view.html",
                 controller: "HotelDetailController"
             })
+            .when("/favorite", {
+                templateUrl: "views/users/favorite.view.html",
+                controller: "FavoriteController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/"
             });

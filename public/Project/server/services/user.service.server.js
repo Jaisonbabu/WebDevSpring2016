@@ -8,6 +8,12 @@ module.exports = function (app, userModel){
     app.put("/api/project/user/:id", updateUser);
     app.delete("/api/project/user/:id", deleteUser);
 
+    //user favorite
+
+    app.post("/api/project/user/fav/:userId",addUserFavorite);
+    app.get("/api/project/user/fav/:userId",getUserFavorite);
+
+
     function createUser(req,res){
         var user = req.body;
         console.log("req body in web service:"+JSON.stringify(req.body));
@@ -49,6 +55,29 @@ module.exports = function (app, userModel){
         userModel.findUserById(req.params.id)
             .then(function(user){
                     res.json(user);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+
+    function addUserFavorite(req, res){
+
+        userModel.addUserFavorite(req.params.userId, req.body)
+            .then(function(userFav){
+                    res.json(userFav);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+    function getUserFavorite(req, res){
+        console.log(req.params.userId);
+        userModel.getUserFavorite(req.params.userId)
+            .then(function(userFavs){
+                    res.json(userFavs);
                 },
                 function(err){
                     res.status(400).send(err);
@@ -106,45 +135,5 @@ module.exports = function (app, userModel){
         res.send(200);
     }
 
-    //function createUser(req,res){
-    //    console.log(req.body);
-    //    var newUsers = userModel.createUser(req.body);
-    //    res.json(newUsers);
-    //}
-    //
-    //function updateUser(req,res){
-    //    var updatedUser = userModel.updateUser(req.body,req.params.id);
-    //    res.json(updatedUser);
-    //
-    //}
-    //
-    //function deleteUser(req,res){
-    //    var users = userModel.deleteUser(req.params.id);
-    //    res.json(users);
-    //}
-    //
-    //function findUserById(req,res){
-    //    var user = userModel.findUserById(req.params.id);
-    //    res.json(user);
-    //}
-    //
-    //function findUser(req,res){
-    //    var userName = req.query.username;
-    //    var password = req.query.password;
-    //    var user = null;
-    //    if (userName != null && password != null){
-    //        var credentials = {username : userName, password : password};
-    //        user = userModel.findUserByCredentials(credentials);
-    //        res.json(user);
-    //    }
-    //    if(userName!=null && password == null){
-    //        user = userModel.findUserByUsername(userName);
-    //        res.json(user);
-    //    }
-    //    if(userName ==null && password == null){
-    //        var users = userModel.findAllUsers();
-    //        res.json(users);
-    //    }
-    //}
 
 };

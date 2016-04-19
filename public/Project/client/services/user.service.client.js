@@ -19,6 +19,8 @@
             checkLoggedIn: checkLoggedIn,
             checkUserAdmin: checkUserAdmin,
             getCurrentUser: getCurrentUser,
+            addUserFavorite:addUserFavorite,
+            getUserFavorites:getUserFavorites,
             logout:logout
 
         };
@@ -60,6 +62,14 @@
         function updateUser(userId, user){
             console.log("inside client updateUser"+ user);
             return $http.put("/api/project/user/"+userId, user);
+        }
+
+        function addUserFavorite(userId,res){
+            return $http.post("/api/project/user/fav/"+userId,res,{headers: {'Content-Type': 'application/json'} });
+        }
+
+        function getUserFavorites(userId){
+            return $http.get("/api/project/user/fav/"+userId);
         }
 
         function checkLoggedIn(){

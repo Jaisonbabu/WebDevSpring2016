@@ -3,9 +3,9 @@
 (function(){
     angular
         .module("BonAppetitApp")
-        .controller("FavoriteController", FavoriteController);
+        .controller("ReviewController", ReviewController);
 
-    function FavoriteController (SearchService,UserService) {
+    function ReviewController (SearchService,UserService) {
 
         var vm = this;
 
@@ -13,9 +13,9 @@
 
             UserService.getCurrentUser()
                 .then(function(user){
-                    UserService.getUserFavorites(user.data._id)
-                        .then(function(fav){
-                            vm.restaurants = fav.data;
+                    SearchService.getReviewsByUserId(user.data._id)
+                        .then(function(rev){
+                            vm.reviews = rev.data;
 
                         },function(err){
 

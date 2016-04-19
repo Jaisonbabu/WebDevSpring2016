@@ -7,7 +7,7 @@
 
     function LoginController ($scope, $location, $rootScope, UserService) {
 
-        console.log($rootScope.currentUser + " inside login controller");
+        //console.log($rootScope.currentUser + " inside login controller");
 
         var vm = this;
 

@@ -17,8 +17,11 @@ module.exports = function(db,mongoose,RestaurantModel) {
         findUserById:findUserById,
         findUserByUsername:findUserByUsername,
         findUserByCredentials:findUserByCredentials,
+
+        //Favorites
         addUserFavorite:addUserFavorite,
-        getUserFavorite:getUserFavorite
+        getUserFavorite:getUserFavorite,
+        removeUserFavorite:removeUserFavorite
     };
 
     return api;
@@ -105,6 +108,29 @@ module.exports = function(db,mongoose,RestaurantModel) {
                                 deferred.resolve(favRes);
                             }
                         });
+                }
+            });
+        return deferred.promise;
+    }
+
+    function removeUserFavorite(userId, resId){
+        var deferred = q.defer();
+
+        FavoriteModel.findOne({userId: userId},
+            function(err, userFav){
+                if(err){
+                    deferred.reject(err);
+                }
+                else {
+                    userFav.resIds.splice(userFav.bookIds.indexOf(resId), 1);
+                    userFav.save(function (err, userFavObj) {
+                        if (err) {
+                            deferred.reject(err);
+                        }
+                        else {
+                            deferred.resolve(userFavObj);
+                        }
+                    });
                 }
             });
         return deferred.promise;

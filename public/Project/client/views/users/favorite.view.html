@@ -2,6 +2,7 @@
     <ul class="nav nav-tabs">
         <li role="presentation" ><a href="#/profile">Profile</a></li>
         <li role="presentation" class="active"><a href="#/favorite">Favorites</a></li>
+        <li role="presentation"><a href="#/review">Your Review's</a></li>
     </ul>
     <div class="container-fluid">
         <div class="row">
@@ -18,7 +19,11 @@
                                 <div class="col-sm-9 col-md-9 col-lg-9 center-block" >
                                     <h2 class ="home-card-move-up">{{restaurant.name}}</h2>
                                     <h4 class="subtitle ">{{restaurant.location.address}}</h4>
-                                    <h4>Rating: {{restaurant.rating}}</h4>
+                                    <div class="row text-nowrap" ng-hide="model.isLogin()">
+                                        <a class="disabled" ng-click="model.removeFav(restaurant)">
+                                            <span style="color:orangered" class="glyphicon glyphicon-heart-empty"></span>
+                                        </a>
+                                    </div>
 
                                 </div>
 

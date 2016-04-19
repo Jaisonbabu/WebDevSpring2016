@@ -19,8 +19,12 @@
             checkLoggedIn: checkLoggedIn,
             checkUserAdmin: checkUserAdmin,
             getCurrentUser: getCurrentUser,
+
+            //favorites
             addUserFavorite:addUserFavorite,
             getUserFavorites:getUserFavorites,
+
+
             logout:logout
 
         };

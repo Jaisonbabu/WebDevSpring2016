@@ -54,6 +54,14 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
+            .when("/review", {
+                templateUrl: "views/users/review.view.html",
+                controller: "ReviewController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/"
             });

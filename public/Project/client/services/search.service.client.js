@@ -12,6 +12,7 @@
             userSearch:userSearch,
             addReview:addReview,
             getReviewsByResId:getReviewsByResId,
+            getReviewsByUserId:getReviewsByUserId,
             getLocationForAddress: getLocationForAddress
         };
 
@@ -37,6 +38,10 @@
 
         function getReviewsByResId(resId){
             return $http.get("/api/project/restaurant/review/"+resId);
+        }
+
+        function getReviewsByUserId(userId){
+            return $http.get("/api/project/user/review/"+userId);
         }
 
         function getLocationForAddress(place){

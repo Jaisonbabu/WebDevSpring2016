@@ -25,10 +25,12 @@ module.exports = function(db,mongoose,RestaurantModel) {
         console.log(JSON.stringify(review));
         var newReview = {
             resId: review.resId,
+            resName : review.hotel.name,
             userId: review.userId,
             text: review.text,
             userName : review.userName,
             rating : review.rating,
+            image:review.hotel.image,
             created: (new Date).getTime(),
             updated: (new Date).getTime()
         };
@@ -39,6 +41,25 @@ module.exports = function(db,mongoose,RestaurantModel) {
                 storeHotel(review.hotel);
                 deferred.resolve(doc);
 
+            }
+        });
+        return deferred.promise;
+    }
+
+    function storeHotel(hotel){
+        var deferred = q.defer();
+        RestaurantModel.create({
+            resId: hotel.id,
+            name : hotel.name,
+            cuisines : hotel.cuisines,
+            currency : hotel.currency,
+            image : hotel.image
+
+        },function(err,hotel){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(hotel);
             }
         });
         return deferred.promise;
@@ -71,22 +92,5 @@ module.exports = function(db,mongoose,RestaurantModel) {
     }
 
 
-    function storeHotel(hotel){
-        var deferred = q.defer();
-        RestaurantModel.create({
-            resId: hotel.id,
-            name : hotel.name,
-            cuisines : hotel.cuisines,
-            currency : hotel.currency,
-            image : hotel.image
 
-        },function(err,hotel){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(hotel);
-            }
-        });
-        return deferred.promise;
-    }
 };

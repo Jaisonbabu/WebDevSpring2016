@@ -36,25 +36,26 @@ module.exports = function(db,mongoose,RestaurantModel) {
                     deferred.reject(err);
                 }
                 else{
-
+                    console.log(JSON.stringify(userFav));
                     var resId = restaurant.id;
 
-                    if(userFav.resIds.indexOf(resId) == -1 ) {
+                        if(userFav.resIds.indexOf(resId) == -1 ) {
 
-                        userFav.resIds.push(resId);
-                        userFav.save(function (err, userFavObj) {
-                            if (err) {
-                                deferred.reject(err);
-                            } else {
+                            userFav.resIds.push(resId);
+                            userFav.save(function (err, userFavObj) {
+                                if (err) {
+                                    deferred.reject(err);
+                                } else {
 
-                                storeHotel(restaurant);
-                                deferred.resolve(userFavObj);
-                            }
-                        })
-                    }
-                    else{
-                        deferred.resolve(null);
-                    }
+                                    storeHotel(restaurant);
+                                    deferred.resolve(userFavObj);
+                                }
+                            })
+                        }
+                        else{
+                            deferred.resolve(null);
+                        }
+
                 }
             });
         return deferred.promise;
@@ -70,25 +71,34 @@ module.exports = function(db,mongoose,RestaurantModel) {
                 else{
                     if(userFav === null || userFav.resIds == 0 ){
                         deferred.resolve(null);
+                    }else{
+                        console.log("user found");
+                        console.log(userFav);
+                        var finalUserFav = {};
+                        RestaurantModel.find({$or: [{resId: {$in: userFav.resIds}}]},
+                            function(err, favRes){
+                                if(err){
+                                    deferred.reject(err);
+                                }
+                                else
+                                {
+                                    console.log("favRes");
+                                    console.log(favRes);
+                                    finalUserFav = {
+                                        userId : userFav.userId,
+                                        resIds : userFav.resIds,
+                                        resFav : favRes
+                                    };
+                                    deferred.resolve(finalUserFav);
+                                }
+                            });
                     }
-                    console.log("user found");
-                    console.log(userFav);
-                    RestaurantModel.find({$or: [{resId: {$in: userFav.resIds}}]},
-                        function(err, favRes){
-                            if(err){
-                                deferred.reject(err);
-                            }
-                            else
-                            {
-                                console.log("favRes");
-                                console.log(favRes);
-                                deferred.resolve(favRes);
-                            }
-                        });
+
                 }
             });
         return deferred.promise;
     }
+
 
     function removeUserFavorite(userId, resId){
         var deferred = q.defer();
@@ -125,12 +135,15 @@ module.exports = function(db,mongoose,RestaurantModel) {
             currency : hotel.currency,
             image : hotel.image,
             location : hotel.location.address,
-            rating : hotel.rating
+            rating : hotel.rating.aggregate_rating
 
         },function(err,hotel){
             if(err){
+                console.log("hotel save error");
                 deferred.reject(err);
             }else{
+                console.log("hotel saved");
+                console.log(hotel);
                 deferred.resolve(hotel);
             }
         });

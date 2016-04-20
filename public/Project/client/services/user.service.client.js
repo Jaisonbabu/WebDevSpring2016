@@ -24,6 +24,7 @@
             //favorites
             addUserFavorite:addUserFavorite,
             getUserFavorites:getUserFavorites,
+            removeUserFavorite:removeUserFavorite,
 
 
             logout:logout
@@ -79,6 +80,10 @@
 
         function getUserFavorites(userId){
             return $http.get("/api/project/user/fav/"+userId);
+        }
+
+        function removeUserFavorite(userId,resId){
+            return $http.delete("/api/project/user/"+userId+"/fav/"+resId);
         }
 
         function checkLoggedIn(){

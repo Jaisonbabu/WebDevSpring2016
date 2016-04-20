@@ -17,7 +17,7 @@ module.exports = function (app, userModel){
 
     app.post("/api/project/user/fav/:userId",addUserFavorite);
     app.get("/api/project/user/fav/:userId",getUserFavorite);
-
+    app.delete("/api/project/user/:userId/fav/:resId",removeUserFavorite);
 
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
@@ -129,6 +129,19 @@ module.exports = function (app, userModel){
         console.log(req.params.userId);
         userModel.getUserFavorite(req.params.userId)
             .then(function(userFavs){
+                    res.json(userFavs);
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
+    }
+
+    function removeUserFavorite(req,res){
+
+        userModel.removeUserFavorite(req.params.userId,req.params.resId)
+            .then(function(userFavs){
+                    console.log("user fav deleted");
+                    console.log(userFavs);
                     res.json(userFavs);
                 },
                 function(err){

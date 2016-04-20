@@ -24,14 +24,21 @@
                     <p class="subtext">Phone: {{searchDetail.phone}}</p>
 
                     <!--<div class="row text-nowrap" ng-hide="isLogin()">-->
-                        <!--<a class="disabled" ng-click="addFav(searchDetail)"-->
-                           <!--style="pointer-events:{{getFavButtonState(searchDetail)}}">-->
-                            <!--<span style="color:{{getFavButtonColor(searchDetail)}}"-->
-                                  <!--class="glyphicon glyphicon-heart text-muted"></span>-->
-                        <!--</a>-->
+                    <!--<a class="disabled" ng-click="addFav(searchDetail)"-->
+                    <!--style="pointer-events:{{getFavButtonState(searchDetail)}}">-->
+                    <!--<span style="color:{{getFavButtonColor(searchDetail)}}"-->
+                    <!--class="glyphicon glyphicon-heart text-muted"></span>-->
+                    <!--</a>-->
                     <!--</div>-->
+                    <button class="btn btn-primary"
+                            ng-click="addFav(searchDetail)" ng-show ="currentUser">
+                <span ng-show="userFav.resIds.indexOf(searchDetail.id) > -1" class="glyphicon glyphicon-star"></span>
+                <span ng-show="!userFav || !userFav.resIds || userFav.resIds.indexOf(searchDetail.id) == -1"
+                      class="glyphicon glyphicon-star-empty">
 
-                    <a ng-click = "addFav(searchDetail)" > <img  class ="heart" width = "30px" height = "30px" ng-src ="./css/empty.png"/></a>
+                </span></button>
+
+                        <!--<a ng-click = "addFav(searchDetail)" > <img  class ="heart" width = "30px" height = "30px" ng-src ="./css/empty.png"/></a>-->
 
 
                 </div>

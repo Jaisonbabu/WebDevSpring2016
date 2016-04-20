@@ -12,18 +12,24 @@
         console.log(resId);
 
         var vm = this;
-        var currentUser = "";
+
+        $scope.userFav = null;
 
         function init() {
             UserService.getCurrentUser()
                 .then(function(user){
-                    UserService.getUserFavorites(user.data._id)
-                        .then(function(fav){
-                            $scope.userFavRes = fav.data.resIds;
+                    $scope.currentUser = user.data;
+                    if ($scope.currentUser != ""){
+                        UserService.getUserFavorites(user.data._id)
+                            .then(function(fav){
+                                $scope.userFav = fav.data;
+                                console.log($scope.userFav);
 
-                        },function(err){
+                            },function(err){
 
-                        });
+                            });
+                    }
+
                 });
         }
         init();
@@ -105,8 +111,8 @@
         function createReview(review) {
             var newReview = {
                 resId: resId,
-                userId: currentUser._id,
-                userName : currentUser.username,
+                userId: $scope.currentUser._id,
+                userName : $scope.currentUser.username,
                 text: review.text,
                 hotel: $scope.searchDetail,
                 rating:$scope.rate
@@ -124,9 +130,18 @@
         }
 
         function addFav(res){
-            UserService.addUserFavorite(currentUser._id,res)
+            UserService.addUserFavorite($scope.currentUser._id,res)
                 .then(function(res){
-                        alert("Favorite added");
+
+                    UserService.getUserFavorites($scope.currentUser._id)
+                        .then(function(fav){
+                            $scope.userFav = fav.data;
+                            console.log($scope.userFav);
+                            alert("Favorite added");
+
+                        },function(err){
+
+                        });
                     },function(err){
 
                     }

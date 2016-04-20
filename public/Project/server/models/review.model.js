@@ -3,7 +3,7 @@
 var q = require("q");
 
 
-module.exports = function(db,mongoose,RestaurantModel) {
+module.exports = function(request,db,mongoose,RestaurantModel) {
 
     var ReviewSchema = require("./review.schema.server.js")(mongoose);
     var ReviewModel = mongoose.model('review',ReviewSchema);
@@ -46,6 +46,28 @@ module.exports = function(db,mongoose,RestaurantModel) {
         return deferred.promise;
     }
 
+    function storeHotel(hotel){
+        var deferred = q.defer();
+
+        console.log( hotel.location.address);
+
+        RestaurantModel.create({
+            resId: hotel.id,
+            name : hotel.name,
+            cuisines : hotel.cuisines,
+            currency : hotel.currency,
+            image : hotel.image,
+            location : hotel.location.address,
+            rating : hotel.rating
+        },function(err,hotel){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(hotel);
+            }
+        });
+        return deferred.promise;
+    }
 
     function getReviewsByResId(resId){
         var deferred = q.defer();
@@ -73,25 +95,7 @@ module.exports = function(db,mongoose,RestaurantModel) {
         return deferred.promise;
     }
 
-    function storeHotel(hotel){
-        var deferred = q.defer();
-        RestaurantModel.create({
-            resId: hotel.id,
-            name : hotel.name,
-            cuisines : hotel.cuisines,
-            currency : hotel.currency,
-            image : hotel.image,
-            location : hotel.location.address,
-            rating : hotel.rating
-        },function(err,hotel){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(hotel);
-            }
-        });
-        return deferred.promise;
-    }
+
 
 
 };

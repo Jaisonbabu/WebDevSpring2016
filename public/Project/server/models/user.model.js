@@ -60,29 +60,6 @@ module.exports = function(db,mongoose,RestaurantModel) {
         return deferred.promise;
     }
 
-    function storeHotel(hotel){
-        var deferred = q.defer();
-        console.log("Store hotel");
-        console.log(hotel);
-        RestaurantModel.create({
-            resId: hotel.id,
-            name : hotel.name,
-            cuisines : hotel.cuisines,
-            currency : hotel.currency,
-            image : hotel.image,
-            location : hotel.location,
-            rating : hotel.rating
-
-        },function(err,hotel){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(hotel);
-            }
-        });
-        return deferred.promise;
-    }
-
     function getUserFavorite(userId){
         var deferred = q.defer();
         FavoriteModel.findOne({userId: userId},
@@ -91,7 +68,7 @@ module.exports = function(db,mongoose,RestaurantModel) {
                     deferred.reject(err);
                 }
                 else{
-                    if(userFav.resIds == 0){
+                    if(userFav === null || userFav.resIds == 0 ){
                         deferred.resolve(null);
                     }
                     console.log("user found");
@@ -136,6 +113,29 @@ module.exports = function(db,mongoose,RestaurantModel) {
         return deferred.promise;
     }
 
+
+    function storeHotel(hotel){
+        var deferred = q.defer();
+        console.log("Store hotel");
+        console.log(hotel);
+        RestaurantModel.create({
+            resId: hotel.id,
+            name : hotel.name,
+            cuisines : hotel.cuisines,
+            currency : hotel.currency,
+            image : hotel.image,
+            location : hotel.location.address,
+            rating : hotel.rating
+
+        },function(err,hotel){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(hotel);
+            }
+        });
+        return deferred.promise;
+    }
 
 
 

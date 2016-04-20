@@ -28,6 +28,10 @@ th {
 .tableProp {border-collapse:collapse; table-layout:fixed;}
 .tdProp { width:100px; word-wrap:break-word;}
 
+.heart{
+    float: left;
+    clear:left;
+}
 
 .vcenter {
     display: inline-block;

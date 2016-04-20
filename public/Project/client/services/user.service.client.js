@@ -19,6 +19,7 @@
             checkLoggedIn: checkLoggedIn,
             checkUserAdmin: checkUserAdmin,
             getCurrentUser: getCurrentUser,
+            userLogin:userLogin,
 
             //favorites
             addUserFavorite:addUserFavorite,
@@ -31,7 +32,11 @@
 
         return userService;
 
-        function findUserByCredentials(username, password) {
+        function userLogin(user){
+            return $http.post("/api/project/login", user);
+        }
+
+        function findUserByCredentials(username,password) {
             return $http.get("/api/project/user?username="+username+"&password="+password);
         }
 

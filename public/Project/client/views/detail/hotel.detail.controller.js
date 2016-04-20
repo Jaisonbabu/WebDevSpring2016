@@ -17,7 +17,13 @@
         function init() {
             UserService.getCurrentUser()
                 .then(function(user){
-                    currentUser = user.data;
+                    UserService.getUserFavorites(user.data._id)
+                        .then(function(fav){
+                            $scope.userFavRes = fav.data.resIds;
+
+                        },function(err){
+
+                        });
                 });
         }
         init();
@@ -54,7 +60,29 @@
 
         $scope.createReview = createReview;
         $scope.addFav = addFav;
+        $scope.getFavButtonState = getFavButtonState;
+        $scope.getFavButtonColor = getFavButtonColor;
         $scope.reviews= null;
+
+
+
+        function getFavButtonState(res){
+            if($scope.userFavRes.indexOf(res.id) == -1){
+                //console.log("setting state auto");
+                return "auto";
+            }
+            //console.log("setting state none");
+            return "none";
+        }
+
+        function getFavButtonColor(res){
+            if($scope.userFavRes.indexOf(res.id) == -1){
+                //console.log("setting color red");
+                return "yellow";
+            }
+            //console.log("setting color Grey");
+            return "blue";
+        }
 
         function getRestaurantReviews(resId){
             SearchService.getReviewsByResId(resId)

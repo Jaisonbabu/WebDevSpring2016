@@ -46,24 +46,6 @@ module.exports = function(db,mongoose,RestaurantModel) {
         return deferred.promise;
     }
 
-    function storeHotel(hotel){
-        var deferred = q.defer();
-        RestaurantModel.create({
-            resId: hotel.id,
-            name : hotel.name,
-            cuisines : hotel.cuisines,
-            currency : hotel.currency,
-            image : hotel.image
-
-        },function(err,hotel){
-            if(err){
-                deferred.reject(err);
-            }else{
-                deferred.resolve(hotel);
-            }
-        });
-        return deferred.promise;
-    }
 
     function getReviewsByResId(resId){
         var deferred = q.defer();
@@ -91,6 +73,25 @@ module.exports = function(db,mongoose,RestaurantModel) {
         return deferred.promise;
     }
 
+    function storeHotel(hotel){
+        var deferred = q.defer();
+        RestaurantModel.create({
+            resId: hotel.id,
+            name : hotel.name,
+            cuisines : hotel.cuisines,
+            currency : hotel.currency,
+            image : hotel.image,
+            location : hotel.location.address,
+            rating : hotel.rating
+        },function(err,hotel){
+            if(err){
+                deferred.reject(err);
+            }else{
+                deferred.resolve(hotel);
+            }
+        });
+        return deferred.promise;
+    }
 
 
 };

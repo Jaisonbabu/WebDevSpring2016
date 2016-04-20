@@ -4,9 +4,9 @@ var request         = require('request');
 var app             = express();
 var mongoose        = require ('mongoose');
 //var multer          = require('multer');
-//var passport        = require('passport');
-//var localStrategy   = require('passport-local').Strategy;
 var cookieParser    = require('cookie-parser');
+var passport        = require('passport');
+var localStrategy   = require('passport-local').Strategy;
 var session         = require('express-session');
 //var cors            = require('cors');
 
@@ -37,8 +37,8 @@ app.use(session({ secret: "this is secret", resave: true,
     saveUninitialized: true}));
 //app.use(multer());
 app.use(cookieParser());
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 //app.use(express.json());       // to support JSON-encoded bodies
 //app.use(express.urlencoded()); // to support URL-encoded bodies
 app.use(express.static( __dirname + '/public'));

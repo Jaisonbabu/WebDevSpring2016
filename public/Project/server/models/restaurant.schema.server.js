@@ -7,7 +7,7 @@ module.exports = function(mongoose){
         currency : String,
         image : String,
         location : String,
-        rating : String
+        rating :    String
     }, {collection: 'hotel'});
     return RestaurantSchema;
 };

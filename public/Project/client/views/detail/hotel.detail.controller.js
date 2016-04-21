@@ -65,7 +65,7 @@
             .then(successHandler,errorHandler);
 
         $scope.createReview = createReview;
-        $scope.addFav = addFav;
+        $scope.addOrRemoveFav = addOrRemoveFav;
         $scope.getFavButtonState = getFavButtonState;
         $scope.getFavButtonColor = getFavButtonColor;
         $scope.reviews= null;
@@ -129,23 +129,41 @@
                     })
         }
 
-        function addFav(res){
-            UserService.addUserFavorite($scope.currentUser._id,res)
-                .then(function(res){
+        function addOrRemoveFav(){
+            if(!$scope.userFav || !$scope.userFav.resIds || $scope.userFav.resIds.indexOf($scope.searchDetail.id) == -1){
+                UserService.addUserFavorite($scope.currentUser._id,$scope.searchDetail)
+                    .then(function(res){
 
-                    UserService.getUserFavorites($scope.currentUser._id)
-                        .then(function(fav){
-                            $scope.userFav = fav.data;
-                            console.log($scope.userFav);
-                            alert("Favorite added");
+                            UserService.getUserFavorites($scope.currentUser._id)
+                                .then(function(fav){
+                                    $scope.userFav = fav.data;
+                                    console.log($scope.userFav);
+                                    alert("Favorite added");
 
+                                },function(err){
+
+                                });
                         },function(err){
 
-                        });
-                    },function(err){
+                        }
+                    )
+            }else{
+                UserService.removeUserFavorite($scope.currentUser._id,$scope.searchDetail.id)
+                    .then(function(usersFav){
+                        console.log(usersFav.data);
+                        UserService.getUserFavorites($scope.currentUser._id)
+                            .then(function(fav){
+                                $scope.userFav = fav.data;
+                                alert("Removed from favorites");
+                            },function(err){
 
-                    }
-                )
+                            });
+                    },function(err){
+                        alert("Removed from favorites");
+                    });
+            }
+
+
         }
 
 

@@ -75,7 +75,7 @@ module.exports = function(db,mongoose,RestaurantModel) {
                         console.log("user found");
                         console.log(userFav);
                         var finalUserFav = {};
-                        RestaurantModel.find({$or: [{resId: {$in: userFav.resIds}}]},
+                        RestaurantModel.find({ resId : { $in : userFav.resIds }},
                             function(err, favRes){
                                 if(err){
                                     deferred.reject(err);
@@ -109,12 +109,14 @@ module.exports = function(db,mongoose,RestaurantModel) {
                     deferred.reject(err);
                 }
                 else {
-                    userFav.resIds.splice(userFav.bookIds.indexOf(resId), 1);
+                    userFav.resIds.splice(userFav.resIds.indexOf(resId), 1);
                     userFav.save(function (err, userFavObj) {
                         if (err) {
+
                             deferred.reject(err);
                         }
                         else {
+                            removeHotel(resId);
                             deferred.resolve(userFavObj);
                         }
                     });
@@ -149,6 +151,25 @@ module.exports = function(db,mongoose,RestaurantModel) {
         });
         return deferred.promise;
     }
+
+    function removeHotel(resId){
+        var deferred = q.defer();
+        console.log(resId);
+        RestaurantModel.findOneAndRemove({ resId : resId },
+            function(err,hotel){
+                if(err){
+                    console.log("hotel remove error");
+                    deferred.reject(err);
+                }else{
+                    console.log("hotel remove");
+                    console.log(hotel);
+                    deferred.resolve(hotel);
+                }
+            });
+
+        return deferred.promise;
+    }
+
 
 
 

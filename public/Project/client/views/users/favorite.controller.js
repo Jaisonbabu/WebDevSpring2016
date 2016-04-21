@@ -25,10 +25,15 @@
                 });
             console.log(vm.currentUser);
 
-            vm.removeUserFav = removeUserFav;
 
-            function removeUserFav(resId){
-                UserService.removeUserFavorite($scope.currentUser._id,resId)
+        }
+        init();
+
+
+        vm.removeUserFav = removeUserFav;
+
+        function removeUserFav(resId){
+            UserService.removeUserFavorite($scope.currentUser._id,resId)
                 .then(function(usersFav){
                     console.log(userFav.data);
                     UserService.getUserFavorites($scope.currentUser._id)
@@ -40,13 +45,8 @@
                         });
                 },function(err){
                     alert("Removed from favorites");
-                })
-            }
+                });
         }
-        init();
-
-
-
 
 
 

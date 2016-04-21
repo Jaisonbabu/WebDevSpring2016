@@ -31,7 +31,7 @@
                     <!--</a>-->
                     <!--</div>-->
                     <button class="btn btn-primary"
-                            ng-click="addFav(searchDetail)" ng-show ="currentUser">
+                            ng-click="addOrRemoveFav()" ng-show ="currentUser">
                 <span ng-show="userFav.resIds.indexOf(searchDetail.id) > -1" class="glyphicon glyphicon-star"></span>
                 <span ng-show="!userFav || !userFav.resIds || userFav.resIds.indexOf(searchDetail.id) == -1"
                       class="glyphicon glyphicon-star-empty">
@@ -77,7 +77,7 @@
         </div>
         <div class="col-lg-4">
 
-            <div class="card box-shadow1">
+            <div class="card box-shadow1" ng-show = "currentUser">
                 <div class="form-header">
                     <h3 class="container-fluid site-color ng-binding">Been to {{searchDetail.name}}? Write a review below!</h3>
                 </div>
@@ -88,12 +88,13 @@
                     </uib-rating>
                     <form class="form-horizontal ng-pristine ng-valid">
                         <textarea placeholder="Write a review!" class="form-control review-textarea ng-pristine ng-valid ng-touched" name="name" rows="8" cols="40" ng-model="review.text"></textarea>
-                        <button class="btn btn-primary square-button site-color-background form-control" ng-click="createReview(review)">Submit Review</button>
+                        <button class="btn btn-primary square-button site-color-background form-control"
+                                ng-click="createReview(review)">Submit Review</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-3"></div>
+        <!--<div class="col-lg-3"></div>-->
     </div>
 </div>

@@ -26,7 +26,8 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         //follow
         addFriend:addFriend,
         findFriends:findFriends,
-        findFollowers:findFollowers
+        findFollowers:findFollowers,
+        removeFriend:removeFriend
     };
 
     return api;
@@ -52,6 +53,47 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
             }
         );
         return deferred.promise;
+    }
+
+    function removeFriend(userId,fId) {
+        var deferred = q.defer();
+        console.log(userId);
+        console.log(fId);
+        FollowModel.findOneAndRemove({ $or : [{ 'userId' : userId },{ 'followerId' : fId }]},
+            function (err, users) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                console.log(users);
+                console.log("removed");
+                deferred.resolve(users);
+            }
+        });
+
+        return deferred.promise;
+
+            //FollowModel.findOne({userId: userId ,followerId: fId},
+            //    function(err, userFollower){
+            //        if(err){
+            //            deferred.reject(err);
+            //        }
+            //        else {
+            //
+            //            userFollower.resIds.splice(userFollower.resIds.indexOf(resId), 1);
+            //            userFav.save(function (err, userFavObj) {
+            //                if (err) {
+            //
+            //                    deferred.reject(err);
+            //                }
+            //                else {
+            //                    removeHotel(resId);
+            //                    deferred.resolve(userFavObj);
+            //                }
+            //            });
+            //        }
+            //    });
+            //return deferred.promise;
     }
 
     function findFriends(uid){
@@ -167,6 +209,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                     deferred.reject(err);
                 }
                 else {
+
                     userFav.resIds.splice(userFav.resIds.indexOf(resId), 1);
                     userFav.save(function (err, userFavObj) {
                         if (err) {

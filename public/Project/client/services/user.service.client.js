@@ -30,6 +30,7 @@
             addFriend: addFriend,
             findFriends:findFriends,
             findFollowers:findFollowers,
+            removeFriend: removeFriend,
 
             logout:logout
 
@@ -49,6 +50,9 @@
             return $http.get("/api/project/find/followers/"+userId);
         }
 
+        function removeFriend(userId,fId){
+            return $http.delete("/api/project/"+userId+"/friend/"+fId);
+        }
 
         function userLogin(user){
             return $http.post("/api/project/login", user);

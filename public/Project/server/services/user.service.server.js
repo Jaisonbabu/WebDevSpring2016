@@ -24,6 +24,8 @@ module.exports = function (app, userModel){
     app.post("/api/project/:userId/follow/:userName", addFriend);
     app.get("/api/project/find/friends/:userId", findFriends);
     app.get("/api/project/find/followers/:userId", findFollowers);
+    app.delete("/api/project/:userId/friend/:fId", removeFriend);
+
 
 
     passport.use(new LocalStrategy(localStrategy));
@@ -86,6 +88,19 @@ module.exports = function (app, userModel){
                function ( err ) {
                    res.status(400).send(err);
                });
+    }
+
+    function removeFriend(req,res){
+        userModel.removeFriend(req.params.userId,req.params.fId)
+            .then(
+                function (doc) {
+                    console.log("Inside user web service");
+                    console.log(JSON.stringify(doc));
+                    res.json(doc);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
     }
 
     function findFriends (req,res){

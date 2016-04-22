@@ -15,18 +15,18 @@
         </ul>
     </div>
     <div >
-        <h3>Users you follow:</h3>
-        <ul class="thumbnails list-inline">
-            <li ng-repeat="friend in model.friends">
-                    <!--ng-repeat="friend in model.Friends">-->
-                <div class="thumbnail">
-                    <a ><img src="//placehold.it/120x120"></a>
-                    <h4><p align="center">{{friend.followerName}} </p></h4>
-                    <a ng-click = "model.removeFriend(user)"  width = "100%" class="btn btn-primary btn-block" role="button">Remove friend</a>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <h3>Users you follow:</h3>
+    <ul class="thumbnails list-inline">
+        <li ng-repeat="friend in model.friends">
+            <!--ng-repeat="friend in model.Friends">-->
+            <div class="thumbnail">
+                <a ><img src="//placehold.it/120x120"></a>
+                <h4><p align="center">{{friend.followerName}} </p></h4>
+                <a ng-click = "model.removeFriend(friend.followerName)"  width = "100%" class="btn btn-primary btn-block" role="button">Remove friend</a>
+            </div>
+        </li>
+    </ul>
+</div>
     <div>
         <h3>Users who follow you:</h3>
         <ul class="thumbnails list-inline">

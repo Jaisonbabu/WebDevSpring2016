@@ -1,6 +1,6 @@
 var q = require("q");
 
-module.exports = function(db,mongoose,RestaurantModel) {
+module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
 
     var UserSchema = require("./user.schema.server.js")(mongoose);
     var UserModel = mongoose.model('appUser',UserSchema);
@@ -21,10 +21,68 @@ module.exports = function(db,mongoose,RestaurantModel) {
         //Favorites
         addUserFavorite:addUserFavorite,
         getUserFavorite:getUserFavorite,
-        removeUserFavorite:removeUserFavorite
+        removeUserFavorite:removeUserFavorite,
+
+        //follow
+        addFriend:addFriend,
+        findFriends:findFriends,
+        findFollowers:findFollowers
     };
 
     return api;
+
+    function addFriend(uid,username,friend){
+        var deferred = q.defer();
+        console.log("Inside Model add");
+        console.log(friend.username);
+        FollowModel.create(
+            {
+                userId      : uid,
+                userName  : username,
+                followerId  : friend._id,
+                followerName : friend.username,
+                notify      : "no"
+            },function(err,follow){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+                    deferred.resolve(follow);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function findFriends(uid){
+        var deferred = q.defer();
+        console.log("Inside Model");
+        console.log(uid);
+        FollowModel.find({userId:uid},function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
+    }
+
+    function findFollowers(uid){
+        var deferred = q.defer();
+        console.log("Inside Model");
+        console.log(uid);
+        FollowModel.find({followerId:uid},function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
+    }
 
     function addUserFavorite(userId,restaurant){
         var deferred = q.defer();
@@ -218,6 +276,7 @@ module.exports = function(db,mongoose,RestaurantModel) {
                 userFound.phones = user.phones;
                 userFound.review = user.review;
                 userFound.likes = user.likes;
+                userFound.friends = user.friends;
                 userFound.save(function(err,userUpdated){
                     if(err){
                         deferred.reject(err);

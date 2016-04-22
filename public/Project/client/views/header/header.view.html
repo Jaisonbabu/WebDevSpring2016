@@ -21,6 +21,9 @@
                 <li ng-show = "currentUser" ng-class="{'active': model.$location.url() == '/profile'}">
                     <a href="#/profile">{{currentUser.username}}</a>
                 </li>
+                <li ng-show = "currentUser" ng-class="{'active': model.$location.url() == '/find'}">
+                    <a href="#/find">Find Users</a>
+                </li>
                 <li ng-show = "currentUser"><a ng-click = model.logout()>Logout</a></li>
 
             </ul>

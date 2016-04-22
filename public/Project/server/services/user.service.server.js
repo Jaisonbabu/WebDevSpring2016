@@ -19,6 +19,13 @@ module.exports = function (app, userModel){
     app.get("/api/project/user/fav/:userId",getUserFavorite);
     app.delete("/api/project/user/:userId/fav/:resId",removeUserFavorite);
 
+    //user follow
+
+    app.post("/api/project/:userId/follow/:userName", addFriend);
+    app.get("/api/project/find/friends/:userId", findFriends);
+    app.get("/api/project/find/followers/:userId", findFollowers);
+
+
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
@@ -65,6 +72,52 @@ module.exports = function (app, userModel){
         var user = req.user;
         res.json(user);
     }
+
+    function addFriend(req,res){
+        console.log(req.params.userName);
+
+       userModel.addFriend(req.params.userId,req.params.userName,req.body)
+           .then(
+               function (doc) {
+                   console.log("Inside user web service");
+                   console.log(JSON.stringify(doc));
+                   res.json(doc);
+               },
+               function ( err ) {
+                   res.status(400).send(err);
+               });
+    }
+
+    function findFriends (req,res){
+        console.log(req.params.userId);
+
+        userModel.findFriends(req.params.userId)
+            .then(
+                function (doc) {
+                    console.log("Inside user web service");
+                    console.log(JSON.stringify(doc));
+                    res.json(doc);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function findFollowers (req,res){
+        console.log(req.params.userId);
+
+        userModel.findFollowers(req.params.userId)
+            .then(
+                function (doc) {
+                    console.log("Inside user web service");
+                    console.log(JSON.stringify(doc));
+                    res.json(doc);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+    }
+
 
     function createUser(req,res){
         var user = req.body;

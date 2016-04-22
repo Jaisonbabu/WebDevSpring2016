@@ -9,7 +9,8 @@ module.exports = function(mongoose){
         email: String,
         phones: String,
         review: [ReviewSchema],
-        likes:[String]
+        likes:[String],
+        friends : [String]
     }, {collection: 'appUser'});
     return UserSchema;
 };

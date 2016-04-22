@@ -62,6 +62,14 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
+            .when("/find", {
+                templateUrl: "views/users/find.view.html",
+                controller: "FindController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/"
             });

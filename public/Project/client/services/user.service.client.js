@@ -26,12 +26,29 @@
             getUserFavorites:getUserFavorites,
             removeUserFavorite:removeUserFavorite,
 
+            //follow
+            addFriend: addFriend,
+            findFriends:findFriends,
+            findFollowers:findFollowers,
 
             logout:logout
 
         };
 
         return userService;
+
+        function addFriend(userId,userName,friend){
+            return $http.post("/api/project/"+userId+"/follow/"+userName,friend,{headers: {'Content-Type': 'application/json'} });
+        }
+
+        function findFriends(userId){
+            return $http.get("/api/project/find/friends/"+userId);
+        }
+
+        function findFollowers(userId){
+            return $http.get("/api/project/find/followers/"+userId);
+        }
+
 
         function userLogin(user){
             return $http.post("/api/project/login", user);
@@ -100,7 +117,7 @@
 
         function setUser(user){
             $rootScope.currentUser = user;
-            // console.log("inside setUser "+ $rootScope.currentUser._id);
+            //console.log("inside setUser "+ $rootScope.currentUser._id);
         }
 
         function getUser(){

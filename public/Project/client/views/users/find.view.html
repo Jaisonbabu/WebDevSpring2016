@@ -13,6 +13,9 @@
                 </div>
             </li>
         </ul>
+        <div ng-if = "model.allUsers.length > 1" class="text-center more-button" >
+           <h3> No User's yet</h3>
+        </div>
     </div>
     <div >
     <h3>Users you follow:</h3>
@@ -20,7 +23,7 @@
         <li ng-repeat="friend in model.friends">
             <!--ng-repeat="friend in model.Friends">-->
             <div class="thumbnail">
-                <a ><img src="//placehold.it/120x120"></a>
+                <a href = "#/api/profile/{{friend.followerName}}"><img src="//placehold.it/120x120"></a>
                 <h4><p align="center">{{friend.followerName}} </p></h4>
                 <a ng-click = "model.removeFriend(friend.followerName)"  width = "100%" class="btn btn-primary btn-block" role="button">Remove friend</a>
             </div>
@@ -32,10 +35,8 @@
         <ul class="thumbnails list-inline">
             <li ng-repeat="follower in model.followers">
                 <div class="thumbnail">
-                    <a style="color:#7000FF" class="close" href="" ng-click="model.removeFollower(follower)">x</a>
                     <a ng-click="model.visitFriend(follower)"><img src="//placehold.it/120x120"></a>
                     <h4><p align="center">{{follower.userName}}</p></h4>
-                    <a ng-click = "model.removeFriend(user)"  width = "100%" class="btn btn-primary btn-block" role="button">Remove friend</a>
                 </div>
             </li>
         </ul>

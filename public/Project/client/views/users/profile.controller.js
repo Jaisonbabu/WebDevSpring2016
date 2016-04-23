@@ -5,12 +5,12 @@
         .module("BonAppetitApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController ($scope, $location, $rootScope, UserService) {
+    function ProfileController ( $routeParams, $rootScope, UserService) {
 
         //console.log($rootScope.currentUser.username + " inside profile controller");
        // UserService.checkLoggedIn();
         var vm = this;
-
+        var profileUserName = $routeParams.username;
         vm.update= update;
         function init() {
             vm.user = UserService.getUser();

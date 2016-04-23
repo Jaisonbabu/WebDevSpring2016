@@ -57,6 +57,7 @@ module.exports = function(db,mongoose) {
                 userFound.password = user.password;
                 userFound.email = user.email;
                 userFound.phones = user.phones;
+                userFound.roles = user.roles;
                 userFound.save(function(err,userUpdated){
                     if(err){
                         deferred.reject(err);
@@ -71,27 +72,46 @@ module.exports = function(db,mongoose) {
     }
 
     function deleteUser(userId){
-        var user = findUserById(userId);
-        if(user != null){
-            users.splice(user,1);
-            return users;
-        }
-        else{
-            return null;
-        }
-    }
-
-    function findAllUsers(){
-        return users;
-    }
-
-    function findUserById(userId){
-        for(var i in users){
-            if(users[i]._id == userId){
-                return users[i];
+        console.log(userId);
+        var deferred = q.defer();
+        UserModel.remove({_id: userId}, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
             }
-        }
-        return null;
+            else {
+                console.log("user deleted");
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
+    }
+
+    function findAllUsers() {
+        var deferred = q.defer();
+        UserModel.find(function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                deferred.resolve(doc)
+            }
+        });
+        return deferred.promise;
+    }
+
+
+
+    function findUserById(userId) {
+        var deferred = q.defer();
+        UserModel.findById(userId, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            }
+            else {
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
 

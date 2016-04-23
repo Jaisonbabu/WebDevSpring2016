@@ -9,19 +9,67 @@
         var userService = {
             findUserByCredentials: findUserByCredentials,
             findUserByUsername:findUserByUsername,
-            findAllUsers: findAllUsers,
-            createUser: createUser,
+            //findAllUsers: findAllUsers,
+            register: register,
             deleteUserById: deleteUserById,
             updateUser: updateUser,
             setUser: setUser,
             getUser: getUser,
             findUserbyId: findUserbyId,
             checkLoggedIn: checkLoggedIn,
-            checkUserAdmin: checkUserAdmin
+            checkUserAdmin: checkUserAdmin,
+            getCurrentUser:getCurrentUser,
+            logout:logout,
+            userLogin:userLogin,
+
+            //admin
+
+            createUser: createUser,
+            findAllUsers: findAllUsers,
+            findUserById: findUserById,
+            deleteUser: deleteUser,
+            updateUser: updateUser,
+            updateUserById: updateUserById
+
+
+
 
         };
 
         return userService;
+
+        //admin
+
+        function createUser(user) {
+            return $http.post('/api/assignment/admin/user', user);
+        }
+
+        function findAllUsers() {
+            return $http.get("/api/assignment/admin/user/");
+        }
+
+        function findUserById(userId){
+            return $http.get("/api/assignment/admin/user/"+ userId)
+        }
+
+        function deleteUser(userId) {
+            return $http.delete('/api/assignment/admin/user/'+userId);
+        }
+
+        function updateUserById(userId, user) {
+            return $http.put('/api/assignment/admin/user/'+userId, user);
+        }
+
+        function getCurrentUser(){
+            return $http.get("/api/assignment/loggedin");
+        }
+
+        function logout() {
+            return $http.post("/api/assignment/logout");
+        }
+        function userLogin(user){
+            return $http.post("/api/assignment/login", user);
+        }
 
         function findUserByCredentials(username, password) {
             return $http.get("/api/assignment/user?username="+username+"&password="+password);
@@ -35,11 +83,11 @@
             return $http.get("/api/assignment/user/:"+userId);
         }
 
-        function findAllUsers() {
-           return $http.get("/api/assignment/user");
-        }
+        //function findAllUsers() {
+        //   return $http.get("/api/assignment/user");
+        //}
 
-        function createUser(user){
+        function register(user){
             console.log(user);
             return $http.post("/api/assignment/user",user);
         }

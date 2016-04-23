@@ -70,6 +70,14 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
+            .when("/api/profile/:username", {
+                templateUrl: "views/users/profile.view.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/"
             });

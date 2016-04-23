@@ -18,7 +18,7 @@
             UserService.findUserByUsername(userName)
                 .then(function (userPresent){
                         if(userPresent.data == null){
-                            UserService.createUser(user)
+                            UserService.register(user)
                                 .then(function (user) {
                                         UserService.setUser(user.data);
                                         $location.url("/profile");

@@ -6,9 +6,8 @@
         .controller("AdminController", AdminController);
 
     function AdminController($scope, $location, UserService) {
-        UserService.checkLoggedIn();
-        UserService.checkUserAdmin();
-        $scope.$location = $location;
+
+        var vm = this;
 
         vm.remove = remove;
         vm.update = update;

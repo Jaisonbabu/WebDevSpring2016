@@ -6,11 +6,11 @@ var bcrypt = require("bcrypt-nodejs");
 module.exports = function (app, userModel){
 
     var auth = authorized;
-    var user;
+    var loggedInUser;
     app.post('/api/assignment/login', passport.authenticate('local'), login);
     app.get('/api/assignment/loggedin',loggedin);
     app.post('/api/assignment/logout',logout);
-    app.post("/api/assignment/user",register);
+    app.post("/api/assignment/register",register);
     app.get("/api/assignment/user",findUser);
     app.get("/api/assignment/user/:id",findUserById);
     app.put("/api/assignment/user/:id", updateUser);
@@ -37,7 +37,8 @@ module.exports = function (app, userModel){
             .findUserByUsername(username)
             .then(
                 function (user) {
-                    //console.log(user);
+                    console.log("Inside local strategy");
+                    console.log(user);
                     if (user && bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
                     }
@@ -70,14 +71,24 @@ module.exports = function (app, userModel){
             );
     }
 
+    function authorized(req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    }
 
     function login(req, res) {
         var user = req.user;
-        //console.log(user);
+        console.log("login server");
+        loggedInUser = user;
         res.json(user);
     }
 
     function loggedin(req, res) {
+        console.log("logged in");
+        console.log(req.user);
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
@@ -88,8 +99,10 @@ module.exports = function (app, userModel){
 
     function isAdmin(req,res,next) {
         if(req.isAuthenticated()) {
-            user = req.user;
-            if(user.roles.indexOf("admin") > -1) {
+            if(loggedInUser === undefined) {
+                loggedInUser = req.user;
+            }
+            if(loggedInUser.roles.indexOf("admin") >= 0 || loggedInUser[0].roles.indexOf("admin") >= 0) {
                 next();
             }
 
@@ -147,6 +160,9 @@ module.exports = function (app, userModel){
                             if (err) {
                                 res.status(400).send(err);
                             } else {
+                                console.log("user logged in after registrations");
+                                console.log(user);
+                                loggedInUser = user;
                                 res.json(user);
                             }
                         });
@@ -253,26 +269,22 @@ module.exports = function (app, userModel){
             );
     }
 
-    function findUserById(userId) {
-        var deferred = q.defer();
-        UserModel.findById(userId, function (err, doc) {
-            if (err) {
-                deferred.reject(err);
-            }
-            else {
-                deferred.resolve(doc);
-            }
-        });
-        return deferred.promise;
+    function findUserById(req, res) {
+        var userId = req.params.id;
+        var userResponse = userModel.findUserById(userId)
+            .then(
+                function(doc) {
+                    console.log("find user id ");
+                    console.log(doc);
+                    res.json(doc);
+                },
+                // send error if promise rejected
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function authorized(req, res, next) {
-        if (!req.isAuthenticated()) {
-            res.send(401);
-        } else {
-            next();
-        }
-    }
 
     function findUser(req,res){
         var userName = req.query.username;

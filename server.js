@@ -3,11 +3,12 @@ var bodyParser      = require('body-parser');
 var request         = require('request');
 var app             = express();
 var mongoose        = require ('mongoose');
-//var multer          = require('multer');
+var multer          = require('multer');
 var cookieParser    = require('cookie-parser');
+var session         = require('express-session');
 var passport        = require('passport');
 var localStrategy   = require('passport-local').Strategy;
-var session         = require('express-session');
+
 //var cors            = require('cors');
 
 var connectionString = 'mongodb://127.0.0.1:27017/WebDev2016';
@@ -31,17 +32,19 @@ var port         = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 //app.use(cors());
 //app.options('*', cors());
 
+app.use(express.static( __dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: "this is secret", resave: true,
-    saveUninitialized: true}));
-//app.use(multer());
+app.use(multer());
 app.use(cookieParser());
+app.use(session({ secret: "this is secret",    saveUninitialized: true,  resave: true  }));
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 //app.use(express.json());       // to support JSON-encoded bodies
 //app.use(express.urlencoded()); // to support URL-encoded bodies
-app.use(express.static( __dirname + '/public'));
+
 
 //console.log("secret");
 //console.log(process.env.PASSPORT_SECRET);

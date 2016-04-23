@@ -12,7 +12,7 @@
             //findAllUsers: findAllUsers,
             register: register,
             deleteUserById: deleteUserById,
-            updateUser: updateUser,
+            //updateUser: updateUser,
             setUser: setUser,
             getUser: getUser,
             findUserbyId: findUserbyId,
@@ -30,9 +30,6 @@
             deleteUser: deleteUser,
             updateUser: updateUser,
             updateUserById: updateUserById
-
-
-
 
         };
 
@@ -89,7 +86,7 @@
 
         function register(user){
             console.log(user);
-            return $http.post("/api/assignment/user",user);
+            return $http.post("/api/assignment/register",user);
         }
 
         function deleteUserById(userId){

@@ -7,10 +7,21 @@
 
     function ProfileController ($scope, $rootScope, UserService) {
 
-        //console.log($rootScope.currentUser.username + " inside profile controller");
-        UserService.checkLoggedIn();
+        console.log($rootScope.currentUser.username + " inside profile controller");
+        //UserService.checkLoggedIn();
 
-        $scope.user = UserService.getUser();
+        $scope.user = $rootScope.currentUser;
+        //UserService.getCurrentUser()
+        //    .then(
+        //        function(response){
+        //            $scope.user = response.data;
+        //            if ( $scope.user == null) {
+        //                $location.url("/");
+        //            }
+        //        }
+        //    );
+        console.log($scope.user);
+
         $scope.update = update;
 
         function update(user){

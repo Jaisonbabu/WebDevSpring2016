@@ -5,7 +5,7 @@
         .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($scope, $location, UserService ) {
+    function RegisterController($scope, $rootScope,$location, UserService ) {
 
 
         $scope.message = null;
@@ -21,6 +21,7 @@
                             UserService.register(user)
                                 .then(function (user) {
                                         UserService.setUser(user.data);
+                                        console.log($rootScope.currentUser);
                                         $location.url("/profile");
                                     },
                                     function (err){

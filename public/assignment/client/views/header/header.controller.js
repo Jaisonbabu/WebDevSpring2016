@@ -11,8 +11,14 @@
         $scope.$location = $location;
 
         $scope.logout = function logout() {
-            UserService.setUser(null);
-            $location.url("/");
+            UserService.logout()
+            .then(function(res){
+                UserService.setUser(null);
+                $location.url("/");
+            },function(err){
+
+            });
+
 
         }
     }

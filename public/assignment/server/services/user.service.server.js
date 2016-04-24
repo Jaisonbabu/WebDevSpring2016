@@ -137,7 +137,7 @@ module.exports = function (app, userModel){
     function assignmentRegister(req,res){
         var newUser = req.body;
         console.log(JSON.stringify(newUser));
-        newUser.roles = ['student','admin'];
+        newUser.roles = ['student'];
         console.log(newUser);
 
         for(var i in newUser.emails){

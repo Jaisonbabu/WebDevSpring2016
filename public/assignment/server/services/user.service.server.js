@@ -10,7 +10,7 @@ module.exports = function (app, userModel){
 
     app.get("/api/assignment/user",findUser);
     app.get("/api/assignment/user/:id",findUserById);
-    app.put("/api/assignment/user/:id", updateUser);
+    app.put("/api/assignment/user/:id", updateProfileUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
     //admin
@@ -232,6 +232,48 @@ module.exports = function (app, userModel){
     }
 
     function updateUser(req,res){
+        var newUser = req.body;
+
+        console.log(JSON.stringify(req.body));
+        console.log("update user");
+        if (typeof newUser.roles == "string") {
+            newUser.roles = newUser.roles.split(",");
+        }
+        for(var i in newUser.roles){
+            newUser.roles[i]=newUser.roles[i].trim();
+        }
+        for(var i in newUser.emails){
+            newUser.emails[i]=newUser.emails[i].trim();
+        }
+
+        newUser.password = bcrypt.hashSync(newUser.password);
+
+        userModel
+            .updateUser(req.params.id, newUser)
+            .then(
+                function (user) {
+                    console.log("user updated servicwe");
+                    return userModel.findAllUsers();
+
+                },
+                function (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+
+    function updateProfileUser(req,res){
         var newUser = req.body;
 
         console.log(JSON.stringify(req.body));

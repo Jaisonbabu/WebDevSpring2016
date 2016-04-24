@@ -7,10 +7,7 @@ module.exports = function (app, userModel){
 
     var auth = authorized;
     var loggedInUser;
-    app.post('/api/assignment/login', passport.authenticate('local'), login);
-    app.get('/api/assignment/loggedin',loggedin);
-    app.post('/api/assignment/logout',logout);
-    app.post("/api/assignment/register",register);
+
     app.get("/api/assignment/user",findUser);
     app.get("/api/assignment/user/:id",findUserById);
     app.put("/api/assignment/user/:id", updateUser);
@@ -18,20 +15,29 @@ module.exports = function (app, userModel){
 
     //admin
 
-    app.post('/api/assignment/admin/user',       isAdmin,                  createUser);
+    app.post("/api/assignment/admin/user",       isAdmin,                  createUser);
     app.get('/api/assignment/admin/user',        isAdmin,                  findAllUsers);
     app.get('/api/assignment/admin/user/:id',    isAdmin,                  findUserById);
     app.delete('/api/assignment/admin/user/:id', isAdmin,                  deleteUser);
-    app.put('/api/assignment/admin/user/:id',    isAdmin,                  updateUser);
+    app.put("/api/assignment/admin/user/:id",    isAdmin,                  updateUser);
 
-
-
-    passport.use(new LocalStrategy(localStrategy));
+    passport.use('assignment',   new LocalStrategy(assignmentLocalStrategy));
+    //passport.use('project', new LocalStrategy(storeLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
+    app.post  ('/api/assignment/login',    passport.authenticate('assignment'), assignmentLogin);
+    app.post  ('/api/assignment/logout',   assignmentLogout);
+    app.get   ('/api/assignment/loggedin', assignmentLoggedin);
+    app.post  ('/api/assignment/register', assignmentRegister);
 
-    function localStrategy(username, password, done) {
+    //app.post  ('/api/project/login',    passport.authenticate('project'), storeLogin);
+    //app.post  ('/api/project/logout',   logout);
+    //app.get   ('/api/project/loggedin', loggedin);
+    //app.post  ('/api/project/register', register);
+
+
+    function assignmentLocalStrategy(username, password, done) {
         //console.log(username);
         userModel
             .findUserByUsername(username)
@@ -79,20 +85,20 @@ module.exports = function (app, userModel){
         }
     }
 
-    function login(req, res) {
+    function assignmentLogin(req, res) {
         var user = req.user;
         console.log("login server");
         loggedInUser = user;
         res.json(user);
     }
 
-    function loggedin(req, res) {
+    function assignmentLoggedin(req, res) {
         console.log("logged in");
         console.log(req.user);
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
-    function logout(req, res) {
+    function assignmentLogout(req, res) {
         req.logOut();
         res.send(200);
     }
@@ -109,7 +115,8 @@ module.exports = function (app, userModel){
             else {
                 res.send(403);
             }
-        }}
+        }
+    }
 
     function findAllUsers(req, res) {
         userModel
@@ -127,10 +134,10 @@ module.exports = function (app, userModel){
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function register(req,res){
+    function assignmentRegister(req,res){
         var newUser = req.body;
         console.log(JSON.stringify(newUser));
-        newUser.roles = ['student'];
+        newUser.roles = ['student','admin'];
         console.log(newUser);
 
         for(var i in newUser.emails){
@@ -183,19 +190,25 @@ module.exports = function (app, userModel){
             newUser.roles = ["student"];
         }
         // first check if a user already exists with the username
+
+        console.log("inside create user");
+        console.log(newUser);
         userModel.findUserByUsername(newUser.username)
             .then(
                 function (user) {
                     // if the user does not already exist
+                    console.log(user);
                     if (user == null) {
                         // create a new user
                         return userModel.createUser(newUser)
                             .then(
                                 // fetch all the users
-                                function () {
+                                function (user) {
+                                    console.log("model create user");
                                     return userModel.findAllUsers();
                                 },
                                 function (err) {
+                                    console.log("error");
                                     res.status(400).send(err);
                                 }
                             );
@@ -220,6 +233,9 @@ module.exports = function (app, userModel){
 
     function updateUser(req,res){
         var newUser = req.body;
+
+        console.log(JSON.stringify(req.body));
+        console.log("update user");
         if (typeof newUser.roles == "string") {
             newUser.roles = newUser.roles.split(",");
         }
@@ -229,21 +245,42 @@ module.exports = function (app, userModel){
         for(var i in newUser.emails){
             newUser.emails[i]=newUser.emails[i].trim();
         }
+
+        newUser.password = bcrypt.hashSync(newUser.password);
+
         userModel
             .updateUser(req.params.id, newUser)
             .then(
                 function (user) {
-                    return userModel.findAllUsers();
+                    console.log("user updated servicwe");
+                    //return userModel.findAllUsers();
+                    return userModel.findUserById(req.params.id)
                 },
                 function (err) {
+                    console.log(err);
                     res.status(400).send(err);
                 }
             )
             .then(
-                function (users) {
-                    res.json(users);
+                function (user) {
+                    //res.json(users);
+
+                    if (user) {
+                        console.log(" User Registered , login the user");
+                        req.login(user, function (err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                console.log("user logged in after registrations");
+                                console.log(user);
+                                loggedInUser = user;
+                                res.json(user);
+                            }
+                        });
+                    }
                 },
                 function (err) {
+                    console.log(err);
                     res.status(400).send(err);
                 }
             );

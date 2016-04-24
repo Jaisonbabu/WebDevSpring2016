@@ -20,6 +20,7 @@
             checkUserAdmin: checkUserAdmin,
             getCurrentUser:getCurrentUser,
             logout:logout,
+            login:login,
             userLogin:userLogin,
 
             //admin
@@ -38,7 +39,7 @@
         //admin
 
         function createUser(user) {
-            return $http.post('/api/assignment/admin/user', user);
+            return $http.post("/api/assignment/admin/user", user);
         }
 
         function findAllUsers() {
@@ -54,7 +55,7 @@
         }
 
         function updateUserById(userId, user) {
-            return $http.put('/api/assignment/admin/user/'+userId, user);
+            return $http.put("/api/assignment/admin/user/"+userId, user, {headers: {'Content-Type': 'application/json'} });
         }
 
         function getCurrentUser(){
@@ -78,6 +79,11 @@
 
         function findUserbyId(userId){
             return $http.get("/api/assignment/user/:"+userId);
+        }
+
+        function login(user) {
+            console.log("in client login");
+            return $http.post('/api/assignment/login', user);
         }
 
         //function findAllUsers() {

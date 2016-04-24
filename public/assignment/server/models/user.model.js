@@ -42,12 +42,14 @@ module.exports = function(db,mongoose) {
         return deferred.promise;
     }
 
-    function updateUser(user, userId){
+    function updateUser(userId, user){
         console.log(user);
         var deferred = q.defer();
 
-        UserModel.findById({_id:userId}, function(err,userFound){
+        UserModel.findById({_id: userId}, function(err,userFound){
             if(err){
+                console.log("Model update error");
+                console.log(err);
                 deferred.reject(err);
             }
             else{
@@ -58,6 +60,7 @@ module.exports = function(db,mongoose) {
                 userFound.email = user.email;
                 userFound.phones = user.phones;
                 userFound.roles = user.roles;
+                userFound.type = user.type;
                 userFound.save(function(err,userUpdated){
                     if(err){
                         deferred.reject(err);
@@ -74,7 +77,7 @@ module.exports = function(db,mongoose) {
     function deleteUser(userId){
         console.log(userId);
         var deferred = q.defer();
-        UserModel.remove({_id: userId}, function (err, doc) {
+        UserModel.remove({_id : userId}, function (err, doc) {
             if (err) {
                 deferred.reject(err);
             }
@@ -103,7 +106,7 @@ module.exports = function(db,mongoose) {
 
     function findUserById(userId) {
         var deferred = q.defer();
-        UserModel.findById(userId, function (err, doc) {
+        UserModel.findById({_id : userId}, function (err, doc) {
             if (err) {
                 deferred.reject(err);
             }

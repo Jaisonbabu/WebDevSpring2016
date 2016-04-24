@@ -4,9 +4,10 @@ var request         = require('request');
 var app             = express();
 var mongoose        = require ('mongoose');
 var multer          = require('multer');
+var passport        = require('passport');
 var cookieParser    = require('cookie-parser');
 var session         = require('express-session');
-var passport        = require('passport');
+
 var localStrategy   = require('passport-local').Strategy;
 
 //var cors            = require('cors');
@@ -33,14 +34,22 @@ var port         = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 //app.options('*', cors());
 
 app.use(express.static( __dirname + '/public'));
+
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
-app.use(cookieParser());
-app.use(session({ secret: "this is secret",    saveUninitialized: true,  resave: true  }));
+
+app.use(session({
+    secret : 'this is the secret',
+    resave : true ,
+    saveUninitialized : true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 //app.use(express.json());       // to support JSON-encoded bodies
 //app.use(express.urlencoded()); // to support URL-encoded bodies
@@ -51,8 +60,8 @@ app.use(passport.session());
 
 
 console.log("In Server.js");
-require("./public/Project/server/app.js")(app,request,db,mongoose);
-require("./public/assignment/server/app.js")(app,db,mongoose);
+//require("./public/Project/server/app.js")(app,request,db,mongoose);
+require("./public/assignment/server/app.js")(app,request,db,mongoose);
 
 
 //NOTE: PLease keep this before all http calls

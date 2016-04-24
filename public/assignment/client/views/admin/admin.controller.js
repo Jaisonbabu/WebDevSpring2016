@@ -43,7 +43,9 @@
             UserService
                 .deleteUser(user._id)
                 .then(function(response) {
-                    vm.users.splice(index,1);
+                    UserService
+                        .findAllUsers()
+                        .then(handleSuccess, handleError);
                 });
         }
 
@@ -58,14 +60,34 @@
 
         function add(user)
         {
+            var newUser = {
+                username: user.username,
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                roles : user.roles
+            };
             UserService
-                .createUser(user)
+                .createUser(newUser)
                 .then(handleSuccess, handleError);
         }
 
         function select(user)
         {
-            vm.user = angular.copy(user);
+            vm.selectedUser = user;
+            vm.user = {
+                _id : vm.selectedUser._id,
+                username : vm.selectedUser.username,
+                password : vm.selectedUser.password,
+                firstName : vm.selectedUser.firstName,
+                lastName : vm.selectedUser.lastName,
+                email : vm.selectedUser.email,
+                phones : vm.selectedUser.phones,
+                roles : vm.selectedUser.roles,
+                type : vm.selectedUser.type
+            };
+            //user.roles = user.roles.toString(); =
+
         }
 
     }

@@ -15,18 +15,18 @@
             .when("/", {
                 templateUrl: "views/home/home.view.html",
                 controller:"HomeController",
-                controllerAs: "model",
-                resolve: {
-                    getLoggedIn: getLoggedIn
-                }
+                controllerAs: "model"
+                //resolve: {
+                //    getLoggedIn: getLoggedIn
+                //}
             })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController",
-                controllerAs: "model",
-                resolve: {
-                    checkLoggedIn: checkLoggedIn
-                }
+                controllerAs: "model"
+                //resolve: {
+                //    checkLoggedIn: checkLoggedIn
+                //}
             })
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
@@ -49,34 +49,34 @@
             .when("/favorite", {
                 templateUrl: "views/users/favorite.view.html",
                 controller: "FavoriteController",
-                controllerAs: "model",
-                resolve: {
-                    checkLoggedIn: checkLoggedIn
-                }
+                controllerAs: "model"
+                //resolve: {
+                //    checkLoggedIn: checkLoggedIn
+                //}
             })
             .when("/review", {
                 templateUrl: "views/users/review.view.html",
                 controller: "ReviewController",
                 controllerAs: "model",
-                resolve: {
-                    checkLoggedIn: checkLoggedIn
-                }
+                //resolve: {
+                //    checkLoggedIn: checkLoggedIn
+                //}
             })
             .when("/find", {
                 templateUrl: "views/users/find.view.html",
                 controller: "FindController",
-                controllerAs: "model",
-                resolve: {
-                    checkLoggedIn: checkLoggedIn
-                }
+                controllerAs: "model"
+                //resolve: {
+                //    checkLoggedIn: checkLoggedIn
+                //}
             })
             .when("/api/profile/:username", {
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController",
-                controllerAs: "model",
-                resolve: {
-                    checkLoggedIn: checkLoggedIn
-                }
+                controllerAs: "model"
+                //resolve: {
+                //    checkLoggedIn: checkLoggedIn
+                //}
             })
             .otherwise({
                 redirectTo: "/"

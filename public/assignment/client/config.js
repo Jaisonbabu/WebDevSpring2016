@@ -7,24 +7,24 @@
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/home.view.html",
-                controller:"HomeController"
-                //resolve:{
-                //    checkLoggedIn: checkCurrentUser
-                //}
+                controller:"HomeController",
+                resolve:{
+                    checkLoggedIn: checkCurrentUser
+                }
             })
             .when("/forms", {
                 templateUrl: "views/forms/forms.view.html",
-                controller: "FormController"
-                //resolve: {
-                //    loggedin: checkLoggedin
-                //}
+                controller: "FormController",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/fields", {
                 templateUrl: "views/forms/field.view.html",
-                controller: "FieldController"
-                //resolve: {
-                //    loggedin: checkLoggedin
-                //}
+                controller: "FieldController",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
@@ -77,7 +77,7 @@
             if (user !== '0' && user.roles.indexOf('admin') != -1)
             {
                 console.log("admin found");
-                $rootScope.user = user;
+                $rootScope.currentUser = user;
                 deferred.resolve();
             }
         });

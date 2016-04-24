@@ -5,7 +5,7 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function (app, userModel){
 
-    var auth = authorized;
+    var auth = authenticated;
     var loggedInUser;
 
     app.get("/api/assignment/user",findUser);
@@ -77,7 +77,7 @@ module.exports = function (app, userModel){
             );
     }
 
-    function authorized(req, res, next) {
+    function authenticated(req, res, next) {
         if (!req.isAuthenticated()) {
             res.send(401);
         } else {

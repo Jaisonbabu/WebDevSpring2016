@@ -7,8 +7,6 @@
 
     function HeaderController ($scope, $location, UserService) {
 
-        UserService.checkLoggedIn();
-
         console.log($location);
         $scope.$location = $location;
 

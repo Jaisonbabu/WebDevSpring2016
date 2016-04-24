@@ -40,8 +40,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-app.use(session({
-    secret : 'this is the secret',
+console.log(process.env.SESSION_SECRET);
+app.use( session ( {
+    secret : process.env.SESSION_SECRET ,
     resave : true ,
     saveUninitialized : true
 }));

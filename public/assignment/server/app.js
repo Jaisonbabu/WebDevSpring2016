@@ -12,11 +12,6 @@ module.exports = function (app,request,db,mongoose){
 
 
 
-    var userService  = require("./services/user.service.server.js")(app, userModel);
-    var formService  = require("./services/form.service.server.js")(app,formModel);
-    var fieldService = require("./services/field.service.server.js")(app,fieldModel);
-
-
 
     var FollowerSchema = require("../../Project/server/models/follower.schema.server.js")(mongoose);
     var FollowModel =  mongoose.model('follow',FollowerSchema);
@@ -29,4 +24,10 @@ module.exports = function (app,request,db,mongoose){
 
     var reviewModel = require("../../Project/server/models/review.model.js")(request,db,mongoose,RestaurantModel);
     var searchService = require("../../Project/server/services/search.service.server.js")(app,request,reviewModel);
+
+
+    var userService  = require("./services/user.service.server.js")(app, userModel,userModelProject);
+    var formService  = require("./services/form.service.server.js")(app,formModel);
+    var fieldService = require("./services/field.service.server.js")(app,fieldModel);
+
 };

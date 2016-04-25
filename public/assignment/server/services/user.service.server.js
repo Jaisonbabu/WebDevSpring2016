@@ -3,7 +3,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
 
-module.exports = function (app, userModel){
+module.exports = function (app, userModel,projectModel){
 
     var auth = authenticated;
     var loggedInUser;
@@ -22,7 +22,7 @@ module.exports = function (app, userModel){
     app.put("/api/assignment/admin/user/:id",    isAdmin,                  updateUser);
 
     passport.use('assignment',   new LocalStrategy(assignmentLocalStrategy));
-    //passport.use('project', new LocalStrategy(storeLocalStrategy));
+    passport.use('project', new LocalStrategy(projectLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
@@ -31,10 +31,10 @@ module.exports = function (app, userModel){
     app.get   ('/api/assignment/loggedin', assignmentLoggedin);
     app.post  ('/api/assignment/register', assignmentRegister);
 
-    //app.post  ('/api/project/login',    passport.authenticate('project'), storeLogin);
-    //app.post  ('/api/project/logout',   logout);
-    //app.get   ('/api/project/loggedin', loggedin);
-    //app.post  ('/api/project/register', register);
+    app.post  ('/api/project/login',    passport.authenticate('project'), projLogin);
+    app.post  ('/api/project/logout',   projLogout);
+    app.get   ('/api/project/loggedin', projLoggedin);
+    app.post  ('/api/project/register', projRegister);
 
 
     function assignmentLocalStrategy(username, password, done) {
@@ -58,23 +58,61 @@ module.exports = function (app, userModel){
             );
     }
 
+    function projectLocalStrategy(username, password, done) {
+        //console.log(username);
+        projectModel
+            .findUserByUsername(username)
+            .then(
+                function (user) {
+                    console.log("Inside projeect strategy");
+                    console.log(user);
+                    if (user && bcrypt.compareSync(password, user.password)) {
+                        return done(null, user);
+                    }
+                    return done(null, false);
+                },
+                function (err) {
+                    if (err) {
+                        return done(err);
+                    }
+                }
+            );
+    }
+
     function serializeUser(user, done) {
         delete user.password;
         done(null, user);
     }
 
     function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function (user) {
-                    delete user.password;
-                    done(null, user);
-                },
-                function (err) {
-                    done(err, null);
-                }
-            );
+        if(user.type == 'assignment'){
+            userModel
+                .findUserById(user._id)
+                .then(
+                    function (user) {
+                        delete user.password;
+                        done(null, user);
+                    },
+                    function (err) {
+                        done(err, null);
+                    }
+                );
+
+        }else if(user.type == "project"){
+            projectModel
+                .findUserById(user._id)
+                .then(
+                    function (user) {
+                        delete user.password;
+                        done(null, user);
+                    },
+                    function (err) {
+                        done(err, null);
+                    }
+                );
+
+        }
+
     }
 
     function authenticated(req, res, next) {
@@ -92,13 +130,31 @@ module.exports = function (app, userModel){
         res.json(user);
     }
 
+    function projLogin(req, res) {
+        var user = req.user;
+        console.log("login server");
+        loggedInUser = user;
+        res.json(user);
+    }
+
     function assignmentLoggedin(req, res) {
         console.log("logged in");
         console.log(req.user);
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
+    function projLoggedin(req, res) {
+        console.log("logged in");
+        console.log(req.user);
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
     function assignmentLogout(req, res) {
+        req.logOut();
+        res.send(200);
+    }
+
+    function projLogout(req, res) {
         req.logOut();
         res.send(200);
     }
@@ -153,6 +209,54 @@ module.exports = function (app, userModel){
                     } else {
                         newUser.password = bcrypt.hashSync(newUser.password);
                         return userModel.createUser(newUser);
+                    }
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (user) {
+                    if (user) {
+                        console.log(" User Registered , login the user");
+                        req.login(user, function (err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                console.log("user logged in after registrations");
+                                console.log(user);
+                                loggedInUser = user;
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+
+    }
+
+    function projRegister(req,res){
+        var newUser = req.body;
+        console.log(JSON.stringify(newUser));
+        newUser.roles = ['student','admin'];
+        console.log(newUser);
+
+        for(var i in newUser.emails){
+            newUser.emails[i]=newUser.emails[i].trim();
+        }
+
+        projectModel.findUserByUsername(newUser.username)
+            .then(
+                function (user) {
+                    if (user) {
+                        console.log(user);
+                        res.json(null);
+                    } else {
+                        newUser.password = bcrypt.hashSync(newUser.password);
+                        return projectModel.createUser(newUser);
                     }
                 },
                 function (err) {

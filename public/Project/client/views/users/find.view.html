@@ -7,7 +7,7 @@
             <li ng-repeat="user in model.allUsers">
                 <div class="thumbnail" ng-hide= "model.isCurrentUser(user.username) || model.isFriend(user)">
                     <!--userFav.resIds.indexOf(searchDetail.id) == -1-->
-                    <a ng-click="model.visitFriend(user)"><img src="//placehold.it/120x120"></a>
+                    <a href = "#/api/profile/{{user.username}}/profile"><img src="//placehold.it/120x120"></a>
                     <h4><p align="center">{{user.username}}</p></h4>
                     <a ng-click = "model.addFriend(user)"  width = "100%" class="btn btn-primary btn-block" role="button">Add Friend</a>
                 </div>

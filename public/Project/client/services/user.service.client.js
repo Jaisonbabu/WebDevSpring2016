@@ -83,7 +83,7 @@
         }
 
         function createUser(user){
-            return $http.post("/api/project/user",user,{headers: {'Content-Type': 'application/json'} });
+            return $http.post("/api/project/register",user,{headers: {'Content-Type': 'application/json'} });
         }
 
         function deleteUserById(userId){

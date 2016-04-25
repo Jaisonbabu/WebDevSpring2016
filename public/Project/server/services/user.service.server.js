@@ -4,12 +4,11 @@ module.exports = function (app, userModel){
     app.post("/api/project/user",createUser);
     app.get("/api/project/user",findUser);
     //app.get("/api/project/loggedin", loggedin);
-    app.post("/api/project/logout", logout);
+    //app.post("/api/project/logout", logout);
     app.get("/api/project/user/:id",findUserById);
     app.put("/api/project/user/:id", updateUser);
     app.delete("/api/project/user/:id", deleteUser);
 
-    //app.post("/api/project/login",passport.authenticate('local'),login);
 
     //user favorite
 
@@ -24,54 +23,6 @@ module.exports = function (app, userModel){
     app.get("/api/project/find/followers/:userId", findFollowers);
     app.delete("/api/project/:userId/friend/:fId", removeFriend);
 
-
-
-    //passport.use(new LocalStrategy(localStrategy));
-    //passport.serializeUser(serializeUser);
-    //passport.deserializeUser(deserializeUser);
-    //
-    //
-    //function localStrategy(username, password, done) {
-    //
-    //    console.log(username);
-    //    userModel
-    //        .findUserByCredentials({username: username, password: password})
-    //        .then(
-    //            function(user) {
-    //                if (!user) {
-    //                    return done(null, false);
-    //                }
-    //                return done(null, user);
-    //            },
-    //            function(err) {
-    //                if (err) {
-    //                    return done(err);
-    //                }
-    //            }
-    //        );
-    //}
-    //
-    //function serializeUser(user, done) {
-    //    done(null, user);
-    //}
-    //
-    //function deserializeUser(user, done) {
-    //    userModel
-    //        .findUserById(user._id)
-    //        .then(
-    //            function(user){
-    //                done(null, user);
-    //            },
-    //            function(err){
-    //                done(err, null);
-    //            }
-    //        );
-    //}
-    //
-    //function login(req, res) {
-    //    var user = req.user;
-    //    res.json(user);
-    //}
 
     function addFriend(req,res){
         console.log(req.params.userName);

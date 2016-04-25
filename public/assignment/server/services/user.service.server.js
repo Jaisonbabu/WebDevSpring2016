@@ -241,7 +241,6 @@ module.exports = function (app, userModel,projectModel){
     function projRegister(req,res){
         var newUser = req.body;
         console.log(JSON.stringify(newUser));
-        newUser.roles = ['student','admin'];
         console.log(newUser);
 
         for(var i in newUser.emails){

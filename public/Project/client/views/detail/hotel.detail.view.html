@@ -21,24 +21,21 @@
                     <h1>{{searchDetail.name}}</h1>
                     <p class="subtext">{{searchDetail.location.address}}</p>
                     <p class="subtext">Cuisines: {{searchDetail.cuisines}}</p>
-                    <p class="subtext">Phone: {{searchDetail.phone}}</p>
+                    <p class="subtext">Price Range: {{searchDetail.priceRange}}</p>
+                    <p class="subtext">Average cost for two: {{searchDetail.avgCost}}</p>
 
-                    <!--<div class="row text-nowrap" ng-hide="isLogin()">-->
-                    <!--<a class="disabled" ng-click="addFav(searchDetail)"-->
-                    <!--style="pointer-events:{{getFavButtonState(searchDetail)}}">-->
-                    <!--<span style="color:{{getFavButtonColor(searchDetail)}}"-->
-                    <!--class="glyphicon glyphicon-heart text-muted"></span>-->
-                    <!--</a>-->
-                    <!--</div>-->
+                    <h4 class="inverted-color" style = "float:left"><i>Favorite this Restaurant?</i>&nbsp;&nbsp;&nbsp;
                     <button class="btn btn-primary"
                             ng-click="addOrRemoveFav()" ng-show ="currentUser">
-                <span ng-show="userFav.resIds.indexOf(searchDetail.id) > -1" class="glyphicon glyphicon-star"></span>
+                        <span ng-show="userFav.resIds.indexOf(searchDetail.id) > -1" class="glyphicon glyphicon-star"></span>
                 <span ng-show="!userFav || !userFav.resIds || userFav.resIds.indexOf(searchDetail.id) == -1"
                       class="glyphicon glyphicon-star-empty">
 
-                </span></button>
+                </span></button></h4>
 
-                        <!--<a ng-click = "addFav(searchDetail)" > <img  class ="heart" width = "30px" height = "30px" ng-src ="./css/empty.png"/></a>-->
+
+
+                    <!--<a ng-click = "addFav(searchDetail)" > <img  class ="heart" width = "30px" height = "30px" ng-src ="./css/empty.png"/></a>-->
 
 
                 </div>
@@ -46,9 +43,7 @@
         </div>
     </div>
 
-    <div class="container">
-        <h3 class="inverted-color"><i></i></h3>
-    </div>
+
 </div>
 <div class ="container-fluid">
     <div class="row">
@@ -60,7 +55,7 @@
                     <div class = "container-fluid ">
                         <uib-rating ng-model="review.rating"  max="5" read-only="true"  titles="['one','two','three']" aria-labelledby="default-rating">
 
-                    </uib-rating>
+                        </uib-rating>
                         <h4> <i>{{review.text}} </i></h4>
 
                         <div class = "site-color-background inverted-color review-user pull-right box-shadow2">

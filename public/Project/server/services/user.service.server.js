@@ -1,3 +1,5 @@
+var bcrypt = require("bcrypt-nodejs");
+
 
 module.exports = function (app, userModel){
 
@@ -99,12 +101,62 @@ module.exports = function (app, userModel){
                 });
     }
 
+    //function updateUser(req,res){
+    //    userModel.updateUser(req.body,req.params.id)
+    //        .then( function(updatedUser){
+    //                res.json(updatedUser);
+    //            },
+    //            function(err){
+    //                res.status(400).send(err);
+    //            }
+    //        );
+    //}
+
     function updateUser(req,res){
-        userModel.updateUser(req.body,req.params.id)
-            .then( function(updatedUser){
-                    res.json(updatedUser);
+        var newUser = req.body;
+
+        console.log(JSON.stringify(req.body));
+        console.log("update user");
+
+        for(var i in newUser.emails){
+            newUser.emails[i]=newUser.emails[i].trim();
+        }
+
+        newUser.password = bcrypt.hashSync(newUser.password);
+
+        userModel
+            .updateUser(req.params.id, newUser)
+            .then(
+                function (user) {
+                    console.log("user updated servicwe");
+                    //return userModel.findAllUsers();
+                    return userModel.findUserById(req.params.id)
                 },
-                function(err){
+                function (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function (user) {
+                    //res.json(users);
+
+                    if (user) {
+                        console.log(" User Registered , login the user");
+                        req.login(user, function (err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                console.log("user logged in after registrations");
+                                console.log(user);
+                                loggedInUser = user;
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function (err) {
+                    console.log(err);
                     res.status(400).send(err);
                 }
             );

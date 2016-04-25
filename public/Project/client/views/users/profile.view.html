@@ -13,13 +13,21 @@
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label">Username:</label>
             <div class="col-sm-10">
-                <input type="text" ng-model = "model.user.username" class="form-control" id="username" placeholder="Username" required autofocus>
+                <input type="text" ng-model = "model.user.username" class="form-control" id="username" name = "username"
+                       placeholder="Username" required autofocus>
+                <span class="error errorMsg"
+                      ng-show="profileForm.username.$dirty && profileForm.username.$error.required">
+										* Username is required. </span>
             </div>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label">Password:</label>
             <div class="col-sm-10">
-                <input type="password" ng-model = "model.user.password" class="form-control" id="password" placeholder="Password">
+                <input type="password" ng-model = "model.user.password" class="form-control" id="password"
+                       name = "password" placeholder="Password" required>
+                <span class="error errorMsg"
+                      ng-show="profileForm.password.$dirty && profileForm.password.$error.required">
+								* Password is required. </span>
             </div>
         </div>
         <div class="form-group">
@@ -37,7 +45,8 @@
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Email:</label>
             <div class="col-sm-10">
-                <input type="email" ng-model="model.user.email" class="form-control" id="email" placeholder="Email">
+                <input type="email" ng-model="model.user.email" class="form-control" id="email"
+                       name ="email" placeholder="Email"  required>
                  <span  ng-show="profileForm.email.$dirty && profileForm.email.$invalid">
                     <span class="error errorMsg"  ng-show="profileForm.email.$error.email"> Not valid email!</span>
                 </span>

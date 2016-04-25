@@ -175,7 +175,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                         console.log("user found");
                         console.log(userFav);
                         var finalUserFav = {};
-                        RestaurantModel.find({ resId : { $in : userFav.resIds }},
+                        RestaurantModel.findOne({ resId : { $in : userFav.resIds }},
                             function(err, favRes){
                                 if(err){
                                     deferred.reject(err);
@@ -302,7 +302,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         return deferred.promise;
     }
 
-    function updateUser(user, userId){
+    function updateUser(userId,user){
         console.log(user);
         var deferred = q.defer();
 

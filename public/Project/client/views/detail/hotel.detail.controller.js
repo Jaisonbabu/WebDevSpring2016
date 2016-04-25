@@ -53,7 +53,9 @@
                 'image' : detail.featured_image,
                 'location':detail.location,
                 'rating': detail.user_rating,
-                'phone':detail.phone_numbers
+                'phone':detail.phone_numbers,
+                'priceRange':detail.price_range,
+                'avgCost': detail.average_cost_for_two
             };
         };
 

@@ -8,6 +8,7 @@
     function ReviewController (SearchService,UserService) {
 
         var vm = this;
+        vm.reviews = null;
 
         function init() {
 
@@ -15,7 +16,10 @@
                 .then(function(user){
                     SearchService.getReviewsByUserId(user.data._id)
                         .then(function(rev){
-                            vm.reviews = rev.data;
+                            if(rev.data.length > 0){
+                                vm.reviews = rev.data;
+                            }
+
 
                         },function(err){
 

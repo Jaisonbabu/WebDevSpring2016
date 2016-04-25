@@ -8,6 +8,7 @@
     function FavoriteController ($scope,SearchService,UserService) {
 
         var vm = this;
+        vm.restaurants = null;
 
         function init() {
 
@@ -17,7 +18,10 @@
                     $scope.currentUser = user.data;
                     UserService.getUserFavorites(user.data._id)
                         .then(function(fav){
-                            vm.restaurants = fav.data.resFav;
+                            if(fav.data != null){
+                                vm.restaurants = fav.data.resFav;
+                            }
+
 
                         },function(err){
 

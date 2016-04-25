@@ -20,15 +20,15 @@
                                     <h2 class ="home-card-move-up">{{restaurant.name}}</h2>
 
                                     <!--<button class="btn btn-primary"-->
-                                            <!--ng-click="removeUserFav(restaurant.resId)" ng-show ="currentUser">-->
-                                        <!--<span  class="glyphicon glyphicon-star"></span>-->
+                                    <!--ng-click="removeUserFav(restaurant.resId)" ng-show ="currentUser">-->
+                                    <!--<span  class="glyphicon glyphicon-star"></span>-->
 
                                     <!--</button>-->
                                     <h4 class="subtitle ">{{restaurant.location}}</h4>
                                     <!--<div class="row text-nowrap" ng-hide="model.isLogin()">-->
-                                        <!--<a class="disabled" ng-click="model.removeFav(restaurant)">-->
-                                            <!--<span style="color:orangered" class="glyphicon glyphicon-heart-empty"></span>-->
-                                        <!--</a>-->
+                                    <!--<a class="disabled" ng-click="model.removeFav(restaurant)">-->
+                                    <!--<span style="color:orangered" class="glyphicon glyphicon-heart-empty"></span>-->
+                                    <!--</a>-->
                                     <!--</div>-->
 
                                 </div>
@@ -36,6 +36,9 @@
                             </div>
                         </div>
                     </a>
+                </div>
+                <div ng-hide = "model.restaurants">
+                    <h3> You have no Favorites yet</h3>
                 </div>
 
 

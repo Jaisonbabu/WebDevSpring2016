@@ -41,6 +41,14 @@
         vm.addFriend = addFriend;
         vm.removeFriend = removeFriend;
         vm.isFriend = isFriend;
+        vm.hasNotification = hasNotification;
+
+        function hasNotification(notify){
+            if(notify == "yes"){
+                return true;
+            }
+            return false;
+        }
 
         function isCurrentUser(username){
             if($rootScope.currentUser.username == username ){

@@ -4,7 +4,7 @@ module.exports = function(mongoose) {
             userName    : String,
             followerId  : String,
             followerName : String,
-            notify      : String
+            notify      :  {type : String , default : "no"}
         },
         {collection: "follow"});
     return FollowerSchema;

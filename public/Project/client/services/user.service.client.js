@@ -55,7 +55,7 @@
         }
 
         function userLogin(user){
-            return $http.post("/api/project/login", user);
+            return $http.post("/api/project/login", user , {headers: {'Content-Type': 'application/json'} });
         }
 
         function findUserByCredentials(username,password) {

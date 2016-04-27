@@ -67,6 +67,7 @@ module.exports = function (app, userModel,projectModel){
                     console.log("Inside projeect strategy");
                     console.log(user);
                     if (user && bcrypt.compareSync(password, user.password)) {
+                        console.log("bcrypt passes");
                         return done(null, user);
                     }
                     return done(null, false);
@@ -85,6 +86,8 @@ module.exports = function (app, userModel,projectModel){
     }
 
     function deserializeUser(user, done) {
+        console.log("deserialize");
+        console.log(user);
         if(user.type == 'assignment'){
             userModel
                 .findUserById(user._id)
@@ -99,6 +102,7 @@ module.exports = function (app, userModel,projectModel){
                 );
 
         }else if(user.type == "project"){
+            console.log(" project deserialize");
             projectModel
                 .findUserById(user._id)
                 .then(
@@ -132,7 +136,7 @@ module.exports = function (app, userModel,projectModel){
 
     function projLogin(req, res) {
         var user = req.user;
-        console.log("login server");
+        console.log("project login server");
         loggedInUser = user;
         res.json(user);
     }
@@ -155,6 +159,7 @@ module.exports = function (app, userModel,projectModel){
     }
 
     function projLogout(req, res) {
+        console.log("project logout");
         req.logOut();
         res.send(200);
     }

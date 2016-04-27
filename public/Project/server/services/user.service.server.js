@@ -143,6 +143,7 @@ module.exports = function (app, userModel){
 
                     if (user) {
                         console.log(" User Registered , login the user");
+                        console.log(user);
                         req.login(user, function (err) {
                             if (err) {
                                 res.status(400).send(err);

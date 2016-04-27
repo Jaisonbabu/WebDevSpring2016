@@ -320,6 +320,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                 userFound.review = user.review;
                 userFound.likes = user.likes;
                 userFound.friends = user.friends;
+                userFound.type = user.type;
                 userFound.save(function(err,userUpdated){
                     if(err){
                         deferred.reject(err);

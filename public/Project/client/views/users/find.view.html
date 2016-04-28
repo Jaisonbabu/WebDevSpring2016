@@ -2,7 +2,7 @@
 
     <div ng-show="model.message" class="alert alert-success" role="alert">{{model.message}}</div>
     <div>
-        <h3>Hey {{currentUser.username}}, make new friends here: </h3>
+        <h2>Hey {{currentUser.username}}, make new friends here: </h2>
         <ul class="thumbnails list-inline">
             <li ng-repeat="user in model.allUsers">
                 <div class="thumbnail" ng-hide= "model.isCurrentUser(user.username) || model.isFriend(user)">
@@ -13,35 +13,48 @@
                 </div>
             </li>
         </ul>
-        <div ng-if = "model.allUsers.length > 1" class="text-center more-button" >
-           <h3> No User's yet</h3>
+        <div ng-if = "model.allUsers.length < 1" class="text-center more-button" >
+            <h3> No User's yet</h3>
         </div>
     </div>
     <div >
-    <h3>Users you follow:</h3>
-    <ul class="thumbnails list-inline">
-        <li ng-repeat="friend in model.friends">
-            <!--ng-repeat="friend in model.Friends">-->
-            <div class="thumbnail">
-                <a href = "#/api/profile/{{friend.followerName}}/profile"><img src="//placehold.it/120x120"></a>
-                <h4><p align="center">{{friend.followerName}} </p></h4>
-                <a ng-click = "model.removeFriend(friend.followerName)"  width = "100%" class="btn btn-primary btn-block" role="button">Remove friend</a>
-            </div>
-        </li>
-    </ul>
-</div>
+        <h2>Your friends</h2>
+        <ul class="thumbnails list-inline">
+            <li ng-repeat="friend in model.friends">
+                <!--ng-repeat="friend in model.Friends">-->
+                <div class="thumbnail ">
+                    <a href = "#/api/profile/{{friend.followerName}}/profile"><img src="//placehold.it/120x120">
+                        <div class = "notify">
+                        <span ng-if="model.hasNotification(friend.notify)" class="glyphicon glyphicon-heart" ></span>
+                        <span ng-if="!model.hasNotification(friend.notify)" class="glyphicon glyphicon-heart-empty" ></span>
+                        </div>
+                        <h4>
+                            <p align="center">{{friend.followerName}} </p>
+                        </h4>
+                    </a>
+                    <a ng-click = "model.removeFriend(friend.followerName)"  width = "100%" class="btn btn-primary btn-block" role="button">Remove friend</a>
+                </div>
+            </li>
+        </ul>
+
+        <div ng-if = "model.friends.length < 1" class="text-center more-button" >
+            <h3> You have no friends yet</h3>
+        </div>
+    </div>
     <div>
-        <h3>Users who follow you:</h3>
+        <h2>People who added you as friend </h2>
         <ul class="thumbnails list-inline">
             <li ng-repeat="follower in model.followers">
                 <div class="thumbnail">
                     <a href = "#/api/profile/{{follower.userName}}/profile"><img src="//placehold.it/120x120"></a>
-                    <span ng-if="model.hasNotification(follower.notify)" class="glyphicon glyphicon-heart"></span>
-                <span ng-if="!model.hasNotification(follower.notify)" class="glyphicon glyphicon-heart-empty"></span>
                     <h4><p align="center">{{follower.userName}}</p></h4>
                 </div>
             </li>
         </ul>
+
+        <div ng-if = "model.followers.length < 1" class="text-center more-button" >
+            <h3> No Follower's yet</h3>
+        </div>
     </div>
 </div>
 

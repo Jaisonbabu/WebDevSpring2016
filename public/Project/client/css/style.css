@@ -228,6 +228,10 @@ html, body {height: 100%;}
     white-space: nowrap;
 }
 
+.notify{
+    text-align: center;
+}
+
 .text-input {
     height: 60px;
     border-radius: 0;

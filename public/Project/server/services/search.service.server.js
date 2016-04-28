@@ -22,11 +22,18 @@ module.exports = function (app,request,reviewModel){
                 function (createdReview) {
                     console.log("Inside search web service");
                     console.log(JSON.stringify(createdReview));
-                    res.json(createdReview);
+                    //res.json(createdReview);
+                    return createdReview;
                 },
                 function ( err ) {
                     res.status(400).send(err);
-                });
+                })
+            .then(function(review){
+                res.json(review);
+
+            },function (err){
+
+            })
     }
 
     function getReviewsByResId(req,res){

@@ -38,7 +38,7 @@ module.exports = function(request,db,mongoose,RestaurantModel) {
             if(err){
                 deferred.reject(err);
             }else{
-                storeHotel(review.hotel);
+
                 deferred.resolve(doc);
 
             }

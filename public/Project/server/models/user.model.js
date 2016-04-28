@@ -41,8 +41,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                 userId      : uid,
                 userName  : username,
                 followerId  : friend._id,
-                followerName : friend.username,
-                notify      : "no"
+                followerName : friend.username
             },function(err,follow){
                 if(err){
                     deferred.reject(err);

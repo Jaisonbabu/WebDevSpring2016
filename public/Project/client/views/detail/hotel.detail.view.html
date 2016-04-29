@@ -84,7 +84,9 @@
                     <form class="form-horizontal ng-pristine ng-valid">
                         <textarea placeholder="Write a review!" class="form-control review-textarea ng-pristine ng-valid ng-touched" name="name" rows="8" cols="40" ng-model="review.text"></textarea>
                         <button class="btn btn-primary square-button site-color-background form-control"
-                                ng-click="createReview(review)">Submit Review</button>
+                                ng-if="!isCurrentUser()" ng-click="createReview(review)">Submit Review</button>
+                        <button class="btn btn-primary square-button site-color-background form-control"
+                                ng-if="isCurrentUser()" >Login to rewrite review </button>
                     </form>
                 </div>
             </div>

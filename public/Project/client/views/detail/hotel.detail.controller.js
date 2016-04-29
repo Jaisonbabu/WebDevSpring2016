@@ -5,7 +5,7 @@
         .module("BonAppetitApp")
         .controller("HotelDetailController", HotelDetailController);
 
-    function HotelDetailController($scope,$routeParams,UserService,SearchService){
+    function HotelDetailController($scope,$routeParams,$rootScope,UserService,SearchService){
 
         var resId = $routeParams.id;
 
@@ -18,8 +18,7 @@
 
         $scope.createReview = createReview;
         $scope.addOrRemoveFav = addOrRemoveFav;
-        $scope.getFavButtonState = getFavButtonState;
-        $scope.getFavButtonColor = getFavButtonColor;
+       $scope.isCurrentUser = isCurrentUser;
 
 
         function init() {
@@ -48,6 +47,13 @@
             $scope.overStar = value;
             $scope.percent = 100 * (value / $scope.max);
         };
+
+        function isCurrentUser(){
+            if( $rootScope.currentUser == null ){
+                return true;
+            }
+            return false;
+        }
 
         var successHandler = function (response){
             var detail = response.data;

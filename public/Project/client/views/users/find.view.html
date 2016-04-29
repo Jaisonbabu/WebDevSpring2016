@@ -19,7 +19,7 @@
         <div ng-if = "model.allUsers.length < 1" class="text-center more-button" >
             <h3> No users yet</h3>
         </div>
-        <div ng-if = "model.allUsers.length > 1 && model.friends.length > 0" class="text-center more-button" >
+        <div ng-if = "(model.allUsers.length - 1) == (model.friends.length)" class="text-center more-button" >
             <h3> No new users to make friends yet </h3>
         </div>
 
@@ -58,8 +58,8 @@
         <ul class="thumbnails list-inline">
             <li ng-repeat="follower in model.followers">
                 <div class="thumbnail">
-                    <a href = "#/api/profile/{{follower.userName}}/profile"><img src="//placehold.it/120x120"></a>
-                    <h4><p align="center">{{follower.userName}}</p></h4>
+                    <a href = "#/api/profile/{{follower.userName}}/profile"><img src="//placehold.it/120x120">
+                    <h4><p align="center">{{follower.userName}}</p></h4></a>
                 </div>
             </li>
         </ul>

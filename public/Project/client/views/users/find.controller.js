@@ -128,13 +128,13 @@
             UserService.findUserByUsername(fname)
             .then(function(userFriend){
 
-                UserService.removeFriend($rootScope.currentUser._id,userFriend._id)
+                UserService.removeFriend($rootScope.currentUser._id,userFriend.data._id)
                     .then(
-                        function(userFriend){
+                        function(remvedList){
                             vm.message= "removed as Friend";
                             var friends = [];
                             friends = $rootScope.currentUser.friends;
-                            friends.splice(friends.indexOf(userFriend._id),1);
+                            friends.splice(friends.indexOf(userFriend.data._id),1);
 
                             var updatedUser = {
                                 username: $rootScope.currentUser.username,

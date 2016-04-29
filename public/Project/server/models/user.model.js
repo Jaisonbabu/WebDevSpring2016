@@ -97,7 +97,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         var deferred = q.defer();
         console.log(userId);
         console.log(fId);
-        FollowModel.findOneAndRemove({ $or : [{ 'userId' : userId },{ 'followerId' : fId }]},
+        FollowModel.findOneAndRemove({ $and : [{ 'userId' : userId },{ 'followerId' : fId }]},
             function (err, users) {
             if (err) {
                 deferred.reject(err);

@@ -5,7 +5,7 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function (app, userModel,projectModel){
 
-    var auth = authenticated;
+   // var auth = authenticated;
     var loggedInUser;
 
     app.get("/api/assignment/user",findUser);
@@ -81,8 +81,7 @@ module.exports = function (app, userModel,projectModel){
     }
 
     function serializeUser(user, done) {
-        delete user.password;
-        done(null, user);
+       done(null, user);
     }
 
     function deserializeUser(user, done) {
@@ -93,7 +92,7 @@ module.exports = function (app, userModel,projectModel){
                 .findUserById(user._id)
                 .then(
                     function (user) {
-                        delete user.password;
+                        //delete user.password;
                         done(null, user);
                     },
                     function (err) {
@@ -107,7 +106,7 @@ module.exports = function (app, userModel,projectModel){
                 .findUserById(user._id)
                 .then(
                     function (user) {
-                        delete user.password;
+                        //delete user.password;
                         done(null, user);
                     },
                     function (err) {

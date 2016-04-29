@@ -151,7 +151,10 @@ module.exports = function (app, userModel){
                                 console.log("user logged in after registrations");
                                 console.log(user);
                                 loggedInUser = user;
-                                res.json(user);
+                                setTimeout(function  (){
+                                    res.json(user);
+                                },600);
+
                             }
                         });
                     }

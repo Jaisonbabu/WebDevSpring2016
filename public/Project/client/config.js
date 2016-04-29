@@ -141,7 +141,7 @@
     {
         var deferred = $q.defer();
 
-        $http.get('/api/assignment/loggedin').success(function(user)
+        $http.get('/api/project/loggedin').success(function(user)
         {
             $rootScope.errorMessage = null;
             // User is Authenticated

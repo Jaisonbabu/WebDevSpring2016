@@ -1,4 +1,4 @@
-module.exports = function (app,request,reviewModel){
+module.exports = function (app,request,reviewModel,userModel){
 
     //Search
     app.get("/api/project/location/search",fetchAllResult);
@@ -29,7 +29,13 @@ module.exports = function (app,request,reviewModel){
                     res.status(400).send(err);
                 })
             .then(function(review){
-                res.json(review);
+                console.log(review);
+                userModel.updateFollower(review.userId)
+                .then(function (follower){
+                    console.log(" follower updated");
+                    res.json(review);
+                });
+
 
             },function (err){
 

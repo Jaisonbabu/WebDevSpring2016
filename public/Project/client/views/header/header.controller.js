@@ -21,9 +21,14 @@
         function logout() {
             UserService
                 .logout()
-                .then(function(){
+                .then(function(user){
+                    console.log("logout success");
                     UserService.setUser(null);
+                    console.log($rootScope.currentUser);
                     $location.url("/");
+                },
+                function(err){
+                    console.log("logout error");
                 });
         }
 

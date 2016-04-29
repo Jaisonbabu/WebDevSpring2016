@@ -51,14 +51,14 @@
         }
 
         function isCurrentUser(username){
-            if($rootScope.currentUser.username == username ){
+            if( $rootScope.currentUser != null && $rootScope.currentUser.username == username ){
                 return true;
             }
             return false;
         }
 
         function isFriend(user){
-            if ($rootScope.currentUser.friends.length > 0){
+            if ($rootScope.currentUser != null && $rootScope.currentUser.friends.length > 0){
                 if($rootScope.currentUser.friends.indexOf(user._id) != -1){
                     return true;
                 }

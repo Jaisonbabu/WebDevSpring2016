@@ -23,7 +23,7 @@ module.exports = function (app,request,db,mongoose){
     var userServiceProject = require("../../Project/server/services/user.service.server.js")(app,userModelProject);
 
     var reviewModel = require("../../Project/server/models/review.model.js")(request,db,mongoose,RestaurantModel);
-    var searchService = require("../../Project/server/services/search.service.server.js")(app,request,reviewModel);
+    var searchService = require("../../Project/server/services/search.service.server.js")(app,request,reviewModel,userModelProject);
 
 
     var userService  = require("./services/user.service.server.js")(app, userModel,userModelProject);

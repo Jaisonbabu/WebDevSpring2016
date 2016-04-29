@@ -91,7 +91,8 @@
         }
 
         function updateUser(userId, user){
-            console.log("inside client updateUser"+ user);
+            console.log("inside client updateUser");
+            console.log(user);
             return $http.put("/api/project/user/"+userId, user);
         }
 

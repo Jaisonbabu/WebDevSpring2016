@@ -27,7 +27,8 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         addFriend:addFriend,
         findFriends:findFriends,
         findFollowers:findFollowers,
-        removeFriend:removeFriend
+        removeFriend:removeFriend,
+        updateFollower: updateFollower
     };
 
     return api;
@@ -49,6 +50,24 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                 else{
                     deferred.resolve(follow);
                 }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function updateFollower(uid){
+        var deferred = q.defer();
+        console.log("Inside Model update");
+        console.log(uid);
+        FollowModel.update({followerId:uid}, {notify: "yes"}, {multi: true},
+            function(err, fuser) {
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    console.log("updated ");
+                    deferred.resolve(fuser);
+                }
+
             }
         );
         return deferred.promise;

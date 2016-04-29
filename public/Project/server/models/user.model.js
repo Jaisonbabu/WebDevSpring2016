@@ -272,29 +272,39 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         RestaurantModel.findOne({resId: hotel.id},
         function (err,found){
             if(err){
-
-                RestaurantModel.create({
-                    resId: hotel.id,
-                    name : hotel.name,
-                    cuisines : hotel.cuisines,
-                    currency : hotel.currency,
-                    image : hotel.image,
-                    location : hotel.location.address,
-                    rating : hotel.rating.aggregate_rating
-
-                },function(err,hotel){
-                    if(err){
-                        console.log("hotel save error");
-                        deferred.reject(err);
-                    }else{
-                        console.log("hotel saved");
-                        console.log(hotel);
-                        deferred.resolve(hotel);
-                    }
-                });
+                deferred.reject(err);
             }
             else{
-                deferred.resolve(hotel);
+                console.log("found hotel");
+                console.log(found);
+
+                if(found == null){
+
+                    RestaurantModel.create({
+                        resId: hotel.id,
+                        name : hotel.name,
+                        cuisines : hotel.cuisines,
+                        currency : hotel.currency,
+                        image : hotel.image,
+                        location : hotel.location.address,
+                        rating : hotel.rating.aggregate_rating
+
+                    },function(err,hotel){
+                        if(err){
+                            console.log("hotel save error");
+                            deferred.reject(err);
+                        }else{
+                            console.log("hotel saved");
+                            console.log(hotel);
+                            deferred.resolve(hotel);
+                        }
+                    });
+
+                }
+                else{
+                    deferred.resolve(hotel);
+                }
+
             }
 
         });

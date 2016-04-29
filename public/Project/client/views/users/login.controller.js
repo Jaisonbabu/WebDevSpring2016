@@ -57,7 +57,7 @@
                         }
 
                     }, function (err) {
-
+                        vm.message = "User does not exist";
                     })
             }
         }

@@ -26,12 +26,12 @@ module.exports = function (app, userModel,projectModel){
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    app.post  ('/api/assignment/login',    passport.authenticate('assignment'), assignmentLogin);
+    app.post  ('/api/assignment/login' , assignmentLogin);
     app.post  ('/api/assignment/logout',   assignmentLogout);
     app.get   ('/api/assignment/loggedin', assignmentLoggedin);
     app.post  ('/api/assignment/register', assignmentRegister);
 
-    app.post  ('/api/project/login',    passport.authenticate('project'), projLogin);
+    app.post  ("/api/project/login",    passport.authenticate('project'), projLogin);
     app.post  ('/api/project/logout',   projLogout);
     app.get   ('/api/project/loggedin', projLoggedin);
     app.post  ('/api/project/register', projRegister);
@@ -147,7 +147,7 @@ module.exports = function (app, userModel,projectModel){
     }
 
     function projLoggedin(req, res) {
-        console.log("logged in");
+        console.log(" proj logged in");
         console.log(req.user);
         res.send(req.isAuthenticated() ? req.user : '0');
     }

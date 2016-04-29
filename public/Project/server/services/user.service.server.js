@@ -116,7 +116,7 @@ module.exports = function (app, userModel){
         var newUser = req.body;
 
         console.log(JSON.stringify(req.body));
-        console.log("update user");
+        console.log("update Project user");
 
         for(var i in newUser.emails){
             newUser.emails[i]=newUser.emails[i].trim();

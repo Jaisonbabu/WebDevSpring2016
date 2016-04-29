@@ -20,6 +20,9 @@
                 </li>
                 <li ng-show = "currentUser" ng-class="{'active': model.$location.url() == '/profile'}">
                     <a href="#/profile">{{currentUser.username}}</a>
+                </li>``
+                <li ng-show = "currentUser" ng-class="{'active': model.$location.url() == '/'}">
+                    <a href="#/">Search</a>
                 </li>
                 <li ng-show = "currentUser" ng-class="{'active': model.$location.url() == '/find'}">
                     <a href="#/find">Find Users</a>

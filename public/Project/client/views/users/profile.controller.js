@@ -5,18 +5,18 @@
         .module("BonAppetitApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController ( $routeParams, $rootScope, UserService) {
+    function ProfileController ( $rootScope, UserService) {
 
-        //console.log($rootScope.currentUser.username + " inside profile controller");
-       // UserService.checkLoggedIn();
+
         var vm = this;
-        var profileUserName = $routeParams.username;
+
         vm.update= update;
+
+
         function init() {
             vm.user = UserService.getUser();
         }
         init();
-        //$scope.user = UserService.getUser();
 
 
         function update(user){
@@ -35,7 +35,8 @@
                     },
                     function (error){
                         vm.message = "Cannot update User";
-                    });
+                    }
+                );
         }
     }
 })();

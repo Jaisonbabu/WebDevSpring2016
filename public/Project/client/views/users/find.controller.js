@@ -9,6 +9,13 @@
 
         var vm = this;
 
+        vm.isCurrentUser = isCurrentUser;
+        vm.addFriend = addFriend;
+        vm.removeFriend = removeFriend;
+        vm.isFriend = isFriend;
+        vm.hasNotification = hasNotification;
+        vm.undoNotify = undoNotify;
+
         function init() {
 
             UserService.findAllUsers()
@@ -31,26 +38,15 @@
                 },function(err){
 
                 });
-
-
-
         }
         init();
-
-        vm.isCurrentUser = isCurrentUser;
-        vm.addFriend = addFriend;
-        vm.removeFriend = removeFriend;
-        vm.isFriend = isFriend;
-        vm.hasNotification = hasNotification;
-        vm.undoNotify = undoNotify;
-
 
         function undoNotify(friend){
             console.log(friend);
             UserService.undoNotify(friend)
             .then(function(user){
                 console.log("notify undone");
-                $location.url("/api/profile/"+friend.followerName+"/profile");
+                $location.url("/api/profile/"+friend.followerName+"/review");
             })
         }
 

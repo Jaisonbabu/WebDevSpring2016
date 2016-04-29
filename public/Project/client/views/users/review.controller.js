@@ -20,21 +20,13 @@
                                 vm.reviews = rev.data;
                             }
 
-
                         },function(err){
 
                         });
                 });
-            console.log(vm.currentUser);
-
 
         }
         init();
-
-
-
-
-
 
 
     }

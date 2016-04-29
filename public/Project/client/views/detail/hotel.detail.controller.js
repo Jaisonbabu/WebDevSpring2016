@@ -14,6 +14,13 @@
         var vm = this;
 
         $scope.userFav = null;
+        $scope.reviews= null;
+
+        $scope.createReview = createReview;
+        $scope.addOrRemoveFav = addOrRemoveFav;
+        $scope.getFavButtonState = getFavButtonState;
+        $scope.getFavButtonColor = getFavButtonColor;
+
 
         function init() {
             UserService.getCurrentUser()
@@ -66,11 +73,6 @@
         SearchService.getSearchDetail(resId)
             .then(successHandler,errorHandler);
 
-        $scope.createReview = createReview;
-        $scope.addOrRemoveFav = addOrRemoveFav;
-        $scope.getFavButtonState = getFavButtonState;
-        $scope.getFavButtonColor = getFavButtonColor;
-        $scope.reviews= null;
 
 
 
@@ -167,12 +169,6 @@
 
 
         }
-
-
-
-
-
-
 
 
     }

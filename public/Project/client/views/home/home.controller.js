@@ -5,9 +5,11 @@
         .module("BonAppetitApp")
         .controller("HomeController", HomeController);
 
-    function HomeController ($scope, $location, SearchService,$rootScope) {
+    function HomeController (SearchService,$rootScope) {
 
         var vm = this;
+
+        vm.userSearch = userSearch;
 
         function init() {
 
@@ -17,44 +19,37 @@
                 alert('Geolocation not supported by browser');
             }
 
+            function userLocation() {
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                            var pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            SearchService.fetchResult(pos)
+                                .then(function (response){
+                                        console.log(response.data.restaurants);
+                                        vm.restaurants = response.data.restaurants;
+                                    },
+                                    function(err){
+                                        vm.message= "No results for this place";
+                                    });
+
+                        }, function(){
+                            $rootScope.apiResponse = 1;
+                            $rootScope.$apply();
+                        },{maximumAge:0,enableHighAccuracy:true}
+                    );
+                }else{
+                    $rootScope.apiResponse = 1;
+                    $rootScope.$apply();
+                }
+            }
+            userLocation();
+
         }
         init();
-
-        function userLocation() {
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                        var pos = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        SearchService.fetchResult(pos)
-                            .then(function (response){
-                                    console.log(response.data.restaurants);
-                                    vm.restaurants = response.data.restaurants;
-                                },
-                                function(err){
-                                    vm.message= "No results for this place";
-                                });
-
-                    }, function(){
-                        $rootScope.apiResponse = 1;
-                        $rootScope.$apply();
-                    },{maximumAge:0,enableHighAccuracy:true}
-                );
-            }else{
-                $rootScope.apiResponse = 1;
-                $rootScope.$apply();
-            }
-        }
-
-        userLocation();
-
-        vm.userSearch = userSearch;
-        console.log($location.path());
-        $scope.$location = $location;
-
-        //$scope.userSearch = userSearch;
 
 
         function userSearch(search){

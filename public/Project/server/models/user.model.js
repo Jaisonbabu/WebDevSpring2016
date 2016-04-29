@@ -213,7 +213,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                         console.log("user found");
                         console.log(userFav);
                         var finalUserFav = {};
-                        RestaurantModel.findOne({ resId : { $in : userFav.resIds }},
+                        RestaurantModel.find({ resId : { $in : userFav.resIds }},
                             function(err, favRes){
                                 if(err){
                                     deferred.reject(err);
@@ -269,25 +269,37 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         var deferred = q.defer();
         console.log("Store hotel");
         console.log(hotel);
-        RestaurantModel.create({
-            resId: hotel.id,
-            name : hotel.name,
-            cuisines : hotel.cuisines,
-            currency : hotel.currency,
-            image : hotel.image,
-            location : hotel.location.address,
-            rating : hotel.rating.aggregate_rating
-
-        },function(err,hotel){
+        RestaurantModel.findOne({resId: hotel.id},
+        function (err,found){
             if(err){
-                console.log("hotel save error");
-                deferred.reject(err);
-            }else{
-                console.log("hotel saved");
-                console.log(hotel);
+
+                RestaurantModel.create({
+                    resId: hotel.id,
+                    name : hotel.name,
+                    cuisines : hotel.cuisines,
+                    currency : hotel.currency,
+                    image : hotel.image,
+                    location : hotel.location.address,
+                    rating : hotel.rating.aggregate_rating
+
+                },function(err,hotel){
+                    if(err){
+                        console.log("hotel save error");
+                        deferred.reject(err);
+                    }else{
+                        console.log("hotel saved");
+                        console.log(hotel);
+                        deferred.resolve(hotel);
+                    }
+                });
+            }
+            else{
                 deferred.resolve(hotel);
             }
+
         });
+
+
         return deferred.promise;
     }
 

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-sm-3 col-md-3 col-lg-3 hidden-sm hidden-xs hidden-md"></div>
             <div class="col-lg-6">
-                <div ng-if ="model.restaurants" ng-repeat="restaurant  in model.restaurants">
+                <div ng-if = "model.restaurants" ng-repeat="restaurant in model.restaurants">
                     <a class="home-cards" href="#/api/search/{{restaurant.resId}}">
                         <div class="card box-shadow2">
                             <div class="row card-heading">
@@ -18,19 +18,7 @@
                                 </div>
                                 <div class="col-sm-9 col-md-9 col-lg-9 center-block" >
                                     <h2 class ="home-card-move-up">{{restaurant.name}}</h2>
-
-                                    <!--<button class="btn btn-primary"-->
-                                    <!--ng-click="removeUserFav(restaurant.resId)" ng-show ="currentUser">-->
-                                    <!--<span  class="glyphicon glyphicon-star"></span>-->
-
-                                    <!--</button>-->
                                     <h4 class="subtitle ">{{restaurant.location}}</h4>
-                                    <!--<div class="row text-nowrap" ng-hide="model.isLogin()">-->
-                                    <!--<a class="disabled" ng-click="model.removeFav(restaurant)">-->
-                                    <!--<span style="color:orangered" class="glyphicon glyphicon-heart-empty"></span>-->
-                                    <!--</a>-->
-                                    <!--</div>-->
-
                                 </div>
 
                             </div>

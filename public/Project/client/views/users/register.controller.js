@@ -7,8 +7,17 @@
 
     function RegisterController($scope, $location, UserService ) {
 
-        $scope.message = null;
-        $scope.register = register;
+        var vm = this;
+
+        vm.message = null;
+
+        vm.register = register;
+
+        function init() {
+
+        }
+        init();
+
 
         function register(user){
 
@@ -23,14 +32,14 @@
                                         $location.url("/profile");
                                     },
                                     function (err){
-                                        $scope.message = "Cannot register";
+                                        vm.message = "Cannot register";
                                     });
                         }else{
-                            $scope.message = "Username Already Exists";
+                            vm.message = "Username Already Exists";
                         }
                     },
                     function(err){
-                        $scope.message = "Username Already Exists";
+                        vm.message = "Username Already Exists";
                     }
                 );
         }

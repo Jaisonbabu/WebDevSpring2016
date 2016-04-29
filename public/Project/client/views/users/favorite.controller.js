@@ -8,33 +8,28 @@
     function FavoriteController ($scope,SearchService,UserService) {
 
         var vm = this;
-        vm.restaurants = null;
+
+
+        $scope.removeUserFav = removeUserFav;
 
         function init() {
 
             UserService.getCurrentUser()
                 .then(function(user){
-                    vm.currenUser = user.data;
-                    $scope.currentUser = user.data;
+                    vm.currentUser = user.data;
                     UserService.getUserFavorites(user.data._id)
                         .then(function(fav){
                             if(fav.data != null){
                                 vm.restaurants = fav.data.resFav;
                             }
 
-
                         },function(err){
 
                         });
                 });
-            console.log(vm.currentUser);
-
-
         }
         init();
 
-
-        vm.removeUserFav = removeUserFav;
 
         function removeUserFav(resId){
             UserService.removeUserFavorite($scope.currentUser._id,resId)
@@ -51,9 +46,6 @@
                     alert("Removed from favorites");
                 });
         }
-
-
-
 
     }
 })();

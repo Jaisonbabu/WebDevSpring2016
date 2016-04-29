@@ -232,6 +232,10 @@ html, body {height: 100%;}
     text-align: center;
 }
 
+.red{
+    color : #c0392b;
+}
+
 .text-input {
     height: 60px;
     border-radius: 0;

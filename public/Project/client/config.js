@@ -15,10 +15,10 @@
             .when("/", {
                 templateUrl: "views/home/home.view.html",
                 controller:"HomeController",
-                controllerAs: "model",
-                resolve: {
-                    checkCurrentUser: checkCurrentUser
-                }
+                controllerAs: "model"
+                //resolve: {
+                //    checkCurrentUser: checkCurrentUser
+                //}
             })
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",

@@ -7,8 +7,8 @@
             <li ng-repeat="user in model.allUsers">
                 <div class="thumbnail" ng-hide= "model.isCurrentUser(user.username) || model.isFriend(user)">
                     <!--userFav.resIds.indexOf(searchDetail.id) == -1-->
-                    <a href = "#/api/profile/{{user.username}}/profile"><img src="//placehold.it/120x120"></a>
-                    <h4><p align="center">{{user.username}}</p></h4>
+                    <a href = "#/api/profile/{{user.username}}/profile"><img src="//placehold.it/120x120">
+                    <h4><p align="center">{{user.username}}</p></h4></a>
                     <a ng-click = "model.addFriend(user)"  width = "100%" class="btn btn-primary btn-block" role="button">Add Friend</a>
                 </div>
             </li>
@@ -23,11 +23,12 @@
             <li ng-repeat="friend in model.friends">
                 <!--ng-repeat="friend in model.Friends">-->
                 <div class="thumbnail ">
-                    <a href = "#/api/profile/{{friend.followerName}}/profile"><img src="//placehold.it/120x120">
+                    <img src="//placehold.it/120x120">
                         <div class = "notify">
-                        <span ng-if="model.hasNotification(friend.notify)" class="glyphicon glyphicon-heart" ></span>
+                        <span ng-if="model.hasNotification(friend.notify)" class="glyphicon glyphicon-heart red" ></span>
                         <span ng-if="!model.hasNotification(friend.notify)" class="glyphicon glyphicon-heart-empty" ></span>
                         </div>
+                    <a   ng-click = "model.undoNotify(friend)" href = "#/api/profile/{{friend.followerName}}/profile">
                         <h4>
                             <p align="center">{{friend.followerName}} </p>
                         </h4>

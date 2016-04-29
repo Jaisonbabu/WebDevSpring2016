@@ -24,21 +24,37 @@ module.exports = function (app, userModel){
     app.get("/api/project/find/friends/:userId", findFriends);
     app.get("/api/project/find/followers/:userId", findFollowers);
     app.delete("/api/project/:userId/friend/:fId", removeFriend);
+    app.put("/api/project/notify", undoNotify);
 
 
     function addFriend(req,res){
         console.log(req.params.userName);
 
-       userModel.addFriend(req.params.userId,req.params.userName,req.body)
-           .then(
-               function (doc) {
-                   console.log("Inside user web service");
-                   console.log(JSON.stringify(doc));
-                   res.json(doc);
-               },
-               function ( err ) {
-                   res.status(400).send(err);
-               });
+        userModel.addFriend(req.params.userId,req.params.userName,req.body)
+            .then(
+                function (doc) {
+                    console.log("Inside user web service");
+                    console.log(JSON.stringify(doc));
+                    res.json(doc);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function undoNotify(req,res){
+        var friend = req.body;
+        console.log(req.body);
+
+        userModel.undoNotify(friend.userName, friend.followerName)
+            .then(function (doc) {
+                    console.log("Inside user web service");
+                    console.log(JSON.stringify(doc));
+                    res.json(doc);
+                },
+                function ( err ) {
+                    res.status(400).send(err);
+                });
     }
 
     function removeFriend(req,res){
@@ -121,8 +137,6 @@ module.exports = function (app, userModel){
         for(var i in newUser.emails){
             newUser.emails[i]=newUser.emails[i].trim();
         }
-
-        newUser.password = bcrypt.hashSync(newUser.password);
 
         userModel
             .updateUser(req.params.id, newUser)

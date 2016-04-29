@@ -28,7 +28,8 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         findFriends:findFriends,
         findFollowers:findFollowers,
         removeFriend:removeFriend,
-        updateFollower: updateFollower
+        updateFollower: updateFollower,
+        undoNotify:undoNotify
     };
 
     return api;
@@ -60,6 +61,25 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
         console.log("Inside Model update");
         console.log(uid);
         FollowModel.update({followerId:uid}, {notify: "yes"}, {multi: true},
+            function(err, fuser) {
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    console.log("updated ");
+                    deferred.resolve(fuser);
+                }
+
+            }
+        );
+        return deferred.promise;
+    }
+
+    function undoNotify(uName,fName){
+        var deferred = q.defer();
+        console.log("Inside Model undoNotify");
+        console.log(uName);
+        console.log(fName);
+        FollowModel.update({userName : uName ,followerName : fName}, {notify: "no"},
             function(err, fuser) {
                 if(err){
                     deferred.reject(err);

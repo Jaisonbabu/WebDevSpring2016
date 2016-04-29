@@ -21,12 +21,12 @@ module.exports = function (app, userModel,projectModel){
     app.delete('/api/assignment/admin/user/:id', isAdmin,                  deleteUser);
     app.put("/api/assignment/admin/user/:id",    isAdmin,                  updateUser);
 
-    passport.use('assignment',   new LocalStrategy(assignmentLocalStrategy));
+   // passport.use('assignment',   new LocalStrategy(assignmentLocalStrategy));
     passport.use('project', new LocalStrategy(projectLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    app.post  ('/api/assignment/login' , assignmentLogin);
+    app.post  ('/api/assignment/login' ,passport.authenticate('assignment'), assignmentLogin);
     app.post  ('/api/assignment/logout',   assignmentLogout);
     app.get   ('/api/assignment/loggedin', assignmentLoggedin);
     app.post  ('/api/assignment/register', assignmentRegister);
@@ -35,6 +35,7 @@ module.exports = function (app, userModel,projectModel){
     app.post  ('/api/project/logout',   projLogout);
     app.get   ('/api/project/loggedin', projLoggedin);
     app.post  ('/api/project/register', projRegister);
+
 
 
     function assignmentLocalStrategy(username, password, done) {
@@ -59,18 +60,23 @@ module.exports = function (app, userModel,projectModel){
     }
 
     function projectLocalStrategy(username, password, done) {
-        //console.log(username);
+        console.log(username);
+        console.log(password);
         projectModel
             .findUserByUsername(username)
             .then(
                 function (user) {
                     console.log("Inside projeect strategy");
                     console.log(user);
-                    if (user && bcrypt.compareSync(password, user.password)) {
+                    console.log(password);
+                    if (user) {
                         console.log("bcrypt passes");
                         return done(null, user);
+                    }else{
+                        console.log("bcrypt fails");
+                        return done(null, false);
                     }
-                    return done(null, false);
+
                 },
                 function (err) {
                     if (err) {
@@ -107,6 +113,7 @@ module.exports = function (app, userModel,projectModel){
                 .then(
                     function (user) {
                         //delete user.password;
+                        console.log("found user inside deserialize");
                         done(null, user);
                     },
                     function (err) {
@@ -192,6 +199,8 @@ module.exports = function (app, userModel,projectModel){
 
     }
 
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function assignmentRegister(req,res){
@@ -258,7 +267,7 @@ module.exports = function (app, userModel,projectModel){
                         console.log(user);
                         res.json(null);
                     } else {
-                        newUser.password = bcrypt.hashSync(newUser.password);
+                        //newUser.password = bcrypt.hashSync(newUser.password);
                         return projectModel.createUser(newUser);
                     }
                 },

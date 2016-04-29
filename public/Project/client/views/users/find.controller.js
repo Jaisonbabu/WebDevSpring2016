@@ -5,7 +5,7 @@
         .module("BonAppetitApp")
         .controller("FindController", FindController);
 
-    function FindController ($scope,$rootScope,SearchService,UserService) {
+    function FindController ($location,$rootScope,UserService) {
 
         var vm = this;
 
@@ -42,6 +42,17 @@
         vm.removeFriend = removeFriend;
         vm.isFriend = isFriend;
         vm.hasNotification = hasNotification;
+        vm.undoNotify = undoNotify;
+
+
+        function undoNotify(friend){
+            console.log(friend);
+            UserService.undoNotify(friend)
+            .then(function(user){
+                console.log("notify undone");
+                $location.url("/api/profile/"+friend.followerName+"/profile");
+            })
+        }
 
         function hasNotification(notify){
             if(notify == "yes"){

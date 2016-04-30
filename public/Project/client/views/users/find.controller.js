@@ -77,7 +77,7 @@
             UserService.addFriend($rootScope.currentUser._id,$rootScope.currentUser.username,friend)
             .then(
                 function(userFriend){
-                    vm.message= "Added as Friend";
+                    vm.message= "Added as friend";
                         var friends = [];
                     friends = $rootScope.currentUser.friends;
                     friends.push(userFriend.data.followerId);
@@ -99,7 +99,6 @@
                             function (updatedUser){
                                 if (updatedUser.data != null) {
                                     UserService.setUser(updatedUser.data);
-                                    vm.message = "User updated successfully";
                                 }
                                 else
                                 {
@@ -131,7 +130,7 @@
                 UserService.removeFriend($rootScope.currentUser._id,userFriend.data._id)
                     .then(
                         function(remvedList){
-                            vm.message= "removed as Friend";
+                            vm.message= "Removed as friend";
                             var friends = [];
                             friends = $rootScope.currentUser.friends;
                             friends.splice(friends.indexOf(userFriend.data._id),1);
@@ -153,7 +152,6 @@
                                     function (updatedUser){
                                         if (updatedUser.data != null) {
                                             UserService.setUser(updatedUser.data);
-                                            vm.message = "User updated successfully";
                                         }
                                         else
                                         {

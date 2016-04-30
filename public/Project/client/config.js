@@ -41,10 +41,16 @@
                 templateUrl: "views/users/login.view.html",
                 controller: "LoginController",
                 controllerAs: "model"
+
             })
             .when("/api/search/:id", {
                 templateUrl: "views/detail/hotel.detail.view.html",
-                controller: "HotelDetailController"
+                controller: "HotelDetailController",
+                controllerAs: "model",
+                resolve: {
+                    checkCurrentUser: checkCurrentUser
+                }
+
             })
             .when("/favorite", {
                 templateUrl: "views/users/favorite.view.html",

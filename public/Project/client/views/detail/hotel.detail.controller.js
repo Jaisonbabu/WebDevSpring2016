@@ -13,13 +13,12 @@
 
         var vm = this;
 
+        vm.createReview = createReview;
+        vm.addOrRemoveFav = addOrRemoveFav;
+        vm.isCurrentUser = isCurrentUser;
+
         $scope.userFav = null;
         $scope.reviews= null;
-
-        $scope.createReview = createReview;
-        $scope.addOrRemoveFav = addOrRemoveFav;
-       $scope.isCurrentUser = isCurrentUser;
-
 
         function init() {
             UserService.getCurrentUser()

@@ -48,9 +48,18 @@
             }
             userLocation();
 
+
+
         }
         init();
 
+        var locationInput = document.getElementById('txtLocation');
+        var autocomplete = new google.maps.places.Autocomplete(locationInput);
+        //autocomplete.bindTo('bounds', $scope.map);
+
+        autocomplete.addListener('place_changed', function() {
+            vm.search.place = autocomplete.getPlace();
+        });
 
         function userSearch(search){
             if(typeof search == "undefined") {
@@ -89,7 +98,8 @@
                 }
             }else{
                 //get location for address
-                SearchService.getLocationForAddress(search.place)
+                console.log(search.place);
+                SearchService.getLocationForAddress(search.place.formatted_address)
                     .then(function (pos){
                         console.log(pos.data);
                         if (pos.data.results.length > 0){
@@ -99,13 +109,34 @@
                                 lat : pos.data.results[0].geometry.location.lat,
                                 lng : pos.data.results[0].geometry.location.lng
                             };
-                            SearchService.userSearch(newSearch)
-                                .then(function (response){
-                                        vm.restaurants = response.data.restaurants;
-                                    },
-                                    function (err){
 
-                                    })
+                            if(typeof search.query == "undefined" || search.query == ""){
+                                var gpos = {
+                                    lat: pos.data.results[0].geometry.location.lat,
+                                    lng:  pos.data.results[0].geometry.location.lng
+                                };
+                                SearchService.fetchResult(gpos)
+                                    .then(function (response){
+                                            console.log(response.data.restaurants);
+                                            vm.restaurants = response.data.restaurants;
+                                            vm.search.place = undefined;
+                                        },
+                                        function(err){
+                                            vm.message= "No results for this place";
+                                        });
+
+                            }else{
+                                SearchService.userSearch(newSearch)
+                                    .then(function (response){
+                                            vm.restaurants = response.data.restaurants;
+                                            vm.search.place = undefined;
+                                        },
+                                        function (err){
+
+                                        })
+                            }
+
+
 
                         }else{
                             alert("Location not found");

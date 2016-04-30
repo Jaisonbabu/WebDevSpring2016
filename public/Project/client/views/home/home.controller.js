@@ -10,6 +10,7 @@
         var vm = this;
 
         vm.userSearch = userSearch;
+        vm.result = null;
 
         function init() {
 
@@ -31,6 +32,7 @@
                                 .then(function (response){
                                         console.log(response.data.restaurants);
                                         vm.restaurants = response.data.restaurants;
+                                        vm.result = true;
                                     },
                                     function(err){
                                         vm.message= "No results for this place";
@@ -62,6 +64,7 @@
         });
 
         function userSearch(search){
+            vm.result = null;
             if(typeof search == "undefined") {
                 console.log("Do Nothing");
             }else
@@ -82,6 +85,7 @@
                             SearchService.userSearch(newSearch)
                                 .then(function (response){
                                         vm.restaurants = response.data.restaurants;
+                                        vm.result = true;
                                     },
                                     function (err){
 
@@ -120,6 +124,7 @@
                                             console.log(response.data.restaurants);
                                             vm.restaurants = response.data.restaurants;
                                             vm.search.place = undefined;
+                                            vm.result = true;
                                         },
                                         function(err){
                                             vm.message= "No results for this place";
@@ -130,6 +135,7 @@
                                     .then(function (response){
                                             vm.restaurants = response.data.restaurants;
                                             vm.search.place = undefined;
+                                            vm.result = true;
                                         },
                                         function (err){
 

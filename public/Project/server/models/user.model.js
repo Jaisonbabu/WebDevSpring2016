@@ -177,7 +177,7 @@ module.exports = function(db,mongoose,RestaurantModel,FollowModel) {
                     console.log(JSON.stringify(userFav));
                     var resId = restaurant.id;
 
-                        if(userFav.resIds.indexOf(resId) == -1 ) {
+                        if(userFav != null && userFav.resIds.indexOf(resId) == -1 ) {
 
                             userFav.resIds.push(resId);
                             userFav.save(function (err, userFavObj) {

@@ -24,17 +24,28 @@
     </div>
 </div>
 
-<br/>
-
-<div ng-hide="model.restaurants.length>0" class="tablediv row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-8">
-        <h3>
+<div class="container-fluid">
+    <div ng-hide="model.restaurants.length>0" class="tablediv row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-8">
+            <h3>
 				<span class="glyphicon glyphicon-hourglass"
                       style="margin-top: 150px"> Loading...</span>
-        </h3>
+            </h3>
+            <br/><br/><br/><br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
     </div>
 </div>
+
+
+
+
 
 
 <div class="container-fluid">
@@ -48,15 +59,15 @@
                     <div class="card box-shadow2">
                         <div class="row card-heading">
 
-                                <div class="col-sm-3 col-md-3 col-lg-3">
-                                    <img class="img img-responsive card-img "   ng-src="{{restaurant.restaurant.thumb}}" alt=" Image currently unavailable">
-                                </div>
-                                <div class="col-sm-9 col-md-9 col-lg-9 center-block" >
-                                    <h2 class ="home-card-move-up">{{restaurant.restaurant.name}}</h2>
-                                    <h4 class="subtitle ">{{restaurant.restaurant.location.address}}</h4>
-                                    <h4>Rating: {{restaurant.restaurant.user_rating.aggregate_rating}}</h4>
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <img class="img img-responsive card-img "   ng-src="{{restaurant.restaurant.thumb}}" alt=" Image currently unavailable">
+                            </div>
+                            <div class="col-sm-9 col-md-9 col-lg-9 center-block" >
+                                <h2 class ="home-card-move-up">{{restaurant.restaurant.name}}</h2>
+                                <h4 class="subtitle ">{{restaurant.restaurant.location.address}}</h4>
+                                <h4>Rating: {{restaurant.restaurant.user_rating.aggregate_rating}}</h4>
 
-                                </div>
+                            </div>
 
                         </div>
                     </div>

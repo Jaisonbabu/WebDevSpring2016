@@ -24,9 +24,9 @@
                     <p class="subtext">Price Range: {{searchDetail.priceRange}}</p>
                     <p class="subtext">Average cost for two: {{searchDetail.avgCost}}</p>
 
-                    <h4 class="inverted-color" style = "float:left"><i>Favorite this Restaurant?</i>&nbsp;&nbsp;&nbsp;
+                    <h4 class="inverted-color left" ng-if ="!isCurrentUser()"><i>Favorite this Restaurant?</i>&nbsp;&nbsp;&nbsp;
                     <button class="btn btn-primary"
-                            ng-click="addOrRemoveFav()" ng-show ="currentUser">
+                            ng-click="addOrRemoveFav()" ng-if ="!isCurrentUser()">
                         <span ng-show="userFav.resIds.indexOf(searchDetail.id) > -1" class="glyphicon glyphicon-star"></span>
                 <span ng-show="!userFav || !userFav.resIds || userFav.resIds.indexOf(searchDetail.id) == -1"
                       class="glyphicon glyphicon-star-empty">

@@ -42,7 +42,7 @@ app.use(multer());
 
 console.log(process.env.SESSION_SECRET);
 app.use( session ( {
-    secret : process.env.SESSION_SECRET ,
+    secret : "secret" ,
     resave : true ,
     saveUninitialized : true
 }));

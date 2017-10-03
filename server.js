@@ -36,8 +36,8 @@ if(process.env.MLAB_USERNAME) {
 // connect to the database
 var db = mongoose.connect(connectionString);
 
-var ipaddress    = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-var port         = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var ipaddress    = '0.0.0.0';
+var port         =  process.env.PORT || 3000;
 
 //app.use(cors());
 //app.options('*', cors());
@@ -49,7 +49,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-console.log(process.env.SESSION_SECRET);
 app.use( session ( {
     secret : "secret" ,
     resave : true ,
@@ -75,7 +74,7 @@ require("./public/assignment/server/app.js")(app,request,db,mongoose);
 
 
 //NOTE: PLease keep this before all http calls
-app.listen(port, ipaddress);
+app.listen(port);
 
 
 app.options('*', function(req, res) {

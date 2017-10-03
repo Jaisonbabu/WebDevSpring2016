@@ -1,7 +1,6 @@
 module.exports = function (db,mongoose,FormModel,FieldModel){
 
     var q = require('q');
-    var newFieldId = require('node-uuid');
 
     var api = {
         createFieldForForm: createFieldForForm,

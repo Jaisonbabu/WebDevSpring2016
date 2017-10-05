@@ -106,7 +106,7 @@ module.exports = function (app,request,reviewModel,userModel){
         var fetch_options = {
             host: 'developers.zomato.com',
             path:'/api/v2.1/search',
-            url: "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&sort=rating",
+            url: "https://developers.zomato.com/api/v2.1/search?lat="+lat+"&lon="+lng+"&sort=real_distance",
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

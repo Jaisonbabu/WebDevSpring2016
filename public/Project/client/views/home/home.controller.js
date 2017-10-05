@@ -27,7 +27,7 @@
                             var pos = {
                                 lat: position.coords.latitude,
                                 lng: position.coords.longitude
-                            };
+                            }
                             SearchService.fetchResult(pos)
                                 .then(function (response){
                                         console.log(response.data.restaurants);
